@@ -1,20 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { usersSchema } = require("./schemas/usersSchema");
 
-const DB_URL = "mongodb+srv://virajkale9604:Ganja@paymate.konwosa.mongodb.net/?retryWrites=true&w=majority&appName=Paymate";
+const DB_URL = "mongodb+srv://virajkale9604:Ganja@paymate.konwosa.mongodb.net/Paymate";
+mongoose.connect(DB_URL, {
+}).then(() => {
+    console.log("Connected to MongoDB");
+}).catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+});
 
-const connectDb = async () => {
-    try {
-        await mongoose.connect(DB_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        });
-        console.log("MongoDB connected");
-    } catch (error) {
-        console.error("MongoDB connection error:", error);
-    }
-    }
+const Users = mongoose.model("Users", usersSchema);
 
-
-
-module.exports = connectDb;
+module.exports = {
+    Users
+};
