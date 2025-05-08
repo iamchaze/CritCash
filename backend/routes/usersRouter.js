@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { Users } = require('../db') // Import the Users model from usersSchema.js
 const zod = require('zod');
+const bcrypt = require('bcrypt'); 
 
 const usersRouter = express.Router();
 usersRouter.use(express.json());
@@ -66,8 +67,8 @@ usersRouter.post("/walletIdValidate", async (req, res) => {
 // Signup endpoint to register a new user
 usersRouter.post('/signup', async (req, res) => {
     const body = req.body;
-    console.log(body);
-
+    const hashPassword = await bcrypt.hash(body.password, 12); // Hash the password
+    body.password = hashPassword; // Replace the password with the hashed password
     const parsedData = signupSchema.safeParse(req.body);
     const parsedDataResult = parsedData.success;
 
@@ -85,5 +86,23 @@ usersRouter.post('/signup', async (req, res) => {
         res.status(500).json({ error: "Error creating user" });
     }
 });
+
+//Sign in Routes
+usersRouter.post('/signin', async (req, res) => {
+    const { username, password } = req.body;
+    // Check if user exists
+    const user = await Users.find({ username });
+    if (user.length === 0) {
+        return res.status(200).json({ message: "invalid" });
+    } else {
+        // Check if password is correct
+        const isMatch = await bcrypt.compare(password, user[0].password);
+        if (isMatch) {
+            return res.status(200).json({ message: "success" });
+        } else {
+            return res.status(200).json({ message: "invalid" });
+        }
+    }
+})
 
 module.exports = usersRouter;

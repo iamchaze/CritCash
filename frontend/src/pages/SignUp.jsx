@@ -5,7 +5,6 @@ import useDebounce from "../utils/debounce";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'; 
 
-
 const SignUp = () => {
   const navigate = useNavigate();
   //Input states
