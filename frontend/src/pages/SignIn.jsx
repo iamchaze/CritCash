@@ -63,6 +63,7 @@ const SignIn = () => {
           Sign In
         </button>
         <CustomLink link="signup" text="Don't Have an Account? Sign Up" />
+        <CustomLink link="forgotpassword" text="Forgot Password" />
       </div>
     </>
   );
