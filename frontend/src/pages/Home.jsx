@@ -11,7 +11,7 @@ const Home = () => {
                e.preventDefault();
                navigate('/signup');
             }}>Take Me In</button>
-            <CustomLink link = "signup" text = "Already Have an Account? Sign In" />
+            <CustomLink link = "signin" text = "Already Have an Account? Sign In" />
         </div>
     );
 };

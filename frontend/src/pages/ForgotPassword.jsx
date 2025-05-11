@@ -170,9 +170,9 @@ const ForgotPassword = () => {
           >
             Reset Password
           </button>
-          <CustomLink link="signin" text="Sign In" />
         </>
       )}
+      <CustomLink link="signin" text="Sign In" />
     </>
   );
 };

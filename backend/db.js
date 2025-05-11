@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { usersSchema } = require("./schemas/usersSchema");
+const { accountsSchema } = require("./schemas/accountsSchema");
 
 const DB_URL = "mongodb+srv://virajkale9604:Ganja@paymate.konwosa.mongodb.net/Paymate";
 mongoose.connect(DB_URL, {
@@ -11,7 +12,9 @@ mongoose.connect(DB_URL, {
 });
 
 const Users = mongoose.model("Users", usersSchema);
+const Accounts = mongoose.model("Accounts", accountsSchema);
 
 module.exports = {
-    Users
+    Users,
+    Accounts
 };

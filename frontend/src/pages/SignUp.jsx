@@ -421,7 +421,6 @@ const SignUp = () => {
           }}
         />
       </div>
-      <CustomLink link="forgotpassword" text="Forgot Password?" />
       <CustomLink link="signin" text="Already Have an Account? Sign In" />
     </>
   );

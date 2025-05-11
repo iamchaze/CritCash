@@ -3,16 +3,19 @@ const mongoose = require('mongoose');
 
 const accountsSchema = new mongoose.Schema({
     walletId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
         required: true,
         trim: true,
         maxLength: 20,
+        unique: true,
     },
     walletPassword: {
         type: String,
         required: true,
         trim: true,
         maxLength: 15,
+        default: "password",
     },
     accountBalance: {
         type: Number,
@@ -41,4 +44,4 @@ const accountsSchema = new mongoose.Schema({
     }
 })
 
-exports = mongoose.model('Accounts', accountsSchema);
+module.exports = { accountsSchema };

@@ -1,12 +1,14 @@
 // usersRouter.js
 const express = require("express");
 const cors = require("cors");
-const { Users } = require("../db"); // Import the Users model from usersSchema.js
+const { Users, Accounts } = require("../db"); // Import the Users model from usersSchema.js
 const zod = require("zod");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const Redis = require("redis");
-
+const authmiddleware = require("../middlewares/authMiddleware");
+const { JWT_SECRET } = require("../config");
+const JWT = require("jsonwebtoken");
 const usersRouter = express.Router();
 const redisClient = Redis.createClient();
 usersRouter.use(express.json());
@@ -81,7 +83,11 @@ usersRouter.post("/signup", async (req, res) => {
     // Create new user
     try {
         const createUser = await Users.create(body);
-        console.log(createUser);
+        const createAccount = await Accounts.create({
+            walletId: createUser._id,
+        })
+        // console.log(createUser);
+        // console.log(createAccount);
         res.status(200).json({ message: "User signed up successfully" });
     } catch (error) {
         console.error(error);
@@ -100,7 +106,14 @@ usersRouter.post("/signin", async (req, res) => {
         // Check if password is correct
         const isMatch = await bcrypt.compare(password, user[0].password);
         if (isMatch) {
-            return res.status(200).json({ message: "success" });
+            const token = JWT.sign(
+                {
+                    id: user[0]._id,
+                    username: user[0].username
+                },
+                JWT_SECRET
+            );
+            return res.status(200).json({ message: "success", token });
         } else {
             return res.status(200).json({ message: "invalid" });
         }
@@ -173,6 +186,17 @@ usersRouter.post("/resetpassword", async (req, res) => {
         return res.status(200).json({ message: "invalid" });
     } else {
         return res.status(200).json({ message: "success" });
+    }
+});
+
+usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
+    const { userId } = req.query;
+    // Check if user exists
+    const user = await Users.find({ _id: userId });
+    if (user.length === 0) {
+        return res.status(200).json({ message: "invalid" });
+    } else {
+        return res.status(200).json({ message: "success", data: user[0] });
     }
 });
 

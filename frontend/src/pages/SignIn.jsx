@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import CustomLink from "../components/CustomLink";
 import axios from "axios";
+import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
+// const jwt_decode = (await import("jwt-decode")).default;
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
   const debouncedPassword = useDebounce(password, 500);
@@ -20,7 +19,9 @@ const SignIn = () => {
       <h3>Get Closer To Your Finances</h3>
       <div>
         <div>
-            {credentialsError && <p style={{ color: "red" }}>{credentialsError}</p>}
+          {credentialsError && (
+            <p style={{ color: "red" }}>{credentialsError}</p>
+          )}
           <label htmlFor="username">Username: </label>
           <input
             type="text"
@@ -47,10 +48,15 @@ const SignIn = () => {
                 username: debouncedUsername,
                 password: debouncedPassword,
               })
-              .then((res) => {
+              .then(async (res) => {
                 if (res.data.message === "invalid") {
                   setCredentialsError("Invalid Credentials");
                 } else if (res.data.message === "success") {
+                  const jwt_decode = (await import("jwt-decode")).default;
+                  const decoded = jwt_decode(res.data.token);
+                  localStorage.setItem("username", decoded.username);
+                  localStorage.setItem("userId", decoded.id);
+                  localStorage.setItem("token", res.data.token);
                   setCredentialsError(null);
                   navigate("/dashboard");
                 }
@@ -62,8 +68,8 @@ const SignIn = () => {
         >
           Sign In
         </button>
-        <CustomLink link="signup" text="Don't Have an Account? Sign Up" />
         <CustomLink link="forgotpassword" text="Forgot Password" />
+        <CustomLink link="signup" text="Don't Have an Account? Sign Up" />
       </div>
     </>
   );
