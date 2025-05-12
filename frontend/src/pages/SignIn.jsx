@@ -11,7 +11,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
-  const debouncedPassword = useDebounce(password, 500);
+  const debouncedPassword = useDebounce(password, 100);
 
   return (
     <>
@@ -44,19 +44,20 @@ const SignIn = () => {
         <button
           onClick={async () => {
             await axios
-              .post("http://localhost:5000/api/v1/users/signin", {
-                username: debouncedUsername,
-                password: debouncedPassword,
-              })
+              .post(
+                "http://localhost:5000/api/v1/users/signin",
+                {
+                  username: debouncedUsername,
+                  password: debouncedPassword,
+                },
+                {
+                  withCredentials: true, // IMPORTANT to allow cookies
+                }
+              )
               .then(async (res) => {
                 if (res.data.message === "invalid") {
                   setCredentialsError("Invalid Credentials");
                 } else if (res.data.message === "success") {
-                  const jwt_decode = (await import("jwt-decode")).default;
-                  const decoded = jwt_decode(res.data.token);
-                  localStorage.setItem("username", decoded.username);
-                  localStorage.setItem("userId", decoded.id);
-                  localStorage.setItem("token", res.data.token);
                   setCredentialsError(null);
                   navigate("/dashboard");
                 }

@@ -12,7 +12,7 @@ const JWT = require("jsonwebtoken");
 const usersRouter = express.Router();
 const redisClient = Redis.createClient();
 usersRouter.use(express.json());
-usersRouter.use(cors());
+// usersRouter.use(cors());
 redisClient.connect().catch(console.error);
 
 const signupSchema = zod.object({
@@ -113,12 +113,24 @@ usersRouter.post("/signin", async (req, res) => {
                 },
                 JWT_SECRET
             );
+            res.cookie('authToken', token, {
+                httpOnly: false, // Set to true if you want to prevent client-side access
+                secure: false, // only over HTTPS
+                sameSite: 'Strict', // CSRF protection
+                maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+            });
+
             return res.status(200).json({ message: "success", token });
         } else {
             return res.status(200).json({ message: "invalid" });
         }
     }
 });
+
+usersRouter.get("/signout", async (req, res) => {
+    res.clearCookie("authToken");
+    res.status(200).json({ message: "success" });
+})
 
 //Forgot Password Route
 usersRouter.post("/forgotpassword", async (req, res) => {

@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
+    
   );
 };
 
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
 
-  return user ? children : <Navigate to="/login" replace />;
+  return user ? children : <Navigate to="/signin" replace />;
 };
 
 export default PrivateRoute;
