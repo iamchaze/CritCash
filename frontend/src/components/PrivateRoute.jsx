@@ -1,32 +1,11 @@
-import React, { useContext, useState, createContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Outlet, Navigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 
-// 1. Create Auth Context
-const AuthContext = createContext(null);
 
-// 2. Custom hook (defined in the same file)
-const useAuth = () => useContext(AuthContext);
+const PrivateRoute = () => {
+  const isAuthenticated = Cookies.get("authToken") ? true : null;
 
-// 3. Auth Provider to wrap your app (export this to use in App.js)
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
-
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-    
-  );
-};
-
-// 4. PrivateRoute component
-const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
-
-  return user ? children : <Navigate to="/signin" replace />;
-};
+  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
+}
 
 export default PrivateRoute;
