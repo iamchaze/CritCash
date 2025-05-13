@@ -159,7 +159,6 @@ usersRouter.post("/forgotpassword", async (req, res) => {
             subject: "Forgot Password OTP",
             text: `Use This OTP to Reset Your Password: ${otp}
             This otp will expire in ${expiryTime / 60} Minutes`, // plain‑text body
-            // html: "<b>Hello world?</b>", // html body
         };
         transporter.sendMail(mailOptions, async (error, info) => {
             if (error) {
@@ -202,14 +201,19 @@ usersRouter.post("/resetpassword", async (req, res) => {
 });
 
 usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
-    const { userId } = req.query;
-    // Check if user exists
+    const fields = req.query.fields.split(",");
+    // Checks if user exists
+    const userId = req.userid;
     const user = await Users.find({ _id: userId });
     if (user.length === 0) {
         return res.status(200).json({ message: "invalid" });
-    } else {
-        return res.status(200).json({ message: "success", data: user[0] });
     }
+
+    const filteredUser = Object.fromEntries(
+        fields.map(key => [key, user[0][key]])
+    );
+    res.status(200).json({ data: filteredUser })
+
 });
 
 module.exports = usersRouter;
