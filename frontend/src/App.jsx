@@ -4,17 +4,19 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import {
-  BrowserRouter as BroswerRouter,
+  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import SendMoney from "./pages/SendMoney";
 
 function App() {
   return (
     <>
-      <BroswerRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
@@ -24,9 +26,15 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/sendmoney" element={<SendMoney />} />
+            <Route path="/requestmoney" element={<Settings />} />
+            <Route path="/history" element={<Settings />} />
+            <Route path="/send" element={<Settings />} />
+
           </Route>
         </Routes>
-      </BroswerRouter>
+      </BrowserRouter>
     </>
   );
 }

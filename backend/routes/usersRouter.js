@@ -200,6 +200,7 @@ usersRouter.post("/resetpassword", async (req, res) => {
     }
 });
 
+//Route for unique user search
 usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
     const fields = req.query.fields.split(",");
     // Checks if user exists
@@ -215,5 +216,19 @@ usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
     res.status(200).json({ data: filteredUser })
 
 });
+
+//Route for bulk users search
+usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
+    const searchquery = req.query.searchquery;
+    const user = await Users.find({
+        $or: [
+            { firstName: { $regex: searchquery, $options: "i" } },
+            { lastName: { $regex: searchquery, $options: "i" } },
+            { username: { $regex: searchquery, $options: "i" } },
+            { walletId: { $regex: searchquery, $options: "i" } },
+        ]
+    })
+    console.log(user);
+})
 
 module.exports = usersRouter;

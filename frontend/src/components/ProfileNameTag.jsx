@@ -8,7 +8,6 @@ const ProfileNameTag = () => {
 
   useEffect(() => {
     const setName = async () => {
-      console.log("object");
       const response = await axios.get(
         "http://localhost:5000/api/v1/users/getUserDetails?fields=firstName,lastName",
         {
