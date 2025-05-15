@@ -27,7 +27,7 @@ const usersSchema = new mongoose.Schema({
         maxLength: 50,
     },
     contact: {
-        type: Number,
+        type: String,
         required: true,
         trim: true,
         maxLength: 10,

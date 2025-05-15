@@ -219,18 +219,43 @@ usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
 
 //Route for bulk users search
 usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
-    const searchquery = req.query.searchquery;
-    const user = await Users.find({
-        $or: [
-            { firstName: { $regex: searchquery, $options: "i" } },
-            { lastName: { $regex: searchquery, $options: "i" } },
-            { username: { $regex: searchquery, $options: "i" } },
-            { walletId: { $regex: searchquery, $options: "i" } },
-            { contact: { $regex: searchquery } },
-            
-        ]
-    })
-    console.log(user);
+    let fetchedUsers = []
+    const searchquery = req.query.searchquery.trim();
+    const queryParts = searchquery.split(" ").filter(Boolean)
+    if (queryParts.length >= 2) {
+        const [firstName, lastName] = queryParts;
+        fetchedUsers = await Users.find({
+            $and: [
+                { firstName: { $regex: firstName, $options: "i" } },
+                { lastName: { $regex: lastName, $options: "i" } }
+            ]
+        });
+    } else {
+        fetchedUsers = await Users.find({
+            $or: [
+                { firstName: { $regex: searchquery, $options: "i" } },
+                { lastName: { $regex: searchquery, $options: "i" } },
+                { username: { $regex: searchquery, $options: "i" } },
+                { walletId: { $regex: searchquery, $options: "i" } },
+                { contact: { $regex: searchquery } }
+            ]
+        })
+    }
+
+    if (fetchedUsers.length === 0) {
+        res.status(200).json({ message: "No User Found" })
+    } else {
+        const filteredUsers = fetchedUsers.map((fetchedUser) => {
+            return {
+                username: fetchedUser.username,
+                firstName: fetchedUser.firstName,
+                lastName: fetchedUser.lastName,
+                contact: fetchedUser.contact,
+                walletId: fetchedUser.walletId
+            }
+        })
+        res.status(200).json({ users: filteredUsers })
+    }
 })
 
 module.exports = usersRouter;
