@@ -44,7 +44,7 @@ const SignUp = () => {
       if (!debouncedFirstName) {
         setFirstNameError(null);
         return;
-      } else if (debouncedFirstName.trim().length < 3) {
+      } else if (debouncedFirstName.trim().length < 2) {
         setFirstNameError("First name must be at least 3 characters long.");
         return;
       } else if (nameRegex.test(debouncedFirstName) == false) {
@@ -72,7 +72,7 @@ const SignUp = () => {
       if (!debouncedLastName) {
         setLastNameError(null);
         return;
-      } else if (debouncedLastName.trim().length < 3) {
+      } else if (debouncedLastName.trim().length < 2) {
         setLastNameError("Last name must be at least 3 characters long.");
         return;
       } else if (nameRegex.test(debouncedLastName) == false) {
@@ -343,7 +343,7 @@ const SignUp = () => {
         <div>
           <label htmlFor="contact">Contact Number:</label>
           <input
-            type="number"
+            type="text"
             id="contact"
             name="contact"
             onChange={(e) => setContact(e.target.value)}

@@ -12,8 +12,8 @@ accountsRouter.use(authmiddleware); // Apply the auth middleware to all routes i
 
 accountsRouter.get('/balance', async (req, res) => {
     if (req.cookies.authToken) {
-        const { id } = req.userid;
-        const account = await Accounts.findOne({ userId: id });
+        const id = req.userid;
+        const account = await Accounts.findOne({ walletId: id });
         if (!account) {
             return res.status(200).json({ message: 'Account not found' });
         } else {

@@ -17,7 +17,7 @@ redisClient.connect().catch(console.error);
 
 const signupSchema = zod.object({
     firstName: zod.string().min(2).max(15),
-    lastName: zod.string().max(15),
+    lastName: zod.string().min(2).max(15),
     username: zod.string().min(3).max(20),
     contact: zod.string().length(10),
     email: zod.string().email(),
@@ -226,6 +226,8 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
             { lastName: { $regex: searchquery, $options: "i" } },
             { username: { $regex: searchquery, $options: "i" } },
             { walletId: { $regex: searchquery, $options: "i" } },
+            { contact: { $regex: searchquery } },
+            
         ]
     })
     console.log(user);
