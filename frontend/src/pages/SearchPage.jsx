@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useDebounce from "../utils/debounce";
-import { useLocation } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,11 +9,15 @@ const SearchPage = () => {
   const [searchPerformed, setSearchPerformed] = useState(null);
   const debouncedSearch = useDebounce(searchTerm, 300);
 
-  const location = useLocation()
-  const task = location.state?.task
+  const navigate = useNavigate();
+  const location = useLocation();
+  const task = location.state?.task;
+
+  const sendUserToTransaction = (user) => {
+    navigate("/transaction", { state: { task, user } });
+  };
 
   useEffect(() => {
-    console.log(task);
     const searchUsers = async () => {
       if (debouncedSearch.length > 2) {
         try {
@@ -41,7 +44,13 @@ const SearchPage = () => {
 
   return (
     <>
-      <h1>{task === "send" ? "Send Money" : task === "request" ? "Request Money" : "Search Users"}</h1>
+      <h1>
+        {task === "send"
+          ? "Send Money"
+          : task === "request"
+          ? "Request Money"
+          : "Search Users"}
+      </h1>
       <div>
         <input
           type="text"
@@ -56,7 +65,11 @@ const SearchPage = () => {
         {Array.isArray(searchResults) &&
           searchResults.length > 0 &&
           searchResults.map((user) => (
-            <div key={user.username}>
+            <div
+              key={user.username}
+              style={{ cursor: "pointer" }}
+              onClick={() => sendUserToTransaction(user)}
+            >
               <h3>{`${user.firstName} ${user.lastName}`}</h3>
               <pre>{`${user.contact}     ${user.walletId}`}</pre>
             </div>

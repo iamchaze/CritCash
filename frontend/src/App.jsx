@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import SearchPage from "./pages/SearchPage";
+import TransactionPage from "./pages/TransactionPage";
 
 function App() {
   return (
@@ -27,9 +28,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/searchpage" element={<SearchPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/history" element={<Settings />} />
-            <Route path="/send" element={<Settings />} />
+            <Route path="/transaction" element={<TransactionPage />} />
 
           </Route>
         </Routes>

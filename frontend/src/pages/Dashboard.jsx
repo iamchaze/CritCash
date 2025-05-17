@@ -21,8 +21,8 @@ const Dashboard = () => {
       <ProfileNameTag />
       <AccountBalance />
       <div>
-        {renderNavButton("/searchpage", "send")}
-        {renderNavButton("/searchpage", "request")}
+        {renderNavButton("/search", "send")}
+        {renderNavButton("/search", "request")}
         {/* other buttons */}
       </div>
       {/* ... */}

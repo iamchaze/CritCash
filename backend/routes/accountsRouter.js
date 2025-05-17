@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 
 accountsRouter.use(express.json());
 
-accountsRouter.use(authmiddleware); // Apply the auth middleware to all routes in this router
+accountsRouter.use(authmiddleware);
 
 accountsRouter.get('/balance', async (req, res) => {
     if (req.cookies.authToken) {
@@ -20,6 +20,12 @@ accountsRouter.get('/balance', async (req, res) => {
             return res.status(200).json({ balance: account.accountBalance });
         }
     }
+})
+
+accountsRouter.post('/transfer', async (req, res) => {
+    const user = req.body.currentUser
+    const amount = parseInt(req.body.amount)
+    console.log(user, amount);
 })
 
 module.exports = accountsRouter;
