@@ -11,7 +11,7 @@ import {
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import SearchReceiver from "./pages/SearchReceiver";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/searchreceiver" element={<SearchReceiver />} />
+            <Route path="/searchpage" element={<SearchPage />} />
             <Route path="/history" element={<Settings />} />
             <Route path="/send" element={<Settings />} />
 
