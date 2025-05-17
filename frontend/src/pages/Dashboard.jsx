@@ -9,8 +9,8 @@ const Dashboard = () => {
       <ProfileNameTag />
       <AccountBalance />
       <div>
-        <NavButton link="/sendmoney" text="Send" />
-        <NavButton link="/request" text="Request" />
+        <NavButton link="/searchreceiver" text="Send" />
+        <NavButton link="/requestmoney" text="Request" />
         <NavButton link="/history" text="History" />
         <NavButton link="/deposit" text="Deposit" />
       </div>

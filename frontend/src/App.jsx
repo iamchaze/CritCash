@@ -11,7 +11,7 @@ import {
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import SendMoney from "./pages/SendMoney";
+import SearchReceiver from "./pages/SearchReceiver";
 
 function App() {
   return (
@@ -27,8 +27,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/sendmoney" element={<SendMoney />} />
-            <Route path="/requestmoney" element={<Settings />} />
+            <Route path="/searchreceiver" element={<SearchReceiver />} />
             <Route path="/history" element={<Settings />} />
             <Route path="/send" element={<Settings />} />
 
