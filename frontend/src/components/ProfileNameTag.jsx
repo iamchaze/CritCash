@@ -10,9 +10,7 @@ const ProfileNameTag = () => {
     const setName = async () => {
       const response = await axios.get(
         "http://localhost:5000/api/v1/users/getUserDetails?fields=firstName,lastName",
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true },        
       );
       if (response.data.message) {
         setProfileNameTag(response.data.message);

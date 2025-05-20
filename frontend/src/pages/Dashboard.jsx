@@ -23,7 +23,7 @@ const Dashboard = () => {
       <div>
         {renderNavButton("/search", "send")}
         {renderNavButton("/search", "request")}
-        {/* other buttons */}
+        {renderNavButton("/settings", "settings")}
       </div>
       {/* ... */}
     </div>

@@ -15,7 +15,6 @@ const AccountBalance = () => {
       if (!response.data.balance) {
         setBalance(response.data.message);
       } else {
-        console.log(response.data.balance);
         setBalance(response.data.balance);
       }
     };
