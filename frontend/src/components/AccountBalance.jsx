@@ -12,16 +12,19 @@ const AccountBalance = () => {
           withCredentials: true,
         }
       );
-      if (!response.data.balance) {
+      const balance = parseFloat(response.data.balance);
+      if (balance === 0) {
+        setBalance("0.00");
+      } else if (response.data.balance) {
+        setBalance(balance.toFixed(2));
+      } else if (response.data.message) {
         setBalance(response.data.message);
-      } else {
-        setBalance(response.data.balance);
       }
     };
 
     fetchBalance();
   }, []);
- 
+
   return (
     <div>
       <h2>Account Balance: ₹{balance}</h2>

@@ -10,6 +10,7 @@ const payRequestsRouter = require('./payRequestsRouter');
 
 mainRouter.use("/users", usersRouter)
 mainRouter.use("/accounts", accountsRouter);
+mainRouter.use("/transactions", transactionsRouter)
 // mainRouter.use("/transactions", transactionsRouter)
 // mainRouter.use("/accounts", accountsRouter);
 // mainRouter.use("/deposits", depositsRouter);

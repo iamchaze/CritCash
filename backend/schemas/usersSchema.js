@@ -57,27 +57,27 @@ const usersSchema = new mongoose.Schema({
         balance: {
             type: String,
             required: true,
-            default: "0",
+            default: "0.00",
         },
         amountSpentCurrentMonth: {
             type: Number,
             required: true,
-            default: 0,
+            default: "0",
         },
         amountReceivedCurrentMonth: {
             type: Number,
             required: true,
-            default: 0,
+            default: "0",
         },
         totalAmountSpent: {
             type: Number,
             required: true,
-            default: 0,
+            default: "0",
         },
         totalAmountReceived: {
             type: Number,
             required: true,
-            default: 0,
+            default: "0",
         }
     }
 });

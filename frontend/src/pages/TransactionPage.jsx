@@ -8,7 +8,7 @@ const TransactionPage = () => {
 
   const location = useLocation();
   const task = location.state?.task;
-  const user = location.state?.user;
+  const user = location.state?.user;;
   return (
     <>
       <h2>
@@ -25,7 +25,7 @@ const TransactionPage = () => {
 
       <div>
         <input
-          type="text"
+          type="number"
           placeholder="Enter Amount"
           id="amount"
           name="amount"
@@ -41,7 +41,7 @@ const TransactionPage = () => {
       <button
         onClick={async () => {
           const response = await axios.post(
-            `http://localhost:5000/api/v1/accounts/transfer`,
+            `http://localhost:5000/api/v1/transactions/sendmoney`,
             { targetUser: user, amount: amount, task: task },
             { withCredentials: true }
           );

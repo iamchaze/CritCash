@@ -14,21 +14,13 @@ accountsRouter.get('/balance', async (req, res) => {
     if (req.cookies.authToken) {
         const id = req.userid;
         const account = await Users.findOne({ _id: id });
-        if (!account) {
+        const accountBalance = account.accountDetails.balance;
+        if (!accountBalance) {
             return res.status(200).json({ message: 'Account not found' });
         } else {
-            return res.status(200).json({ balance: account.accountDetails.balance });
+            return res.status(200).json({ balance: accountBalance });
         }
     }
-})
-
-accountsRouter.post('/transfer', async (req, res) => {
-    const targetUser = req.body.targetUser
-    const amount = Number.isInteger(req.body.amount) ? req.body.amount * 100 : req.body.amount * 100;
-    const task = req.body.task
-    const currentUserId = req.userid
-    const currentUser = await Accounts.findOne({ _id: currentUserId });
-    console.log(targetUser, amount, task, currentUserId);
 })
 
 module.exports = accountsRouter;
