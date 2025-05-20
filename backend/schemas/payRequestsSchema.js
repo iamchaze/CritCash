@@ -18,18 +18,6 @@ const payRequestsSchema = new mongoose.Schema({
         trim: true,
         maxLength: 20,
     },
-    senderWalletId: {
-        type: String,
-        required: true,
-        trim: true,
-        maxLength: 20,
-    },
-    receiverWalletId: {
-        type: String,
-        required: true,
-        trim: true,
-        maxLength: 20,
-    },
     requestAmount: {
         type: Number,
         required: true,

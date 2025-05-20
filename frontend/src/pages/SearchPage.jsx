@@ -54,7 +54,7 @@ const SearchPage = () => {
       <div>
         <input
           type="text"
-          placeholder="Search by name, contact or WalletId"
+          placeholder="Search by name, contact or walletKey"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
@@ -71,7 +71,7 @@ const SearchPage = () => {
               onClick={() => sendUserToTransaction(user)}
             >
               <h3>{`${user.firstName} ${user.lastName}`}</h3>
-              <pre>{`${user.contact}     ${user.walletId}`}</pre>
+              <pre>{`${user.contact}     ${user.walletKey}`}</pre>
             </div>
           ))}
       </div>

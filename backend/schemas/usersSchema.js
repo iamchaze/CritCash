@@ -38,7 +38,7 @@ const usersSchema = new mongoose.Schema({
         trim: true,
         maxLength: 50,
     },
-    walletId: {
+    walletKey: {
         type: String,
         required: true,
         trim: true,

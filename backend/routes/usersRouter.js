@@ -22,7 +22,7 @@ const signupSchema = zod.object({
     contact: zod.string().length(10),
     email: zod.string().email(),
     password: zod.string().min(6),
-    walletId: zod.string().min(3).max(20),
+    walletKey: zod.string().min(3).max(20),
 });
 
 // Endpoint to validate username
@@ -58,11 +58,11 @@ usersRouter.post("/contactValidate", async (req, res) => {
     return res.status(200).json({ available: false });
 });
 
-// Endpoint to validate wallet ID
-usersRouter.post("/walletIdValidate", async (req, res) => {
-    const { walletId } = req.body;
-    // Check if wallet ID already exists in the DB
-    const walletExists = await Users.findOne({ walletId });
+// Endpoint to validate wallet Key
+usersRouter.post("/walletKeyValidate", async (req, res) => {
+    const { walletKey } = req.body;
+    // Check if wallet Key already exists in the DB
+    const walletExists = await Users.findOne({ walletKey });
     if (!walletExists) {
         return res.status(200).json({ available: true });
     }
@@ -84,7 +84,7 @@ usersRouter.post("/signup", async (req, res) => {
     try {
         const createUser = await Users.create(body);
         const createAccount = await Accounts.create({
-            walletId: createUser._id,
+            walletKey: createUser._id,
         })
         // console.log(createUser);
         // console.log(createAccount);
@@ -236,7 +236,7 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
                 { firstName: { $regex: searchquery, $options: "i" } },
                 { lastName: { $regex: searchquery, $options: "i" } },
                 { username: { $regex: searchquery, $options: "i" } },
-                { walletId: { $regex: searchquery, $options: "i" } },
+                { walletKey: { $regex: searchquery, $options: "i" } },
                 { contact: { $regex: searchquery } }
             ]
         })
@@ -251,7 +251,7 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
                 firstName: fetchedUser.firstName,
                 lastName: fetchedUser.lastName,
                 contact: fetchedUser.contact,
-                walletId: fetchedUser.walletId
+                walletKey: fetchedUser.walletKey
             }
         })
         res.status(200).json({ users: filteredUsers })

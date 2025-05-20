@@ -15,13 +15,14 @@ const AccountBalance = () => {
       if (!response.data.balance) {
         setBalance(response.data.message);
       } else {
+        console.log(response.data.balance);
         setBalance(response.data.balance);
       }
     };
 
     fetchBalance();
   }, []);
-
+ 
   return (
     <div>
       <h2>Account Balance: ₹{balance}</h2>

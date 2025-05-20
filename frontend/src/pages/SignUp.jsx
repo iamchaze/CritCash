@@ -15,7 +15,7 @@ const SignUp = () => {
   const [contact, setContact] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [walletId, setWalletId] = useState("");
+  const [walletKey, setWalletKey] = useState("");
 
   //Error/Success states
   const [firstNameError, setFirstNameError] = useState(null);
@@ -25,7 +25,7 @@ const SignUp = () => {
   const [contactError, setContactError] = useState(null);
   const [createPasswordError, setCreatePasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const [walletIdError, setWalletIdError] = useState(null);
+  const [walletKeyError, setWalletKeyError] = useState(null);
 
   const debouncedFirstName = useDebounce(firstName, 500);
   const debouncedLastName = useDebounce(lastName, 500);
@@ -34,7 +34,7 @@ const SignUp = () => {
   const debouncedContact = useDebounce(contact, 500);
   const debouncedCreatePassword = useDebounce(createPassword, 500);
   const debouncedConfirmPassword = useDebounce(confirmPassword, 500);
-  const debouncedWalletId = useDebounce(walletId, 500);
+  const debouncedWalletKey = useDebounce(walletKey, 500);
 
   //First name validation
   useEffect(() => {
@@ -217,41 +217,41 @@ const SignUp = () => {
     };
   }, [debouncedContact]);
 
-  //Wallet ID validation
+  //Wallet Key validation
   useEffect(() => {
     let isMounted = true; // Helps ignore old responses
-    if (debouncedWalletId.length > 0) {
-      const validateWalletId = async () => {
-        const walletIdRegex = /^[A-Za-z0-9]{8,}$/;
-        if (walletIdRegex.test(debouncedWalletId) == false) {
-          setWalletIdError("Wallet ID must be at least 8 characters long and contain only alphanumeric characters.");
+    if (debouncedWalletKey.length > 0) {
+      const validateWalletKey = async () => {
+        const walletKeyRegex = /^[A-Za-z0-9]{8,}$/;
+        if (walletKeyRegex.test(debouncedWalletKey) == false) {
+          setWalletKeyError("Wallet Key must be at least 8 characters long and contain only alphanumeric characters.");
           return;
         } 
         try{
           const res = await axios.post(
-            `http://localhost:5000/api/v1/users/walletIdValidate`,{
-              walletId: debouncedWalletId,
+            `http://localhost:5000/api/v1/users/walletKeyValidate`,{
+              walletKey: debouncedWalletKey,
             })
             if (isMounted) {
               if (res.data?.available) {
-                setWalletIdError(null);
+                setWalletKeyError(null);
               } else {
-                setWalletIdError("Wallet ID is already taken.");
+                setWalletKeyError("Wallet Key is already taken.");
               }
             }
         } catch (error) {
           if (isMounted) {
-            setWalletIdError("Error checking wallet ID.");
+            setWalletKeyError("Error checking wallet Key.");
           }
-          console.error("Wallet ID check failed:", error);
+          console.error("Wallet Key check failed:", error);
         }
       };
-      validateWalletId();
+      validateWalletKey();
     }
     return () => {
       isMounted = false; // Cleanup function to ignore old responses
     }
-  }, [debouncedWalletId]);
+  }, [debouncedWalletKey]);
 
   // Password validation
   useEffect(() => {
@@ -374,15 +374,15 @@ const SignUp = () => {
           {confirmPasswordError && <p>{confirmPasswordError}</p>}
         </div>
         <div>
-          <label htmlFor="walletId">Create Unique Wallet ID:</label>
+          <label htmlFor="walletKey">Create Unique Wallet Key:</label>
           <input
             type="text"
-            id="walletId"
-            name="walletId"
-            onChange={(e) => setWalletId(e.target.value)}
+            id="walletKey"
+            name="walletKey"
+            onChange={(e) => setWalletKey(e.target.value)}
             required
           />
-          {walletIdError && <p>{walletIdError}</p>}
+          {walletKeyError && <p>{walletKeyError}</p>}
         </div>
         <input
           type="button"
@@ -396,7 +396,7 @@ const SignUp = () => {
               contactError ||
               createPasswordError ||
               confirmPasswordError ||
-              walletIdError
+              walletKeyError
             ) {
               alert("Please fix the errors before submitting.");
             } else {
@@ -408,7 +408,7 @@ const SignUp = () => {
                   email,
                   contact,
                   password: createPassword,
-                  walletId,
+                  walletKey,
                 })
                 .then(() => {
                   navigate("/signin");

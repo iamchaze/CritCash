@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const accountsSchema = new mongoose.Schema({
-    walletId: {
+    walletKey: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         required: true,

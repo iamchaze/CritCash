@@ -42,9 +42,10 @@ const TransactionPage = () => {
         onClick={async () => {
           const response = await axios.post(
             `http://localhost:5000/api/v1/accounts/transfer`,
-            { currentUser: user, amount: amount },
+            { targetUser: user, amount: amount, task: task },
             { withCredentials: true }
           );
+          console.log(response);
         }}
       >
         {task === "send"

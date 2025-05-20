@@ -9,6 +9,10 @@ const authmiddleware = (req, res, next) => {
         const decoded = jwt.verify(authToken, JWT_SECRET);
         req.username = decoded.username;
         req.userid = decoded.id;
+        req.user = {
+            username: decoded.username,
+            id: decoded.id
+        }
         next();
     }
 }
