@@ -5,10 +5,11 @@ import axios from "axios";
 
 const TransactionPage = () => {
   const [amount, setAmount] = useState(0);
+  const [note, setNote] = useState("");
 
   const location = useLocation();
   const task = location.state?.task;
-  const user = location.state?.user;;
+  const user = location.state?.user;
   return (
     <>
       <h2>
@@ -36,13 +37,15 @@ const TransactionPage = () => {
       </div>
       <button>Split With Mates</button>
       <div>
-        <input type="text" placeholder="Add Note" />
+        <input type="text" placeholder="Add Note" onChange={(e) => {
+          setNote(e.target.value);
+        }} />
       </div>
       <button
         onClick={async () => {
           const response = await axios.post(
             `http://localhost:5000/api/v1/transactions/sendmoney`,
-            { targetUser: user, amount: amount, task: task },
+            { to: user, amount: amount, note: note !== "" ? note : null },
             { withCredentials: true }
           );
           console.log(response);

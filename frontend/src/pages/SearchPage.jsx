@@ -66,7 +66,7 @@ const SearchPage = () => {
           searchResults.length > 0 &&
           searchResults.map((user) => (
             <div
-              key={user.username}
+              key={{ id: user.id }}
               style={{ cursor: "pointer" }}
               onClick={() => sendUserToTransaction(user)}
             >

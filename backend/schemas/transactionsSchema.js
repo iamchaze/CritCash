@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 
 const transactionsSchema = new mongoose.Schema({
-    transationId: {
+    senderUserId:{
         type: String,
         required: true,
-        trim: true,
-        maxLength: 20,
+        trim: true
+    },
+    receiverUserId:{
+        type: String,
+        required: true,
+        trim: true
     },
     transactionDate: {
-        type: Date,
+        type: String,
         required: true,
         default: Date.now,
     },
-    transationTime: {
+    transactionTime: {
         type: String,
         required: true,
         trim: true,
@@ -28,6 +32,11 @@ const transactionsSchema = new mongoose.Schema({
         required: true,
         enum: ['success', 'failed', 'pending'],
         default: 'pending'
+    },
+    transactionNote: {
+        type: String,
+        trim: true,
+        maxLength: 100,
     }
 })
 

@@ -260,6 +260,7 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
     }
 
     const filteredUsers = fetchedUsers.map(user => ({
+        id: user._id,
         username: user.userDetails.username,
         firstName: user.userDetails.firstName,
         lastName: user.userDetails.lastName,

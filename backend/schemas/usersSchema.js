@@ -55,7 +55,7 @@ const usersSchema = new mongoose.Schema({
             default: "password",
         },
         balance: {
-            type: String,
+            type: Number,
             required: true,
             default: "0.00",
         },

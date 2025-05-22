@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 
 const payRequestsSchema = new mongoose.Schema({
+    requestSenderId: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    requestReceiverId: {
+        type: String,
+        required: true,
+        trim: true
+    },
     requestId: {
         type: String,
         required: true,
@@ -8,7 +18,7 @@ const payRequestsSchema = new mongoose.Schema({
         maxLength: 20,
     },
     requestDate: {
-        type: Date,
+        type: String,
         required: true,
         default: Date.now,
     },
