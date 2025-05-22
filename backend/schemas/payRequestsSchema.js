@@ -11,12 +11,6 @@ const payRequestsSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    requestId: {
-        type: String,
-        required: true,
-        trim: true,
-        maxLength: 20,
-    },
     requestDate: {
         type: String,
         required: true,
@@ -39,12 +33,12 @@ const payRequestsSchema = new mongoose.Schema({
         enum: ['success', 'failed', 'pending'],
         default: 'pending'
     },
-    requestMessage: {
+    requestNote: {
         type: String,
-        required: true,
         trim: true,
         maxLength: 100,
     }
 })
 
-exports = mongoose.model('PayRequests', payRequestsSchema);
+
+module.exports = { payRequestsSchema };

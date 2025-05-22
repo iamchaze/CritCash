@@ -1,5 +1,5 @@
 const express = require('express');
-const { Users, Transactions } = require('../db');
+const { Users, Transactions, PaymentRequests } = require('../db');
 const authmiddleware = require('../middlewares/authMiddleware');
 const transactionsRouter = express.Router();
 const mongoose = require("mongoose");
@@ -58,8 +58,36 @@ transactionsRouter.post('/requestmoney', async (req, res) => {
     const to = req.body.to;
     const from = req.user
     const amount = req.body.amount * 100;
-    
-    
+    const note = req.body.note ? req.body.note : null;
+    const toAccount = await Users.findOne({ _id: to.id });
+    if (!toAccount) {
+        res.send({ message: 'User not found' })
+        return;
+    }
+    const fromAccount = await Users.findOne({ _id: from.id });
+    if (!fromAccount) {
+        res.send({ message: 'User not found' })
+        return;
+    }
+
+    const paymentRequest = await PaymentRequests.create({
+        requestSenderId: from.id,
+        requestReceiverId: to.id,
+        requestAmount: amount,
+        requestStatus: "pending",
+        requestDate: new Date().toISOString(),
+        requestTime: new Date().toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' }),
+        requestNote: note,
+    })
+    if (paymentRequest) {
+        res.send({
+            message: `Payment request sent`
+        })
+    } else {
+        res.send({
+            message: `Payment request failed`
+        })
+    }
 })
 
 module.exports = transactionsRouter;

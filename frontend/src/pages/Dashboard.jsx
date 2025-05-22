@@ -8,7 +8,7 @@ const Dashboard = () => {
     <button>
       <Link
         to={link}
-        state={{ task }} // <-- Pass 'task' here: "send" or "request"
+        state={{ task }}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         {task}
@@ -21,8 +21,8 @@ const Dashboard = () => {
       <ProfileNameTag />
       <AccountBalance />
       <div>
-        {renderNavButton("/search", "send")}
-        {renderNavButton("/search", "request")}
+        {renderNavButton("/search", "sendmoney")}
+        {renderNavButton("/search", "requestmoney")}
         {renderNavButton("/settings", "settings")}
       </div>
       {/* ... */}

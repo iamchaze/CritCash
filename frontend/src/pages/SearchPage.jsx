@@ -45,9 +45,9 @@ const SearchPage = () => {
   return (
     <>
       <h1>
-        {task === "send"
+        {task === "sendmoney"
           ? "Send Money"
-          : task === "request"
+          : task === "requestmoney"
           ? "Request Money"
           : "Search Users"}
       </h1>

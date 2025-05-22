@@ -15,9 +15,9 @@ const TransactionPage = () => {
       <h2>
         {user
           ? `${
-              task === "send"
+              task === "sendmoney"
                 ? "Send Money to"
-                : task === "request"
+                : task === "requestmoney"
                 ? "Request Money from"
                 : "Unknown Transaction"
             } ${user.firstName} ${user.lastName}`
@@ -44,16 +44,16 @@ const TransactionPage = () => {
       <button
         onClick={async () => {
           const response = await axios.post(
-            `http://localhost:5000/api/v1/transactions/sendmoney`,
+            `http://localhost:5000/api/v1/transactions/${task}`,
             { to: user, amount: amount, note: note !== "" ? note : null },
             { withCredentials: true }
           );
           console.log(response);
         }}
       >
-        {task === "send"
+        {task === "sendmoney"
           ? `Send Money`
-          : task === "request"
+          : task === "requestmoney"
           ? `Request Money`
           : `Unknown Transaction`}
       </button>
