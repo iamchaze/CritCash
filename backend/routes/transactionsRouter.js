@@ -11,7 +11,6 @@ transactionsRouter.use(authmiddleware);
 transactionsRouter.post('/sendmoney', async (req, res) => {
     const to = req.body.to;
     const from = req.user
-    console.log(from);
     const amount = req.body.amount * 100;
     if (!to || !amount || !from) {
         return res.status(200).json({ message: 'Invalid request' });
@@ -20,7 +19,6 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
     session.startTransaction()
     const fromAccount = await Users.findOne({ _id: from.id });
     const fromAccountBalance = fromAccount.accountDetails.balance;
-    console.log(fromAccountBalance, typeof fromAccountBalance, amount, typeof amount);
     if (!fromAccount || fromAccount.accountDetails.balance < amount) {
         await session.abortTransaction();
         res.send({ message: 'Insufficient Balance' })

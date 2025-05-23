@@ -2,12 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TransactionPage = () => {
   const [amount, setAmount] = useState(0);
   const [note, setNote] = useState("");
 
   const location = useLocation();
+  const navigate = useNavigate();
   const task = location.state?.task;
   const user = location.state?.user;
   return (
@@ -15,7 +17,7 @@ const TransactionPage = () => {
       <h2>
         {user
           ? `${
-              task === "sendmoney"
+              task === "sendmoney" || task === "acceptPaymentRequest"
                 ? "Send Money to"
                 : task === "requestmoney"
                 ? "Request Money from"
@@ -37,9 +39,13 @@ const TransactionPage = () => {
       </div>
       <button>Split With Mates</button>
       <div>
-        <input type="text" placeholder="Add Note" onChange={(e) => {
-          setNote(e.target.value);
-        }} />
+        <input
+          type="text"
+          placeholder="Add Note"
+          onChange={(e) => {
+            setNote(e.target.value);
+          }}
+        />
       </div>
       <button
         onClick={async () => {
@@ -48,7 +54,15 @@ const TransactionPage = () => {
             { to: user, amount: amount, note: note !== "" ? note : null },
             { withCredentials: true }
           );
-          console.log(response);
+          if (response.data.message == "Payment request sent") {
+            alert("Payment request sent");
+            navigate("/dashboard");
+          } else if (response.data.message == "Money transferred") {
+            alert("Money transferred");
+            navigate("/dashboard");
+          } else {
+            alert("Transaction failed");
+          }
         }}
       >
         {task === "sendmoney"

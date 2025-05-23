@@ -7,8 +7,7 @@ const authmiddleware = (req, res, next) => {
         return res.status(200).json({ message: "Unauthorized" });
     } else {
         const decoded = jwt.verify(authToken, JWT_SECRET);
-        req.username = decoded.username;
-        req.userid = decoded.id;
+
         req.user = {
             username: decoded.username,
             id: decoded.id

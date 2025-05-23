@@ -103,7 +103,7 @@ usersRouter.post("/signup", async (req, res) => {
 usersRouter.post("/signin", async (req, res) => {
     const { username, password } = req.body;
     const user = await Users.findOne({ "userDetails.username": username });
-    if (user.length === 0) {
+    if (!user) {
         return res.status(200).json({ message: "invalid" });
     } else {
         const isMatch = await bcrypt.compare(password, user.userDetails.password);
@@ -213,7 +213,7 @@ usersRouter.post("/resetpassword", async (req, res) => {
 //Route for unique user search
 usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
     const fields = req.query.fields.split(",");
-    const userId = req.userid;
+    const userId = req.user.id;
 
     const user = await Users.findById(userId).lean();
     if (!user) {

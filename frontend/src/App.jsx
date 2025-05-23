@@ -31,6 +31,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/history" element={<Settings />} />
             <Route path="/transaction" element={<TransactionPage />} />
+            
 
           </Route>
         </Routes>
