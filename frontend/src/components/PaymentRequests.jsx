@@ -4,9 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const PaymentRequests = () => {
-  const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState();
   const navigate = useNavigate();
   useEffect(() => {
+    
     const fetchRequests = async () => {
       try {
         const response = await axios.get(
@@ -16,20 +17,22 @@ const PaymentRequests = () => {
         if (response.data.message === "No payment requests found") {
           setRequests("No payment requests");
         }
-        if (response.data.paymentRequests) {
-          console.log(response.data.paymentRequests);
-          setRequests(response.data.paymentRequests);
+        if (response.data.pendingRequests) {
+          console.log(response.data.pendingRequests);
+          setRequests(response.data.pendingRequests);
         }
       } catch (error) {
         console.error("Error fetching payment requests:", error);
       }
     };
+    
     fetchRequests();
   }, []);
+
   return (
     <div>
       <h1>Payment Requests</h1>
-      {requests === "No payment requests" ? (
+      {requests === "No payment requests" || !requests ? (
         <p>No Payment Requests</p>
       ) : (
         <ul>

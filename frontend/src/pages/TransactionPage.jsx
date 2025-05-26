@@ -12,7 +12,6 @@ const TransactionPage = () => {
   const navigate = useNavigate();
   const task = location.state?.task;
   const user = location.state?.user;
-  console.log(user);
   return (
     <>
       <h2>
