@@ -1,49 +1,48 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import useDebounce from "../utils/debounce";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import SearchBar from "../components/SearchBar"; // Import the new component
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
-  const [searchPerformed, setSearchPerformed] = useState(null);
-  const debouncedSearch = useDebounce(searchTerm, 300);
+  const [results, setResults] = useState([]);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const task = location.state?.task;
 
-  const sendUserToTransaction = (user) => {
+  const sendUserToTransaction = (user) => { 
     navigate("/transaction", { state: { task, user } });
   };
 
   useEffect(() => {
-    const searchUsers = async () => {
-      if (debouncedSearch.length > 2) {
+    const fetchUsers = async () => {
+      if (searchTerm.length > 2) {
         try {
-          const searchResponse = await axios.get(
-            `http://localhost:5000/api/v1/users/getUsers?searchquery=${debouncedSearch}`,
+          const res = await axios.get(
+            `http://localhost:5000/api/v1/users/getUsers?searchquery=${searchTerm}`,
             { withCredentials: true }
           );
-          const users = searchResponse.data.users;
-          setSearchResults(users?.length > 0 ? users : null);
-          setSearchPerformed(true);
+          const users = res.data.users || [];
+          setResults(users);
         } catch (err) {
-          console.error(err);
-          setSearchResults(null);
+          console.error("Error fetching users:", err);
+          setResults([]);
+        } finally {
           setSearchPerformed(true);
         }
       } else {
-        setSearchResults(null);
+        setResults([]);
         setSearchPerformed(false);
       }
     };
 
-    searchUsers();
-  }, [debouncedSearch]);
+    fetchUsers();
+  }, [searchTerm]);
 
   return (
-    <>
+    <div>
       <h1>
         {task === "sendmoney"
           ? "Send Money"
@@ -51,31 +50,23 @@ const SearchPage = () => {
           ? "Request Money"
           : "Search Users"}
       </h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Search by name, contact or walletKey"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+
+      <SearchBar onSearch={setSearchTerm} delay={300} />
 
       <div>
-        {searchPerformed && searchResults == null && <p>No users found.</p>}
-
-        {Array.isArray(searchResults) &&
-          searchResults.length > 0 &&
-          searchResults.map((user) => (
-            <div
-              key={{ id: user.id }}
-              style={{ cursor: "pointer" }}
-              onClick={() => sendUserToTransaction(user)}
-            >
-              <h3>{`${user.firstName} ${user.lastName}`}</h3>
-              <pre>{`${user.contact}     ${user.walletKey}`}</pre>
-            </div>
-          ))}
+        {searchPerformed && results.length === 0 && <p>No users found.</p>}
+        {results.map((user) => (
+          <div
+            key={user.id}
+            style={{ cursor: "pointer" }}
+            onClick={() => sendUserToTransaction(user)}
+          >
+            <h3>{`${user.firstName} ${user.lastName}`}</h3>
+            <pre>{`${user.contact}     ${user.walletKey}`}</pre>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

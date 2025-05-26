@@ -48,7 +48,6 @@ accountsRouter.get('/paymentrequests', async (req, res) => {
             return res.status(200).json({ message: 'No payment requests found' });
         }
         const pendingRequests = paymentRequests.filter(req => req.requestStatus !== 'completed');
-        console.log(pendingRequests);
         return res.status(200).json({ pendingRequests });
     }
 

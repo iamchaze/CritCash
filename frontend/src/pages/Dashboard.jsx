@@ -24,6 +24,7 @@ const Dashboard = () => {
       <div>
         {renderNavButton("/search", "sendmoney")}
         {renderNavButton("/search", "requestmoney")}
+        {renderNavButton("/history", "history")}
         {renderNavButton("/settings", "settings")}
       </div>
       <PaymentRequests />
