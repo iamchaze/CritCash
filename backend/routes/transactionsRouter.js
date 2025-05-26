@@ -12,6 +12,8 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
     const to = req.body.to;
     const from = req.user
     const amount = req.body.amount * 100;
+    const query = req.query.query;
+    
     if (!to || !amount || !from) {
         return res.status(200).json({ message: 'Invalid request' });
     }
@@ -45,6 +47,14 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
         transactionTime: new Date().toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' }),
         transactionNote: req.body.note ? req.body.note : null,
     })
+    if (query === 'acceptpaymentrequest') {
+        const reponse = await PaymentRequests.updateOne({ _id: to.requestId }, { $set: { requestStatus: "completed" } })
+        if (!reponse) {
+            await session.abortTransaction();
+            res.send({ message: 'Payment request not found' })
+            return;
+        }
+    }
 
     await session.commitTransaction();
     res.send({

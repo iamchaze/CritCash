@@ -30,7 +30,7 @@ const payRequestsSchema = new mongoose.Schema({
     requestStatus: {
         type: String,
         required: true,
-        enum: ['success', 'failed', 'pending'],
+        enum: ['completed', 'failed', 'pending'],
         default: 'pending'
     },
     requestNote: {

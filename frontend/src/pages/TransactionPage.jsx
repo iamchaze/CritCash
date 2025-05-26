@@ -12,12 +12,13 @@ const TransactionPage = () => {
   const navigate = useNavigate();
   const task = location.state?.task;
   const user = location.state?.user;
+  console.log(user);
   return (
     <>
       <h2>
         {user
           ? `${
-              task === "sendmoney" || task === "acceptPaymentRequest"
+              task === "sendmoney" || task === "acceptpaymentrequest"
                 ? "Send Money to"
                 : task === "requestmoney"
                 ? "Request Money from"
@@ -50,7 +51,7 @@ const TransactionPage = () => {
       <button
         onClick={async () => {
           const response = await axios.post(
-            `http://localhost:5000/api/v1/transactions/${task}`,
+            `http://localhost:5000/api/v1/transactions/${task === `acceptpaymentrequest` ? `sendmoney?query=acceptpaymentrequest` : task}`,
             { to: user, amount: amount, note: note !== "" ? note : null },
             { withCredentials: true }
           );
@@ -61,11 +62,11 @@ const TransactionPage = () => {
             alert("Money transferred");
             navigate("/dashboard");
           } else {
-            alert("Transaction failed");
+            alert(response.data.message);
           }
         }}
       >
-        {task === "sendmoney"
+        {task === "sendmoney" || task === "acceptpaymentrequest"
           ? `Send Money`
           : task === "requestmoney"
           ? `Request Money`
