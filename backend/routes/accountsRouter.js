@@ -31,7 +31,12 @@ accountsRouter.get('/paymentrequests', async (req, res) => {
             const sender = requestSender.find(user => user._id.toString() === req.requestSenderId.toString());
             return {
                 _id: req._id,
-                requestSenderDetails: sender ? { firstName: sender.userDetails.firstName, lastName: sender.userDetails.lastName, username:sender.userDetails.username, id: sender._id } : null,
+                requestSenderDetails: sender ? {
+                    firstName: sender.userDetails.firstName,
+                    lastName: sender.userDetails.lastName,
+                    username: sender.userDetails.username,
+                    id: sender._id
+                } : null,
                 requestAmount: req.requestAmount / 100,
                 requestStatus: req.requestStatus,
                 requestDate: req.requestDate,

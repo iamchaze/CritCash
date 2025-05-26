@@ -14,10 +14,10 @@ const PaymentRequests = () => {
           "http://localhost:5000/api/v1/accounts/paymentrequests",
           { withCredentials: true }
         );
-        if (response.data.message === "No payment requests found") {
+        if (response.data.message === "No payment requests found" || response.data.pendingRequests.length === 0) {
           setRequests("No payment requests");
         }
-        if (response.data.pendingRequests) {
+        if (response.data.pendingRequests. length > 0) {
           console.log(response.data.pendingRequests);
           setRequests(response.data.pendingRequests);
         }
@@ -55,6 +55,8 @@ const PaymentRequests = () => {
                     firstName: request.requestSenderDetails.firstName,
                     lastName: request.requestSenderDetails.lastName,
                     username: request.requestSenderDetails.username,
+                    requestAmount: request.requestAmount,
+                    requestNote: request.requestNote,
                   };
                   navigate("/transaction", {
                     state: { task: "acceptpaymentrequest", user: user },

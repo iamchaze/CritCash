@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const TransactionPage = () => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
+  const [requestAmount, setRequestAmount] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
   const task = location.state?.task;
   const user = location.state?.user;
+  useEffect(() => {
+    if (task === "acceptpaymentrequest" && user) {
+      setRequestAmount(user.requestAmount);
+    }
+  }, [task, user]);
   return (
     <>
       <h2>
@@ -32,6 +38,8 @@ const TransactionPage = () => {
           placeholder="Enter Amount"
           id="amount"
           name="amount"
+          value={requestAmount ?? amount}
+          disabled={requestAmount !== null}
           onChange={(e) => {
             setAmount(e.target.value);
           }}
@@ -42,6 +50,8 @@ const TransactionPage = () => {
         <input
           type="text"
           placeholder="Add Note"
+          value={task === "acceptpaymentrequest" ? user.requestNote : note}
+          disabled={task === "acceptpaymentrequest"}
           onChange={(e) => {
             setNote(e.target.value);
           }}
@@ -50,8 +60,16 @@ const TransactionPage = () => {
       <button
         onClick={async () => {
           const response = await axios.post(
-            `http://localhost:5000/api/v1/transactions/${task === `acceptpaymentrequest` ? `sendmoney?query=acceptpaymentrequest` : task}`,
-            { to: user, amount: amount, note: note !== "" ? note : null },
+            `http://localhost:5000/api/v1/transactions/${
+              task === `acceptpaymentrequest`
+                ? `sendmoney?query=acceptpaymentrequest`
+                : task
+            }`,
+            {
+              to: user,
+              amount: task === "acceptpaymentrequest" ? requestAmount : amount,
+              note: note !== "" ? note : null,
+            },
             { withCredentials: true }
           );
           if (response.data.message == "Payment request sent") {
