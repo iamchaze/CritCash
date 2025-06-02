@@ -12,7 +12,7 @@ const AccountBalance = () => {
           withCredentials: true,
         }
       );
-      const balance = (response.data.balance / 100).toFixed(2)
+      const balance = response.data.balance;
       if (balance === 0) {
         setBalance("0.00");
       } else if (response.data.balance) {
