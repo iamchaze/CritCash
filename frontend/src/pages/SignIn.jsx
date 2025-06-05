@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
+import Cookies from "js-cookie";
 // const jwt_decode = (await import("jwt-decode")).default;
 
 const SignIn = () => {
@@ -12,6 +13,15 @@ const SignIn = () => {
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
   const debouncedPassword = useDebounce(password, 100);
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const token = Cookies.get('authToken');
+    if (token) {
+      navigate('/settings');
+      return;
+    }
+  }, []);
 
   return (
     <>

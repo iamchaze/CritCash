@@ -74,10 +74,10 @@ const TransactionPage = () => {
           );
           if (response.data.message == "Payment request sent") {
             alert("Payment request sent");
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
           } else if (response.data.message == "Money transferred") {
             alert("Money transferred");
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
           } else {
             alert(response.data.message);
           }

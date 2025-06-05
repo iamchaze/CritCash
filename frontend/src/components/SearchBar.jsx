@@ -4,7 +4,7 @@ import useDebounce from "../utils/debounce";
 
 const SearchBar = ({ onSearch, delay=300 }) => {
   const [input, setInput] = useState("");
-  const debounced = useDebounce(input, 300);
+  const debounced = useDebounce(input, delay);
 
   useEffect(() => {
     onSearch(debounced); // send debounced value to parent
