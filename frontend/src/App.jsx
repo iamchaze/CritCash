@@ -15,6 +15,7 @@ import SearchPage from "./pages/SearchPage";
 import TransactionPage from "./pages/TransactionPage";
 import TransactionDetails from "./pages/TransactionDetails";
 import CommonHistory from "./pages/CommonHistory";
+import Deposit from "./pages/Deposit";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/deposit" element={<Deposit />} />
             <Route path="/history" element={<History />} />
             <Route path="/transactiondetails" element={<TransactionDetails />} />
             <Route path="/commonhistory" element={<CommonHistory />} />

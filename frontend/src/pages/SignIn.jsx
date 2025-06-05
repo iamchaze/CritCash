@@ -18,7 +18,7 @@ const SignIn = () => {
     // Check if user is already logged in
     const token = Cookies.get('authToken');
     if (token) {
-      navigate('/settings');
+      Cookies.remove('authToken'); // Clear the token if it exists
       return;
     }
   }, []);

@@ -235,7 +235,6 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
     const searchquery = req.query.searchquery.trim();
     const queryParts = searchquery.split(" ").filter(Boolean);
     const currentUser = req.user
-    console.log(currentUser);
     if (queryParts.length >= 2) {
         const [firstName, lastName] = queryParts;
         fetchedUsers = await Users.find({

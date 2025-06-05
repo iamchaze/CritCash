@@ -55,7 +55,7 @@ accountsRouter.get('/paymentrequests', async (req, res) => {
 
 accountsRouter.get('/history', async (req, res) => {
     const id = req.user.id;
-    const response = await Transactions.find({ $or: [{senderUserId: id}, {receiverUserId: id}] }).sort({ date: -1 });
+    const response = await Transactions.find({ $or: [{ senderUserId: id }, { receiverUserId: id }] }).sort({ date: -1 });
     if (!response || response.length === 0) {
         return res.status(200).json({ message: 'No transactions found' });
     } else {
@@ -137,6 +137,32 @@ accountsRouter.get('/history/:userId', async (req, res) => {
         });
         transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
         return res.status(200).json({ transactions });
+    }
+})
+
+accountsRouter.put('/deposit', async (req, res) => {
+    const amount= req.body.amount * 100;
+    const id = req.user.id;
+    if (!amount || isNaN(amount) || amount <= 0) {
+        return res.status(200).json({ message: 'invalid amount' });
+    }
+    const account = await Users.updateOne(
+        { _id: id },
+        { $inc: { 'accountDetails.balance': amount } }
+    );
+    if (!account) {
+        return res.status(200).json({ message: 'Account not found' });
+    } else {
+        const transaction = Transactions.create({
+            senderUserId: id,
+            receiverUserId: id,
+            transactionAmount: amount,
+            transactionStatus: 'success',
+            transactionDate: new Date().toISOString().split('T')[0],
+            transactionTime: new Date().toLocaleTimeString(),
+            transactionNote: 'Deposit'
+        });
+        return res.status(200).json({ message: 'successful'});
     }
 })
 
