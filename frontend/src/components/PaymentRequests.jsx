@@ -18,7 +18,6 @@ const PaymentRequests = () => {
           setRequests("No payment requests");
         }
         if (response.data.pendingRequests?.length > 0) {
-          console.log(response.data.pendingRequests);
           setRequests(response.data.pendingRequests);
         }
       } catch (error) {

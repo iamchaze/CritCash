@@ -13,7 +13,6 @@ const SearchPage = () => {
   const task = location.state?.task;
 
   const sendUserToTransaction = (user) => { 
-    console.log(user);
     navigate(`/transaction`, { state: { task, user } });
   };
 

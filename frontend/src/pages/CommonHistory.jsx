@@ -24,7 +24,6 @@ const CommonHistory = () => {
           { withCredentials: true }
         );
         setTransactions(response.data.transactions || []);
-        console.log("Common transactions:", response.data.transactions);
       } catch (err) {
         console.error("Error fetching common history:", err);
         setError("Failed to load common history.");
