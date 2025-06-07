@@ -1,9 +1,39 @@
 import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
-    return (<>
-    this is profile page
-    </>)
-}
+  const [profileData, setProfileData] = useState(null);
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/users/getuserdetails",
+          { withCredentials: true }
+        );
+        setProfileData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+    fetchProfileData();
+  }, []);
 
-export default Profile
+  return (
+    <div>
+      <h1>Profile Page</h1>
+      {profileData && (
+        <div>
+          <h2>{profileData.firstName} {profileData.lastName}</h2>
+          <p>Email: {profileData.email}</p>
+          <p>Username: {profileData.username}</p>
+          <p>Contact: {profileData.contact}</p>
+          <p>Wallet Key: {profileData.walletKey}</p>
+        </div>
+      )}
+      {!profileData && <p>Loading profile data...</p>}
+    </div>
+  );
+};
+
+export default Profile;

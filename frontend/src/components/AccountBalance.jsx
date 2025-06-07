@@ -13,11 +13,13 @@ const AccountBalance = () => {
         }
       );
       const balance = response.data.balance;
-      if (balance === 0) {
+
+      if (balance === 0 || balance === undefined) {
         setBalance("0.00");
       } else if (response.data.balance) {
         setBalance(balance);
       } else if (response.data.message) {
+
         setBalance(response.data.message);
       }
     };

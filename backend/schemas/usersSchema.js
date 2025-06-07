@@ -79,6 +79,20 @@ const usersSchema = new mongoose.Schema({
             required: true,
             default: "0",
         }
+    },
+    connections: {
+        friends: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        sentRequests: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        receivedRequests: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }]
     }
 });
 

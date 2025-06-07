@@ -9,7 +9,7 @@ const ProfileNameTag = () => {
   useEffect(() => {
     const setName = async () => {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/users/getUserDetails?fields=firstName,lastName",
+        "http://localhost:5000/api/v1/users/getuserdetails?fields=firstName,lastName",
         { withCredentials: true },        
       );
       if (response.data.message) {

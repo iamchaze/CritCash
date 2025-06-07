@@ -211,26 +211,37 @@ usersRouter.post("/resetpassword", async (req, res) => {
 
 
 //Route for unique user search
-usersRouter.get("/getUserDetails", authmiddleware, async (req, res) => {
-    const fields = req.query.fields.split(",");
+usersRouter.get("/getuserdetails", authmiddleware, async (req, res) => {
+    const fields = req.query.fields?.split(",");
     const userId = req.user.id;
-
     const user = await Users.findById(userId).lean();
     if (!user) {
         return res.status(200).json({ message: "invalid" });
     }
 
-    const filteredUser = {};
-    fields.forEach(field => {
-        const value = field.split('.').reduce((acc, part) => acc?.[part], user.userDetails);
-        filteredUser[field] = value;
-    });
-    res.status(200).json({ data: filteredUser });
+    let filteredUserDetails = {};
+    if (fields && fields.length > 0) {
+
+        fields.forEach(field => {
+            const value = field.split('.').reduce((acc, part) => acc?.[part], user.userDetails);
+            filteredUserDetails[field] = value;
+        });
+    } else {
+        filteredUserDetails = {
+            firstName: user.userDetails.firstName,
+            lastName: user.userDetails.lastName,
+            username: user.userDetails.username,
+            contact: user.userDetails.contact,
+            email: user.userDetails.email,
+            walletKey: user.accountDetails.walletKey
+        };
+    }
+    res.status(200).json({ data: filteredUserDetails });
 });
 
 
 //Route for bulk users search
-usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
+usersRouter.get("/getusers", authmiddleware, async (req, res) => {
     let fetchedUsers = [];
     const searchquery = req.query.searchquery.trim();
     const queryParts = searchquery.split(" ").filter(Boolean);
@@ -274,6 +285,26 @@ usersRouter.get("/getUsers", authmiddleware, async (req, res) => {
     }));
 
     res.status(200).json({ users: filteredUsers });
+});
+
+usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
+    const { friendId } = req.body
+    const currentUserId = req.user.id;
+
+    if (!friendId) {
+        return res.status(200).json({ message: "Friend ID is required" });
+    }
+    
+    const friend = await Users.find({friends: friendId});
+
+    if (friend.length > 0) {
+        return res.status(200).json({ message: "Already a friend" });
+    } else {
+        const addFriend = await Users.updateOne(
+            { _id: currentUserId },
+            { $push: { friends: friendId } }
+        );
+    }
 });
 
 
