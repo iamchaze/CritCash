@@ -1,20 +1,26 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const ProfileNameTag = () => {
   const [profileNameTag, setProfileNameTag] = useState("");
-
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const token = Cookies.get("authToken");
+  console.log(token)
   useEffect(() => {
     const setName = async () => {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/users/getuserdetails?fields=firstName,lastName",
-        { withCredentials: true },        
+        `http://localhost:5000/api/v1/users/getuserdetails/?fields=firstName,lastName,username`,
+        { withCredentials: true }
       );
       if (response.data.message) {
         setProfileNameTag(response.data.message);
       } else {
+        console.log(response.data);
+        setUsername(response.data.data.username);
         setProfileNameTag(
           response.data.data.firstName + " " + response.data.data.lastName
         );
@@ -24,9 +30,13 @@ const ProfileNameTag = () => {
   }, []);
   return (
     <>
-      <Link to="/profile" style={{ textDecoration: "none", color: "inherit" }}>
+      <div
+        onClick={() => {
+          navigate(`/profile/${username}`);
+        }}
+      >
         {profileNameTag}
-      </Link>
+      </div>
     </>
   );
 };

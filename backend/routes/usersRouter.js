@@ -210,15 +210,14 @@ usersRouter.post("/resetpassword", async (req, res) => {
 });
 
 
-//Route for unique user search
-usersRouter.get("/getuserdetails", authmiddleware, async (req, res) => {
+//Route for specific user data for unique user
+usersRouter.get(`/getuserdetails`, authmiddleware, async (req, res) => {
     const fields = req.query.fields?.split(",");
     const userId = req.user.id;
-    const user = await Users.findById(userId).lean();
+    const user = await Users.findById(userId).lean()
     if (!user) {
-        return res.status(200).json({ message: "invalid" });
+        return res.status(404).json({ message: "invalid" });
     }
-
     let filteredUserDetails = {};
     if (fields && fields.length > 0) {
 
@@ -237,6 +236,29 @@ usersRouter.get("/getuserdetails", authmiddleware, async (req, res) => {
         };
     }
     res.status(200).json({ data: filteredUserDetails });
+})
+
+//Route for unique user data 
+usersRouter.get("/profiledetails/:username", authmiddleware, async (req, res) => {
+    const { username } = req.params;
+
+    if (!username) {
+        return res.status(200).json({ message: "invalid" });
+    }
+    const user = await Users.findOne({ "userDetails.username": username }).lean()
+    if (!user) {
+        return res.status(404).json({ message: "invalid" });
+    }
+    const userDetails = {
+        firstName: user.userDetails.firstName,
+        lastName: user.userDetails.lastName,
+        username: user.userDetails.username,
+        contact: user.userDetails.contact,
+        email: user.userDetails.email,
+        walletKey: user.accountDetails.walletKey
+    };
+
+    res.status(200).json({ data: userDetails });
 });
 
 
@@ -287,6 +309,26 @@ usersRouter.get("/getusers", authmiddleware, async (req, res) => {
     res.status(200).json({ users: filteredUsers });
 });
 
+usersRouter.get("/checkfriendrequest/:friendId", authmiddleware, async (req, res) => {
+    const friendId = req.params.friendId;
+    const currentUserId = req.user.id;
+    if (!friendId) {
+        return res.status(200).json({ message: "Friend ID is required" });
+    }
+    const currentUser = await Users.findById(currentUserId).lean();
+    if (!currentUser) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    const isFriend = currentUser.connections.friends.includes(friendId);
+    const isSentRequest = currentUser.connections.sentRequests.includes(friendId);
+    const isReceivedRequest = currentUser.connections.receivedRequests.includes(friendId);
+    return res.status(200).json({
+        isFriend,
+        isSentRequest,
+        isReceivedRequest
+    });
+});
+
 usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
     const { friendId } = req.body
     const currentUserId = req.user.id;
@@ -294,17 +336,22 @@ usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
     if (!friendId) {
         return res.status(200).json({ message: "Friend ID is required" });
     }
-    
-    const friend = await Users.find({friends: friendId});
+    const addToSentRequests = await Users.updateOne(
+        { _id: currentUserId },
+        { $addToSet: { "connections.sentRequests": friendId } }
+    );
+    const addToReceivedRequests = await Users.updateOne(
+        { _id: friendId },
+        { $addToSet: { "connections.receivedRequests": currentUserId } }
+    );
 
-    if (friend.length > 0) {
-        return res.status(200).json({ message: "Already a friend" });
+    console.log(addToSentRequests, addToReceivedRequests);
+    if (addToSentRequests.modifiedCount > 0 && addToReceivedRequests.modifiedCount > 0) {
+        return res.status(200).json({ message: "request sent" });
     } else {
-        const addFriend = await Users.updateOne(
-            { _id: currentUserId },
-            { $push: { friends: friendId } }
-        );
+        return res.status(200).json({ message: "Failed to send request" });
     }
+
 });
 
 

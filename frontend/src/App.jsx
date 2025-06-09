@@ -29,7 +29,7 @@ function App() {
 
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:username" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/deposit" element={<Deposit />} />
