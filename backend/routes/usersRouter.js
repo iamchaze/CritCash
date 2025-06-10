@@ -345,7 +345,6 @@ usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
         { $addToSet: { "connections.receivedRequests": currentUserId } }
     );
 
-    console.log(addToSentRequests, addToReceivedRequests);
     if (addToSentRequests.modifiedCount > 0 && addToReceivedRequests.modifiedCount > 0) {
         return res.status(200).json({ message: "request sent" });
     } else {

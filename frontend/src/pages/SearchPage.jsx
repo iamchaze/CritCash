@@ -13,7 +13,6 @@ const SearchPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const task = location.state?.task;
-
   const sendUserToTransaction = (user) => {
     navigate("/transaction", { state: { task, user } });
   };
@@ -62,7 +61,7 @@ const SearchPage = () => {
       <div style={{ marginTop: "20px" }}>
         {searchPerformed && results.length === 0 && <p>No users found.</p>}
         {results.map((user) => (
-          <UserCard key={user.id} user={user} onClick={sendUserToTransaction} />
+          <UserCard task={task} key={user.id} user={user} onClick={sendUserToTransaction} />
         ))}
       </div>
     </div>

@@ -5,7 +5,6 @@ import { useLocation, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { username } = useParams();
-  console.log(username);
   const [profileData, setProfileData] = useState(null);
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -14,6 +13,7 @@ const Profile = () => {
           `http://localhost:5000/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
+        console.log(response.data);
         setProfileData(response.data.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);

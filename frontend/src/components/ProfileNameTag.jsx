@@ -8,8 +8,6 @@ const ProfileNameTag = () => {
   const [profileNameTag, setProfileNameTag] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const token = Cookies.get("authToken");
-  console.log(token)
   useEffect(() => {
     const setName = async () => {
       const response = await axios.get(
@@ -19,7 +17,6 @@ const ProfileNameTag = () => {
       if (response.data.message) {
         setProfileNameTag(response.data.message);
       } else {
-        console.log(response.data);
         setUsername(response.data.data.username);
         setProfileNameTag(
           response.data.data.firstName + " " + response.data.data.lastName
