@@ -383,7 +383,68 @@ usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
 
 });
 
+usersRouter.post(`/cancelfriendrequest`, authmiddleware, async (req, res) => {
+    const currentUserId = req.user.id;
+    const friendUsername = req.body.username;
+    if (!currentUserId || !friendUsername) {
+        return res.status(200).json({ message: "User ID and friend ID are required" });
+    } else {
+        const friendDetails = await Users.findOne({ "userDetails.username": friendUsername })
+        const currentUserUpdate = await Users.updateOne({ _id: currentUserId }, { $pull: { "connections.sentRequests": friendDetails._id } })
+        const friendUpdate = await Users.updateOne({ _id: friendDetails._id }, { $pull: { "connections.receivedRequests": currentUserId } })
 
+        if (currentUserUpdate.modifiedCount < 1 && friendUpdate.modifiedCount < 1) {
+            return res.status(200).json({ message: "Failed to cancel request" });
+        } else {
+            return res.status(200).json({ message: "request cancelled" });
+        }
+    }
+})
+
+usersRouter.post(`/acceptfriendrequest`, authmiddleware, async (req, res) => {
+    const currentUserId = req.user.id;
+    const friendUsername = req.body.username;
+    if (!currentUserId || !friendUsername) {
+        return res.status(200).json({ message: "User Id and friend's User id is required" })
+    } else {
+        const friendDetails = await Users.findOne({ "userDetails.username": friendUsername })
+        const currentUserUpdate = await Users.updateOne({ _id: currentUserId }, {
+            $pull: { "connections.receivedRequests": friendDetails._id },
+            $push: { "connections.friends": friendDetails._id }
+        })
+        const friendUpdate = await Users.updateOne({ _id: friendDetails._id }, {
+            $pull: { "connections.sentRequests": currentUserId },
+            $push: { "connections.friends": currentUserId }
+        })
+        if (currentUserUpdate.modifiedCount < 1 && friendUpdate.modifiedCount < 1) {
+            return res.status(200).json({ message: "Failed to cancel request" });
+        } else {
+            return res.status(200).json({ message: "request cancelled" });
+        }
+    }
+})
+
+usersRouter.post(`/removefriend`, authmiddleware, async (req, res) => {
+    const currentUserId = req.user.id;
+    const friendUsername = req.body.username;
+
+    if (!currentUserId || !friendUsername) {
+        return res.status(200).json({ messaage: "User Id and Friend's user id is required" })
+    } else {
+        const friendDetails = await Users.findOne({ "userDetails.username": friendUsername })
+        const currentUserUpdate = await Users.updateOne({ _id: currentUserId }, {
+            $pull: { "connections.friends": friendDetails._id }
+        })
+        const friendUpdate = await Users.updateOne({ _id: friendDetails._id }, {
+            $pull: { "connections.friends": currentUserId }
+        })
+        if (currentUserUpdate.modifiedCount < 1 && friendUpdate.modifiedCount < 1) {
+            return res.status(200).json({ message: "Failed to cancel request" });
+        } else {
+            return res.status(200).json({ message: "request cancelled" });
+        }
+    }
+})
 
 
 module.exports = usersRouter;

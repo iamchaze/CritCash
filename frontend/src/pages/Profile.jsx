@@ -15,7 +15,6 @@ const Profile = () => {
           `http://localhost:5000/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
-        console.log(response.data);
         setProfileData(response.data.data);
         setConnection(response.data.data.connection);
       } catch (error) {
@@ -49,7 +48,7 @@ const Profile = () => {
                       { username: profileData.username },
                       { withCredentials: true }
                     );
-                    console.log(response.data);
+                    console.log(response.data.message);
                     setConnection("sentrequest");
                   } catch {
                     console.log("Error sending friend request");
@@ -59,10 +58,62 @@ const Profile = () => {
                 Add Friend
               </button>
             )}
-            {connection === "friend" && <button>Remove Friend</button>}
-            {connection === "sentrequest" && <button>Request Sent</button>}
+            {connection === "sentrequest" && (
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await axios.post(
+                      `http://localhost:5000/api/v1/users/cancelfriendrequest`,
+                      { username: profileData.username },
+                      { withCredentials: true }
+                    );
+                    console.log(response.data.message);
+                    setConnection("notfriend");
+                  } catch {
+                    console.log("Error cancelling friend request");
+                  }
+                }}
+              >
+                Cancel Request
+              </button>
+            )}
             {connection === "receivedrequest" && (
-              <button>Accept Request</button>
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await axios.post(
+                      `http://localhost:5000/api/v1/users/acceptfriendrequest`,
+                      { username: profileData.username },
+                      { withCredentials: true }
+                    );
+                    console.log(response.data.message);
+                    setConnection("friend");
+                  } catch {
+                    console.log("Error accepting friend request");
+                  }
+                }}
+              >
+                Accept Request
+              </button>
+            )}
+            {connection === "friend" && (
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:5000/api/v1/users/removefriend",
+                      { username: profileData.username },
+                      { withCredentials: true }
+                    );
+                    console.log(response.data);
+                    setConnection("notfriend");
+                  } catch {
+                    console.log("Error removing friend");
+                  }
+                }}
+              >
+                Remove Friend
+              </button>
             )}
             {connection === "" && (
               <button onClick={navigate("/dashboard", { replace: true })}>
