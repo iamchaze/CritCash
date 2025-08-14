@@ -69,7 +69,8 @@ const SignIn = () => {
                   setCredentialsError("Invalid Credentials");
                 } else if (res.data.message === "success") {
                   setCredentialsError(null);
-                  navigate("/dashboard");
+                  // navigate("/dashboard");
+                  window.location.href = "/dashboard";
                 }
               })
               .catch((err) => {

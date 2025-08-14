@@ -1,10 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
-
 import PrivateRoute from "./components/PrivateRoute";
 
 import Profile from "./pages/Profile";
@@ -16,10 +14,11 @@ import TransactionPage from "./pages/TransactionPage";
 import TransactionDetails from "./pages/TransactionDetails";
 import CommonHistory from "./pages/CommonHistory";
 import Deposit from "./pages/Deposit";
+import '../src/styles/styles.css';
 
 function App() {
   return (
-    <>
+    <div class="bg-F4FBF8-100">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -40,7 +39,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
