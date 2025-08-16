@@ -18,7 +18,7 @@ import '../src/styles/styles.css';
 
 function App() {
   return (
-    <div class="bg-F4FBF8-100">
+    <div className="bg-F4FBF8-100">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

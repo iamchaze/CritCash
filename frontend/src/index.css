@@ -2,12 +2,112 @@
 
 @theme {
     --breakpoint-sm: 480px;
-    --breakpoint-md: 768px; 
+    --breakpoint-md: 768px;
     --breakpoint-lg: 976px;
     --color-primary: #F4FBF8;
-    --color-secondary: #E0FFF2;
-    --color-bg1: #C3FFE2;
-    --color-bg2: #BFEEEE;
-    --font-button: ;
+    --color-accent1: #E0FFF2;
+    --color-accent2: #BFEEEE;
+    --color-accent3: #C3FFE2;
+    --color-button1: #287094;
 
+}
+
+.left-rectangle {
+    position: absolute;
+    top: -20%;
+    left: -60%;
+    width: 150%;
+    height: 50%;
+    rotate: -35deg;
+    z-index: 0;
+}
+
+@media (min-width: 480px) {
+    .left-rectangle {
+        top: -20%;
+        left: -30%;
+        width: 130%;
+        height: 40%;
+        rotate: -30deg;
+    }
+}
+
+@media (min-width: 768px) {
+    .left-rectangle {
+        top: -20%;
+        left: -30%;
+        width: 130%;
+        height: 40%;
+        rotate: -25deg;
+    }
+}
+
+@media (min-width: 976px) {
+    .left-rectangle {
+        top: -20%;
+        left: -30%;
+        width: 130%;
+        height: 40%;
+        rotate: -20deg;
+    }
+}
+
+@media (min-width: 1600px) {
+    .left-rectangle {
+        top: -22%;
+        left: -30%;
+        width: 130%;
+        height: 40%;
+        rotate: -17deg;
+    }
+}
+
+
+.right-rectangle {
+    position: absolute;
+    top: -20%;
+    right: -80%;
+    width: 150%;
+    height: 50%;
+    rotate: 50deg;
+}
+
+@media (min-width: 480px) {
+    .right-rectangle {
+        top: -20%;
+        right: -80%;
+        width: 150%;
+        height: 50%;
+        rotate: 45deg;
+    }
+}
+
+@media (min-width: 768px) {
+    .right-rectangle {
+        top: -20%;
+        right: -80%;
+        width: 150%;
+        height: 50%;
+        rotate: 40deg;
+    }
+}
+
+@media (min-width: 976px) {
+    .right-rectangle {
+        top: -20%;
+        right: -75%;
+        width: 150%;
+        height: 50%;
+        rotate: 35deg;
+    }
+}
+
+@media (min-width: 1600px) {
+    .right-rectangle {
+        top: -15%;
+        right: -70%;
+        width: 150%;
+        height: 50%;
+        rotate: 30deg;
+    }
 }
