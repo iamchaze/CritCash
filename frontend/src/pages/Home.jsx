@@ -5,36 +5,69 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="h-screen bg-primary absolute inset-0 -z-20">
-      <div className="relative w-full h-screen overflow-hidden">
-  {/* Background rectangles */}
-  <div className="absolute inset-0 -z-10">
-    <div className="left-rectangle bg-accent3"></div>
-    <div className="right-rectangle bg-accent2"></div>
-  </div>
-
-  {/* Foreground content */}
-  <div className="relative z-10">
-    <div className="hidden lg:flex items-center justify-between">
-      <p>PAYMATE.</p>
-      <a href="">About Me</a>
-      <button>Contact</button>
-    </div>
-
-    <h1>Finance Management In Smart Way</h1>
-    <button className="bg-button1 text-white p-4 rounded-full font-bold font-[REM]"
-      onClick={(e) => {
-        e.preventDefault();
-        navigate("/signup");
-      }}
-    >
-      Take Me In
-    </button>
-    <CustomLink link="signin" text="Already Have an Account? Sign In" />
-  </div>
-</div>
-
-    </div>
+    <>
+      {/* Background content */}
+      {/* <div className="h-screen bg-primary absolute inset-0 -z-20">
+        <div className="relative w-full h-screen overflow-hidden">
+          <div className="absolute inset-0 -z-10">
+            <div className="left-rectangle bg-accent3"></div>
+            <div className="right-rectangle bg-accent2"></div>
+            <div className="bottom-rectangle bg-accent1"></div>
+          </div>
+        </div>
+      </div> */}
+      {/* Foreground content */}
+      <div className="">
+        <div className="hidden lg:flex items-center justify-between my-10 mx-25">
+          <p className="font-[REM] font-bold text-2xl">PAYMATE.</p>
+          <div className="flex gap-10 items-center">
+            <a href="" className="font-[REM] text-lg">
+              About Me
+            </a>
+            <button className="font-[REM] bg-button1 text-white py-3 px-8 rounded-full font-bold text-lg">
+              Contact
+            </button>
+          </div>
+        </div>
+        <div className="lg:flex lg:gap-5 lg:items-center lg:justify-between lg:px-25 lg:py-10 transition-all duration-500 ease-in-out">
+          <div className="order-2 w-auto">
+            <img
+              className=" mx-auto w-100 h-100 lg:w-120 lg:h-120 max-w-100 lg:max-w-120 transition-all duration-500 ease-in-out"
+              src="/images/e9f1c2c368f1f9d97982078a54d90e81c5d8cdf5.png"
+              alt="no image found"
+            />
+          </div>
+          <div className="order-1 ml-10 pb-10 lg:ml-0 lg:pb-0 lg:text-left transition-all duration-500 ease-in-out">
+            <h1 className="font-[Righteous] text-5xl lg:text-7xl">
+              <span className="text-button1">Finance</span>
+              <br /> Management <br /> In{" "}
+              <span className="text-accent4">Smart</span> Way
+            </h1>
+            <div className="lg:flex lg:items-center lg:space-between">
+              <div className="inline-block mt-8 bg-button1 text-white py-4 px-8 rounded-full shadow-lg/30 font-bold text-2xl font-[REM]">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/signup");
+                  }}
+                >
+                  Take Me In
+                </button>
+              </div>
+              <div className="hidden lg:inline-block mt-8 py-4 px-8 font-bold text-2xl font-[REM] text-button1 ">
+                <CustomLink link="signin" text="Sign In" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center text-xl/12 underline font-[REM] lg:hidden font-bold">
+          <CustomLink link="signin" text="Already Have an Account? Sign In" />
+        </div>
+        <div className="hidden lg:block">
+          <img src="/images/Iphone theme.png" alt="" />
+        </div>
+      </div>
+    </>
   );
 };
 

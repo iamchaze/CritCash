@@ -8,8 +8,8 @@
     --color-accent1: #E0FFF2;
     --color-accent2: #BFEEEE;
     --color-accent3: #C3FFE2;
+    --color-accent4: #81CFAA;
     --color-button1: #287094;
-
 }
 
 .left-rectangle {
@@ -20,6 +20,7 @@
     height: 50%;
     rotate: -35deg;
     z-index: 0;
+    transition: all 0.5s ease-in-out;
 }
 
 @media (min-width: 480px) {
@@ -70,6 +71,7 @@
     width: 150%;
     height: 50%;
     rotate: 50deg;
+    transition: all 0.5s ease-in-out;
 }
 
 @media (min-width: 480px) {
@@ -110,4 +112,14 @@
         height: 50%;
         rotate: 30deg;
     }
+}
+
+.bottom-rectangle {
+    position: absolute;
+    bottom: -70%;
+    left: -50%;
+    width: 150%;
+    height: 100%;
+    rotate: 20deg;
+    transition: all 0.5s ease-in-out;
 }
