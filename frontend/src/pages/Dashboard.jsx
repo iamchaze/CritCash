@@ -15,22 +15,31 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const renderNavButton = (link, task, svg) => (
-    <div className="flex flex-col items-center justify-center gap-1 flex-wrap">
-      <div className="bg-button1 w-20 h-20 rounded-full cursor-pointer relative shadow-lg/10">
-        <img
-          className="absolute align-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          src={svg}
-          alt={task}
-        />
-      </div>
-      <a
-        href={link}
-        state={{ task }}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
-        <span className="text-md font-[REM]">{task}</span>
-      </a>
+   <div className="flex flex-col items-center justify-center gap-1 flex-wrap">
+  <Link
+    to={link}
+    state={{ task }}
+    style={{ textDecoration: "none", color: "inherit" }}
+    className="flex flex-col items-center gap-1"  // ✅ Added flex column
+  >
+    <div className="bg-button1 w-20 h-20 rounded-full cursor-pointer relative shadow-lg/10">
+      <img
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        src={svg}
+        alt={task}
+      />
     </div>
+
+    <span className="text-md font-[REM]">
+      {task === "sendmoney"
+        ? "Send"
+        : task === "requestmoney"
+        ? "Request"
+        : task}
+    </span>
+  </Link>
+</div>
+
   );
   useEffect(() => {
     const fetchUsers = async () => {
@@ -111,14 +120,14 @@ const Dashboard = () => {
       </div>
 
       <div className="flex justify-around items-center m-5">
-        {renderNavButton("/search", "Send", "/images/Send.svg")}
-        {renderNavButton("/search", "Request", "/images/Request.svg")}
+        {renderNavButton("/search", "sendmoney", "/images/Send.svg")}
+        {renderNavButton("/search", "requestmoney", "/images/Request.svg")}
         {renderNavButton("/history", "History", "/images/History.svg")}
         {renderNavButton("/deposit", "Deposit", "/images/Deposit.svg")}
       </div>
-        <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5">
-      <PaymentRequests />
-        </div>
+      <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5">
+        <PaymentRequests />
+      </div>
     </div>
   );
 };
