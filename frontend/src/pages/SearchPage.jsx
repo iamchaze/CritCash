@@ -55,7 +55,7 @@ const SearchPage = () => {
         onSearch={setSearchTerm}
         delay={300}
         placeholder="Search by name, contact, or wallet key"
-        inputClassName="search-input"
+        inputObjectName="search-input"
       />
 
       <div style={{ marginTop: "20px" }}>

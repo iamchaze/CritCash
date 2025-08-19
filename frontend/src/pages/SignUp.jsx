@@ -3,7 +3,7 @@ import CustomLink from "../components/CustomLink";
 import { useState, useEffect } from "react";
 import useDebounce from "../utils/debounce";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -188,7 +188,7 @@ const SignUp = () => {
         if (contactRegex.test(debouncedContact) == false) {
           setContactError("Contact number is not valid.");
           return;
-        } 
+        }
         try {
           const res = await axios.post(
             `http://localhost:5000/api/v1/users/contactValidate`,
@@ -224,21 +224,25 @@ const SignUp = () => {
       const validateWalletKey = async () => {
         const walletKeyRegex = /^[A-Za-z0-9]{8,}$/;
         if (walletKeyRegex.test(debouncedWalletKey) == false) {
-          setWalletKeyError("Wallet Key must be at least 8 characters long and contain only alphanumeric characters.");
+          setWalletKeyError(
+            "Wallet Key must be at least 8 characters long and contain only alphanumeric characters."
+          );
           return;
-        } 
-        try{
+        }
+        try {
           const res = await axios.post(
-            `http://localhost:5000/api/v1/users/walletKeyValidate`,{
+            `http://localhost:5000/api/v1/users/walletKeyValidate`,
+            {
               walletKey: debouncedWalletKey,
-            })
-            if (isMounted) {
-              if (res.data?.available) {
-                setWalletKeyError(null);
-              } else {
-                setWalletKeyError("Wallet Key is already taken.");
-              }
             }
+          );
+          if (isMounted) {
+            if (res.data?.available) {
+              setWalletKeyError(null);
+            } else {
+              setWalletKeyError("Wallet Key is already taken.");
+            }
+          }
         } catch (error) {
           if (isMounted) {
             setWalletKeyError("Error checking wallet Key.");
@@ -250,7 +254,7 @@ const SignUp = () => {
     }
     return () => {
       isMounted = false; // Cleanup function to ignore old responses
-    }
+    };
   }, [debouncedWalletKey]);
 
   // Password validation
@@ -285,144 +289,213 @@ const SignUp = () => {
 
   return (
     <>
-      <div>
-        <h1>Create Your Account</h1>
-        <h3>Get Closer To Your Finances</h3>
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-            required
-          />
-          {firstNameError && <p>{firstNameError}</p>}
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            required
-          />
-          {lastNameError && <p>{lastNameError}</p>}
-        </div>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            required
-            autoComplete="on"
-          />
-          {usernameError && <p>{usernameError}</p>}
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="on"
-          />
-          {emailError && <p>{emailError}</p>}
-        </div>
-        <div>
-          <label htmlFor="contact">Contact Number:</label>
-          <input
-            type="text"
-            id="contact"
-            name="contact"
-            onChange={(e) => setContact(e.target.value)}
-            required
-          />
-          {contactError && <p>{contactError}</p>}
-        </div>
-        <div>
-          <label htmlFor="createPassword">Create Password:</label>
-          <input
-            type="password"
-            id="createPassword"
-            name="createPassword"
-            onChange={(e) => setCreatePassword(e.target.value)}
-            required
-          />
-          {createPasswordError && <p>{createPasswordError}</p>}
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-          {confirmPasswordError && <p>{confirmPasswordError}</p>}
-        </div>
-        <div>
-          <label htmlFor="walletKey">Create Unique Wallet Key:</label>
-          <input
-            type="text"
-            id="walletKey"
-            name="walletKey"
-            onChange={(e) => setWalletKey(e.target.value)}
-            required
-          />
-          {walletKeyError && <p>{walletKeyError}</p>}
-        </div>
-        <input
-          type="button"
-          value="Submit"
-          onClick={async () => {
-            if (
-              firstNameError ||
-              lastNameError ||
-              usernameError !== "Username is available." ||
-              emailError ||
-              contactError ||
-              createPasswordError ||
-              confirmPasswordError ||
-              walletKeyError
-            ) {
-              alert("Please fix the errors before submitting.");
-            } else {
-              await axios
-                .post(`http://localhost:5000/api/v1/users/signup`, {
-                  firstName,
-                  lastName,
-                  username,
-                  email,
-                  contact,
-                  password: createPassword,
-                  walletKey,
-                })
-                .then(() => {
-                  navigate("/signin");
-                  alert("User Created Successfully!");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
+      <div className="min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1">
+        <div
+          className="hidden lg:inline-block relative min-w-100  w-200 lg:min-h-screen bg-cover bg-center rounded-md"
+          style={{
+            backgroundImage: "url('/images/DeWatermark.ai_1755539134560.png')",
           }}
-        />
+        >
+          <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">Empowering <br /> Finances, One Tap <br /> at a Time</p>
+        </div>
+        <div className="lg:min-h-screen w-200  bg-primary shadow-lg p-6">
+          <div className="flex justify-end" onClick={() => navigate("/")}>
+            <img
+              className="w-6 h-6 cursor-pointer"
+              src="/images/+.svg"
+              alt="close"
+            />
+          </div>
+
+          <h1 className="text-2xl font-semibold font-[REM] text-black">
+            Create Your Account
+          </h1>
+          <h3 className="text-gray-500 text-sm font-[REM] mb-6">
+            Get Closer To Your Finances <span role="img">😎</span>
+          </h3>
+
+          {/* Form */}
+          <div className="space-y-4">
+            {/* First + Last name */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm mb-1 font-semibold">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+                {firstNameError && (
+                  <p className="text-red-500 text-xs">{firstNameError}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm mb-1 font-semibold">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+                {lastNameError && (
+                  <p className="text-red-500 text-xs">{lastNameError}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Username */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">
+                Username
+              </label>
+              <input
+                type="text"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              {usernameError && (
+                <p
+                  className={`text-xs ${
+                    usernameError === "Username is available."
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {usernameError}
+                </p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">Email</label>
+              <input
+                type="email"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {emailError && (
+                <p className="text-red-500 text-xs">{emailError}</p>
+              )}
+            </div>
+
+            {/* Contact */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">
+                Contact Number
+              </label>
+              <input
+                type="text"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setContact(e.target.value)}
+                required
+              />
+              {contactError && (
+                <p className="text-red-500 text-xs">{contactError}</p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">
+                Create Password
+              </label>
+              <input
+                type="password"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setCreatePassword(e.target.value)}
+                required
+              />
+              {createPasswordError && (
+                <p className="text-red-500 text-xs">{createPasswordError}</p>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              {confirmPasswordError && (
+                <p className="text-red-500 text-xs">{confirmPasswordError}</p>
+              )}
+            </div>
+
+            {/* Wallet Key */}
+            <div>
+              <label className="block text-sm mb-1 font-semibold">
+                Create a Unique WalletId
+              </label>
+              <input
+                type="text"
+                className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                onChange={(e) => setWalletKey(e.target.value)}
+                required
+              />
+              {walletKeyError && (
+                <p className="text-red-500 text-xs">{walletKeyError}</p>
+              )}
+            </div>
+
+            {/* Submit */}
+            <button
+              className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
+              onClick={async () => {
+                if (
+                  firstNameError ||
+                  lastNameError ||
+                  usernameError !== "Username is available." ||
+                  emailError ||
+                  contactError ||
+                  createPasswordError ||
+                  confirmPasswordError ||
+                  walletKeyError
+                ) {
+                  alert("Please fix the errors before submitting.");
+                } else {
+                  await axios
+                    .post(`http://localhost:5000/api/v1/users/signup`, {
+                      firstName,
+                      lastName,
+                      username,
+                      email,
+                      contact,
+                      password: createPassword,
+                      walletKey,
+                    })
+                    .then(() => {
+                      navigate("/signin");
+                      alert("User Created Successfully!");
+                    })
+                    .catch((err) => console.log(err));
+                }
+              }}
+            >
+              Create Account
+            </button>
+          </div>
+
+          {/* Link */}
+          <div className="mt-4 text-center underline font-[REM]">
+            <CustomLink link="signin" text="Already Have an Account? Sign In" />
+          </div>
+        </div>
       </div>
-      <CustomLink link="signin" text="Already Have an Account? Sign In" />
     </>
   );
 };
+
 export default SignUp;

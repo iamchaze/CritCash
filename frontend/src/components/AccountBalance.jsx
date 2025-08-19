@@ -19,7 +19,6 @@ const AccountBalance = () => {
       } else if (response.data.balance) {
         setBalance(balance);
       } else if (response.data.message) {
-
         setBalance(response.data.message);
       }
     };
@@ -28,8 +27,16 @@ const AccountBalance = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Account Balance: ₹{balance}</h2>
+    <div className="flex flex-col items-center justify-center bg-accent1 py-7 mx-5 gap-5 rounded-4xl">
+      <h2 className="">
+        <span className="text-4xl font-[REM] font-semibold">
+          {balance}<small className="font-normal">INR</small>
+        </span>
+      </h2>
+      <div className="flex items-center gap-2">
+        <div className="text-md font-[REM]">Available Balance </div>
+        <img src="/images/eye-solid.svg" className="h-full w-5" alt="eye" />
+      </div>
     </div>
   );
 };

@@ -19,7 +19,9 @@ const ProfileNameTag = () => {
       } else {
         setUsername(response.data.data.username);
         setProfileNameTag(
-          response.data.data.firstName + " " + response.data.data.lastName
+          response.data.data.firstName.toUpperCase() +
+            " " +
+            response.data.data.lastName.toUpperCase()
         );
       }
     };
@@ -27,12 +29,13 @@ const ProfileNameTag = () => {
   }, []);
   return (
     <>
-      <div
+      <div className="flex items-center justify-startcursor-pointer gap-4"
         onClick={() => {
           navigate(`/profile/${username}`);
         }}
       >
-        {profileNameTag}
+        <img className="w-10 h-10 object-cover rounded-full" src="/images/person1.jpg" alt="" />
+        <p className="font-[REM] font-semibold text-md">{profileNameTag}</p>
       </div>
     </>
   );

@@ -6,8 +6,8 @@ const SearchBar = ({
   onSearch,
   delay = 300,
   placeholder = "Search...",
-  className = "",
-  inputClassName = "",
+  objectname = "",
+  inputObjectName = "",
 }) => {
   const [input, setInput] = useState("");
   const debounced = useDebounce(input, delay);
@@ -17,13 +17,14 @@ const SearchBar = ({
   }, [debounced]);
 
   return (
-    <div className={className}>
+    <div objectname={objectname}>
       <input
+        className="bg-gray-100 rounded-full p-3 pl-5 w-full h-full font-[REM] text-md border-2 text-gray-500 border-gray-300 focus:outline-accent1"
         type="text"
         placeholder={placeholder}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className={inputClassName}
+        objectname={inputObjectName}
       />
     </div>
   );

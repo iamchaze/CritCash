@@ -4,7 +4,6 @@ import axios from "axios";
 import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
 import Cookies from "js-cookie";
-// const jwt_decode = (await import("jwt-decode")).default;
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,78 +11,111 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
-  const debouncedPassword = useDebounce(password, 100);
+  const debouncedPassword = useDebounce(password, 300);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const token = Cookies.get('authToken');
+    // If already logged in, clear token
+    const token = Cookies.get("authToken");
     if (token) {
-      Cookies.remove('authToken'); // Clear the token if it exists
-      return;
+      Cookies.remove("authToken");
     }
   }, []);
 
   return (
-    <>
-      <h1>Welcome Back!</h1>
-      <h3>Get Closer To Your Finances</h3>
-      <div>
-        <div>
-          {credentialsError && (
-            <p style={{ color: "red" }}>{credentialsError}</p>
-          )}
-          <label htmlFor="username">Username: </label>
-          <input
-            type="text"
-            id="username"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </div>
-        <button
-          onClick={async () => {
-            await axios
-              .post(
-                "http://localhost:5000/api/v1/users/signin",
-                {
-                  username: debouncedUsername,
-                  password: debouncedPassword,
-                },
-                {
-                  withCredentials: true, // IMPORTANT to allow cookies
-                }
-              )
-              .then(async (res) => {
-                if (res.data.message === "invalid") {
-                  setCredentialsError("Invalid Credentials");
-                } else if (res.data.message === "success") {
-                  setCredentialsError(null);
-                  // navigate("/dashboard");
-                  window.location.href = "/dashboard";
-                }
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          }}
-        >
-          Sign In
-        </button>
-        <CustomLink link="forgotpassword" text="Forgot Password" />
-        <CustomLink link="signup" text="Don't Have an Account? Sign Up" />
+    <div className="min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1">
+      <div
+        className="hidden lg:inline-block relative min-w-100 w-200 lg:min-h-screen bg-cover bg-center rounded-md"
+        style={{
+          backgroundImage: "url('/images/DeWatermark.ai_1755539134560.png')",
+        }}
+      >
+        <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">
+          Empowering <br /> Finances, One Tap <br /> at a Time
+        </p>
       </div>
-    </>
+
+      <div className="h-screen lg:min-h-screen w-200 bg-primary shadow-lg p-6">
+        <div className="flex justify-end" onClick={() => navigate("/")}>
+          <img
+            className="w-6 h-6 cursor-pointer"
+            src="/images/+.svg"
+            alt="close"
+          />
+        </div>
+
+        <h1 className="text-2xl font-semibold font-[REM] text-black">
+          Welcome Back!
+        </h1>
+        <h3 className="text-gray-500 text-sm font-[REM] mb-6">
+          Get Closer To Your Finances <span role="img">💰</span>
+        </h3>
+
+        <div className="space-y-4">
+          {credentialsError && (
+            <p className="text-red-500 text-xs">{credentialsError}</p>
+          )}
+
+          <div>
+            <label className="block text-sm mb-1 font-semibold">Username</label>
+            <input
+              type="text"
+              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm mb-1 font-semibold">Password</label>
+            <input
+              type="password"
+              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button
+            className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
+            onClick={async () => {
+              await axios
+                .post(
+                  "http://localhost:5000/api/v1/users/signin",
+                  {
+                    username: debouncedUsername,
+                    password: debouncedPassword,
+                  },
+                  {
+                    withCredentials: true,
+                  }
+                )
+                .then((res) => {
+                  if (res.data.message === "invalid") {
+                    setCredentialsError("Invalid Credentials");
+                  } else if (res.data.message === "success") {
+                    setCredentialsError(null);
+                    window.location.href = "/dashboard";
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                  setCredentialsError("Something went wrong. Try again.");
+                });
+            }}
+          >
+            Sign In
+          </button>
+        </div>
+
+        {/* Links */}
+        <div className="mt-4 text-center space-y-2 font-[REM]">
+          <CustomLink link="forgotpassword" text="Forgot Password?" />
+          <div className="underline">
+            <CustomLink link="signup" text="Don't Have an Account? Sign Up" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

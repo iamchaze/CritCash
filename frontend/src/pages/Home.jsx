@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
       {/* Background content */}
-      {/* <div className="h-screen bg-primary absolute inset-0 -z-20">
+      <div className="h-screen bg-primary absolute inset-0 -z-20">
         <div className="relative w-full h-screen overflow-hidden">
           <div className="absolute inset-0 -z-10">
             <div className="left-rectangle bg-accent3"></div>
@@ -15,16 +15,18 @@ const Home = () => {
             <div className="bottom-rectangle bg-accent1"></div>
           </div>
         </div>
-      </div> */}
+      </div>
       {/* Foreground content */}
       <div className="">
         <div className="hidden lg:flex items-center justify-between my-10 mx-25">
-          <p className="font-[REM] font-bold text-2xl">PAYMATE.</p>
+          <p className="font-[REM] font-bold text-2xl cursor-pointer" onClick={() => {
+            navigate("/");
+          }}>PAYMATE.</p>
           <div className="flex gap-10 items-center">
-            <a href="" className="font-[REM] text-lg">
+            <a href="" className="font-[REM] text-lg cursor-pointer">
               About Me
             </a>
-            <button className="font-[REM] bg-button1 text-white py-3 px-8 rounded-full font-bold text-lg">
+            <button className="font-[REM] bg-button1 text-white py-3 px-8 rounded-full font-bold text-lg cursor-pointer">
               Contact
             </button>
           </div>
@@ -45,22 +47,15 @@ const Home = () => {
             </h1>
             <div className="lg:flex lg:items-center lg:space-between">
               <div className="inline-block mt-8 bg-button1 text-white py-4 px-8 rounded-full shadow-lg/30 font-bold text-2xl font-[REM]">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/signup");
-                  }}
-                >
-                  Take Me In
-                </button>
+                <CustomLink link="signup" text="Take Me In" />
               </div>
               <div className="hidden lg:inline-block mt-8 py-4 px-8 font-bold text-2xl font-[REM] text-button1 ">
-                <CustomLink link="signin" text="Sign In" />
+                <CustomLink link="signin" text="Sign In" /> 
               </div>
             </div>
           </div>
         </div>
-        <div className="text-center text-xl/12 underline font-[REM] lg:hidden font-bold">
+        <div className="text-center text-lg underline font-[REM] lg:hidden">
           <CustomLink link="signin" text="Already Have an Account? Sign In" />
         </div>
         <div className="hidden lg:block">

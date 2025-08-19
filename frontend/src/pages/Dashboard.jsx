@@ -14,16 +14,23 @@ const Dashboard = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const renderNavButton = (link, task) => (
-    <button>
-      <Link
-        to={link}
+  const renderNavButton = (link, task, svg) => (
+    <div className="flex flex-col items-center justify-center gap-1 flex-wrap">
+      <div className="bg-button1 w-20 h-20 rounded-full cursor-pointer relative shadow-lg/10">
+        <img
+          className="absolute align-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          src={svg}
+          alt={task}
+        />
+      </div>
+      <a
+        href={link}
         state={{ task }}
         style={{ textDecoration: "none", color: "inherit" }}
       >
-        {task}
-      </Link>
-    </button>
+        <span className="text-md font-[REM]">{task}</span>
+      </a>
+    </div>
   );
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,10 +72,26 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div style={{ position: "relative" }}>
-      <ProfileNameTag />
+    <div className="bg-accent5 h-screen" style={{ position: "relative" }}>
+      <div className="flex items-center justify-between px-5 py-5">
+        <ProfileNameTag />
+        <a
+          href="/settings"
+          className="flex items-center justify-center cursor-pointer bg-accent3 rounded-full p-1"
+        >
+          <img
+            src="/images/settings.png"
+            className="w-8 h-8 rounded-full"
+            alt="settings"
+          />
+        </a>
+      </div>
       <AccountBalance />
-      <div style={{ position: "relative" }} ref={dropdownRef}>
+      <div
+        className="bg-gray-100 mx-5 my-3 rounded-full"
+        style={{ position: "relative" }}
+        ref={dropdownRef}
+      >
         <SearchBar
           onSearch={setSearchTerm}
           delay={300}
@@ -87,15 +110,15 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div>
-        {renderNavButton("/search", "sendmoney")}
-        {renderNavButton("/search", "requestmoney")}
-        {renderNavButton("/history", "history")}
-        {renderNavButton("/deposit", "deposit")}
-        {renderNavButton("/settings", "settings")}
+      <div className="flex justify-around items-center m-5">
+        {renderNavButton("/search", "Send", "/images/Send.svg")}
+        {renderNavButton("/search", "Request", "/images/Request.svg")}
+        {renderNavButton("/history", "History", "/images/History.svg")}
+        {renderNavButton("/deposit", "Deposit", "/images/Deposit.svg")}
       </div>
-
+        <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5">
       <PaymentRequests />
+        </div>
     </div>
   );
 };

@@ -30,9 +30,9 @@ const PaymentRequests = () => {
 
   return (
     <div>
-      <h1>Payment Requests</h1>
+      <h1 className="font-[REM] font-bold text-md">Payment Requests</h1>
       {requests === "No payment requests" || !requests ? (
-        <p>No Payment Requests</p>
+        <p className="text-center p-5">No Payment Requests</p>
       ) : (
         <ul>
           {requests.map((request) => (
