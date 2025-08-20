@@ -18,7 +18,6 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    console.log(task);
     const fetchUsers = async () => {
       if (searchTerm.length > 2) {
         try {

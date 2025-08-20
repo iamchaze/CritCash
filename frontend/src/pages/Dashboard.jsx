@@ -22,15 +22,15 @@ const Dashboard = () => {
     style={{ textDecoration: "none", color: "inherit" }}
     className="flex flex-col items-center gap-1"  // ✅ Added flex column
   >
-    <div className="bg-button1 w-20 h-20 rounded-full cursor-pointer relative shadow-lg/10">
+    <div className="bg-button1 w-15 h-15 rounded-full cursor-pointer relative shadow-lg/10 border-2 border-accent4">
       <img
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="w-7 h-7 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         src={svg}
         alt={task}
       />
     </div>
 
-    <span className="text-md font-[REM]">
+    <span className="text-sm font-[REM]">
       {task === "sendmoney"
         ? "Send"
         : task === "requestmoney"
@@ -81,12 +81,12 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-accent5 h-screen" style={{ position: "relative" }}>
+    <div className="bg-gradient-to-tr from-accent4 to-accent5 h-screen" style={{ position: "relative" }}>
       <div className="flex items-center justify-between px-5 py-5">
         <ProfileNameTag />
         <a
           href="/settings"
-          className="flex items-center justify-center cursor-pointer bg-accent3 rounded-full p-1"
+          className="flex items-center justify-center cursor-pointer bg-accent3 border-1 border-accent4 rounded-full p-1"
         >
           <img
             src="/images/settings.png"
@@ -114,12 +114,12 @@ const Dashboard = () => {
               results.map((user) => (
                 <UserCard key={user.id} user={user} onClick={handleUserClick} />
               ))
-            )}
+           )}
           </div>
         )}
       </div>
 
-      <div className="flex justify-around items-center m-5">
+      <div className="flex justify-around items-center mx-5">
         {renderNavButton("/search", "sendmoney", "/images/Send.svg")}
         {renderNavButton("/search", "requestmoney", "/images/Request.svg")}
         {renderNavButton("/history", "History", "/images/History.svg")}

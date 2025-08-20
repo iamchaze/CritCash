@@ -27,7 +27,7 @@ const AccountBalance = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-accent1 py-7 mx-5 gap-5 rounded-4xl">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-tr from-accent1 to-accent3 border-2 border-accent4 py-7 mx-5 gap-5 rounded-4xl">
       <h2 className="">
         <span className="text-4xl font-[REM] font-semibold">
           {balance}<small className="font-normal">INR</small>
