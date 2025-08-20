@@ -29,7 +29,7 @@ const ProfileNameTag = () => {
   }, []);
   return (
     <>
-      <div className="flex items-center justify-startcursor-pointer gap-4"
+      <div className="flex items-center justify-start cursor-pointer gap-4 lg:bg-accent1 p-2 rounded-lg lg:shadow-lg lg:hover:shadow-xl transition-shadow duration-300"
         onClick={() => {
           navigate(`/profile/${username}`);
         }}

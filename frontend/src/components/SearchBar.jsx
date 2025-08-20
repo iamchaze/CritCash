@@ -19,7 +19,7 @@ const SearchBar = ({
   return (
     <div objectname={objectname}>
       <input
-        className="shadow-2xl bg-gray-100 rounded-full p-3 pl-5 w-full h-full font-[REM] text-md border-2 text-gray-500 border-gray-300 focus:outline-accent1"
+        className="bg-gray-100 shadow-2xl rounded-full py-2 pl-5 w-full h-full font-[REM] text-md border-2 text-gray-500 border-gray-300 focus:outline-accent1"
         type="text"
         placeholder={placeholder}
         value={input}

@@ -5,7 +5,9 @@ import ProfileNameTag from "../components/ProfileNameTag";
 import PaymentRequests from "../components/PaymentRequests";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
+import DesktopSideBar from "../components/DesktopSideBar";
 import axios from "axios";
+import MobileNavBar from "../components/MobileNavBar";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,33 +16,6 @@ const Dashboard = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const renderNavButton = (link, task, svg) => (
-   <div className="flex flex-col items-center justify-center gap-1 flex-wrap">
-  <Link
-    to={link}
-    state={{ task }}
-    style={{ textDecoration: "none", color: "inherit" }}
-    className="flex flex-col items-center gap-1"  // ✅ Added flex column
-  >
-    <div className="bg-button1 w-15 h-15 rounded-full cursor-pointer relative shadow-lg/10 border-2 border-accent4">
-      <img
-        className="w-7 h-7 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        src={svg}
-        alt={task}
-      />
-    </div>
-
-    <span className="text-sm font-[REM]">
-      {task === "sendmoney"
-        ? "Send"
-        : task === "requestmoney"
-        ? "Request"
-        : task}
-    </span>
-  </Link>
-</div>
-
-  );
   useEffect(() => {
     const fetchUsers = async () => {
       if (searchTerm.length > 2) {
@@ -81,52 +56,96 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-tr from-accent4 to-accent5 h-screen" style={{ position: "relative" }}>
-      <div className="flex items-center justify-between px-5 py-5">
-        <ProfileNameTag />
-        <a
-          href="/settings"
-          className="flex items-center justify-center cursor-pointer bg-accent3 border-1 border-accent4 rounded-full p-1"
-        >
-          <img
-            src="/images/settings.png"
-            className="w-8 h-8 rounded-full"
-            alt="settings"
-          />
-        </a>
-      </div>
-      <AccountBalance />
-      <div
-        className="bg-gray-100 mx-5 my-3 rounded-full"
-        style={{ position: "relative" }}
-        ref={dropdownRef}
-      >
-        <SearchBar
-          onSearch={setSearchTerm}
-          delay={300}
-          placeholder="Search friends by name, wallet key, etc."
-        />
-        {showDropdown && (
-          <div style={styles.dropdown}>
-            {results.length === 0 ? (
-              <p style={styles.noResult}>No users found.</p>
-            ) : (
-              results.map((user) => (
-                <UserCard key={user.id} user={user} onClick={handleUserClick} />
-              ))
-           )}
+    <div className="bg-gradient-to-tr from-accent4 to-accent5 h-screen lg:flex">
+      {/* Sidebar for desktop view*/}
+      <DesktopSideBar />
+      <div className="flex-1">
+        <div className="flex items-center justify-between px-5 py-5 lg:hidden">
+          <ProfileNameTag />
+          <a
+            href="/settings"
+            className="flex items-center justify-center cursor-pointer bg-accent3 border-1 border-accent4 rounded-full p-1"
+          >
+            <img
+              src="/images/settings.png"
+              className="w-8 h-8 rounded-full"
+              alt="settings"
+            />
+          </a>
+        </div>
+        {/* Desktop Header */}
+        <div className="hidden lg:flex items-center justify-between px-6 py-4">
+          <h1 className="text-2xl font-semibold font-[REM]">Dashboard</h1>
+          <div className="flex items-center space-x-4">
+            <button className="p-2 rounded-full hover:bg-gray-100">
+              <img
+                src="/images/lightmode.svg"
+                className="w-6 h-6"
+                alt="dark mode"
+              />
+            </button>
+            <a
+              href="/settings"
+              className="flex items-center justify-center cursor-pointer border rounded-full p-2 hover:bg-gray-100"
+            >
+              <img
+                src="/images/settings.png"
+                className="w-6 h-6"
+                alt="settings"
+              />
+            </a>
           </div>
-        )}
-      </div>
+        </div>
 
-      <div className="flex justify-around items-center mx-5">
-        {renderNavButton("/search", "sendmoney", "/images/Send.svg")}
-        {renderNavButton("/search", "requestmoney", "/images/Request.svg")}
-        {renderNavButton("/history", "History", "/images/History.svg")}
-        {renderNavButton("/deposit", "Deposit", "/images/Deposit.svg")}
-      </div>
-      <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5">
-        <PaymentRequests />
+        <div className="lg:grid lg:grid-cols-3 lg:gap-6 lg:px-6 lg:py-4">
+          <div className="">
+            <AccountBalance />
+          </div>
+          <div
+            className="mx-5 my-3 order-2 lg:hidden"
+            style={{ position: "relative" }}
+            ref={dropdownRef}
+          >
+            <SearchBar
+              onSearch={setSearchTerm}
+              delay={300}
+              placeholder="Search friends by name, wallet key, etc."
+            />
+            {showDropdown && (
+              <div style={styles.dropdown}>
+                {results.length === 0 ? (
+                  <p style={styles.noResult}>No users found.</p>
+                ) : (
+                  results.map((user) => (
+                    <UserCard
+                      key={user.id}
+                      user={user}
+                      onClick={handleUserClick}
+                    />
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-around items-center mx-5 lg:hidden">
+            <MobileNavBar />
+          </div>
+
+          <div className="w-auto hidden lg:col-span-2 lg:flex lg:flex-col lg:space-y-6">
+            <div className="bg-white p-6 rounded-xl shadow">
+              <h2 className=" text-lg font-semibold mb-4">Active Autopays</h2>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow">
+              <PaymentRequests />
+            </div>
+          </div>
+
+          {/* Mobile Payment Requests */}
+          <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5 lg:hidden">
+            <PaymentRequests />
+          </div>
+        </div>
       </div>
     </div>
   );

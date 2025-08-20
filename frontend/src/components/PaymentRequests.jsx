@@ -7,8 +7,6 @@ const PaymentRequests = () => {
   const [requests, setRequests] = useState();
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -41,28 +39,37 @@ const PaymentRequests = () => {
       ) : (
         <ul>
           {requests.map((request) => (
-            <li key={request._id} className="m-2 p-5 rounded-lg bg-accent2 font-[REM] text-md">
-              <div className="flex items-center justify-between">
+            <li
+              key={request._id}
+              className="m-2 p-5 rounded-lg bg-accent2 font-[REM] text-md"
+            >
+              <div
+                key={request._id}
+                className="flex items-center justify-between"
+              >
                 <div className="flex items-center justify-start gap-3">
                   <img
-                  src="/images/person1.jpg"
-                  className="h-10 w-10 object-cover rounded-full"
-                  alt="profile image"
-                />
-                <p className="text-md font-semibold">
-                  {titleCase(request.requestSenderDetails.firstName)}{" "}
-                  {titleCase(request.requestSenderDetails.lastName)}
-                </p>
+                    src="/images/person1.jpg"
+                    className="h-10 w-10 object-cover rounded-full"
+                    alt="profile image"
+                  />
+                  <p className="text-md font-semibold">
+                    {titleCase(request.requestSenderDetails.firstName)}{" "}
+                    {titleCase(request.requestSenderDetails.lastName)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-md font-semibold">{request.requestAmount}<small>INR</small> </p>
+                  <p className="text-md font-semibold">
+                    {request.requestAmount}
+                    <small>INR</small>{" "}
+                  </p>
                   {/* <p>Status: {request.requestStatus}</p> */}
                   {/* <p>Date: {request.requestDate}</p> */}
                   {/* <p>Time: {request.requestTime}</p> */}
                   {/* <p>Note: {request.requestNote}</p> */}
                 </div>
                 <button
-                className="bg-button1 text-white text-md font-semibold px-4 py-2 rounded-lg shadow-md"
+                  className="bg-button1 text-white text-md font-semibold px-4 py-2 rounded-lg shadow-md"
                   onClick={async () => {
                     const user = {
                       requestId: request._id,
