@@ -13,7 +13,8 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+  const desktopDropdownRef = useRef(null);
+  const mobileDropdownRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +48,12 @@ const Dashboard = () => {
   // close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      if (
+        desktopDropdownRef.current &&
+        !desktopDropdownRef.current.contains(e.target) &&
+        mobileDropdownRef.current &&
+        !mobileDropdownRef.current.contains(e.target)
+      ) {
         setShowDropdown(false);
       }
     };
@@ -56,10 +62,11 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-tr from-accent4 to-accent5 h-screen lg:flex">
+    <div className="bg-gradient-to-br from-accent1 to-accent2 h-screen lg:flex">
       {/* Sidebar for desktop view*/}
       <DesktopSideBar />
       <div className="flex-1">
+        {/* Header for mobile view */}
         <div className="flex items-center justify-between px-5 py-5 lg:hidden">
           <ProfileNameTag />
           <a
@@ -74,10 +81,36 @@ const Dashboard = () => {
           </a>
         </div>
         {/* Desktop Header */}
-        <div className="hidden lg:flex items-center justify-between px-6 py-4">
+        <div className="hidden lg:flex items-center justify-between px-6 py-5">
           <h1 className="text-2xl font-semibold font-[REM]">Dashboard</h1>
+          <div
+            className="w-100 lg:w-100 xl:w-150 max-w-150 transition-all duration-300 ease-in-out"
+            style={{ position: "relative" }}
+            ref={desktopDropdownRef}
+          >
+            <SearchBar
+              onSearch={setSearchTerm}
+              delay={300}
+              placeholder="Search friends by Name, Wallet Key, Contact"
+            />
+            {showDropdown && (
+              <div style={styles.dropdown}>
+                {results.length === 0 ? (
+                  <p style={styles.noResult}>No users found.</p>
+                ) : (
+                  results.map((user) => (
+                    <UserCard
+                      key={user.id}
+                      user={user}
+                      onClick={handleUserClick}
+                    />
+                  ))
+                )}
+              </div>
+            )}
+          </div>
           <div className="flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-gray-100">
+            <button className="p-2 rounded-full bg-amber-50">
               <img
                 src="/images/lightmode.svg"
                 className="w-6 h-6"
@@ -96,20 +129,20 @@ const Dashboard = () => {
             </a>
           </div>
         </div>
-
-        <div className="lg:grid lg:grid-cols-3 lg:gap-6 lg:px-6 lg:py-4">
+        {/* Mobile size */}
+        <div className="lg:grid md:grid-cols-2 lg:items-center lg:grid-cols-3 lg:gap-6 lg:px-6 lg:py-4">
           <div className="">
             <AccountBalance />
           </div>
           <div
-            className="mx-5 my-3 order-2 lg:hidden"
+            className="mx-5 my-3 lg:hidden"
             style={{ position: "relative" }}
-            ref={dropdownRef}
+            ref={mobileDropdownRef}
           >
             <SearchBar
               onSearch={setSearchTerm}
               delay={300}
-              placeholder="Search friends by name, wallet key, etc."
+              placeholder="Search friends by Name, Wallet Key, Contact"
             />
             {showDropdown && (
               <div style={styles.dropdown}>

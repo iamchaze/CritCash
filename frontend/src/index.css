@@ -4,12 +4,14 @@
     --breakpoint-sm: 480px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 976px;
+    --breakpoint-xl: 1600px;
     --color-primary: #F4FBF8;
     --color-accent1: #E0FFF2;
     --color-accent2: #BFEEEE;
     --color-accent3: #C3FFE2;
     --color-accent4: #81CFAA;
     --color-accent5: #69CDFF;
+    --color-accent6: #97DCFF;
     --color-button1: #287094;
     --color-button1light: #338EBC;
 

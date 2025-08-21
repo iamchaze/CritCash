@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import titleCase from "../utils/titlecase";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,22 +26,40 @@ const Profile = () => {
   }, [connection]);
 
   return (
-    <div>
-      <h1>Profile Page</h1>
+    <div className="font-[REM] bg-gradient-to-br from-accent1 to-accent2 h-screen">
+      <div className="bg-button1 p-3 lg:p-5 text-center font-[REM] text-white text-lg lg:text-2xl">
+        <h1>Profile</h1>
+      </div>
       {profileData && (
         <div>
-          <div>
-            <h2>
-              {profileData.firstName} {profileData.lastName}
-            </h2>
-            <p>Email: {profileData.email}</p>
-            <p>Username: {profileData.username}</p>
-            <p>Contact: {profileData.contact}</p>
-            <p>Wallet Key: {profileData.walletKey}</p>
+          <div className="mt-10 mx-auto mb-5">
+            <img
+              src="/images/person1.jpg"
+              className="m-auto rounded-full h-20 w-20 object-cover"
+              alt=""
+            />
           </div>
-          <div>
+          <h2 className="text-2xl text-center font-semibold mb-4">
+            {titleCase(profileData.firstName)} {titleCase(profileData.lastName)}
+          </h2>
+          <div className="grid grid-cols-2 gap-y-2 gap-x-4 w-fit m-auto">
+            <span className="font-medium">Username:</span>
+            <span>{profileData.username}</span>
+
+            <span className="font-medium">Wallet Key:</span>
+            <span>{profileData.walletKey}</span>
+
+            <span className="font-medium">Email:</span>
+            <span className="break-all">{profileData.email}</span>
+
+            <span className="font-medium">Contact:</span>
+            <span>{profileData.contact}</span>
+          </div>
+
+          <div className="w-fit m-auto my-5">
             {connection === "notfriend" && (
               <button
+              className="bg-blue-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
                     const response = await axios.post(
@@ -60,6 +79,7 @@ const Profile = () => {
             )}
             {connection === "sentrequest" && (
               <button
+              className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
                     const response = await axios.post(
@@ -79,6 +99,7 @@ const Profile = () => {
             )}
             {connection === "receivedrequest" && (
               <button
+              className="bg-green-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
                     const response = await axios.post(
@@ -98,6 +119,7 @@ const Profile = () => {
             )}
             {connection === "friend" && (
               <button
+              className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
                     const response = await axios.post(

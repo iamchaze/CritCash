@@ -60,7 +60,7 @@ const History = () => {
                   Amount Rs.{transaction.amount} Date:{transaction.date} Time:
                   {transaction.time}
                 </pre>
-                <hr />
+                <hr className="border-0 h-[2px]" />
               </div>
             );
           })}

@@ -27,14 +27,14 @@ const AccountBalance = () => {
   }, []);
 
   return (
-    <div className="w-auto flex flex-col items-center justify-center bg-gradient-to-tr from-accent1 to-accent3 border-2 border-accent4 py-7 mx-5 gap-5 rounded-4xl mt-3">
+    <div className="w-auto flex flex-col items-center justify-center bg-gradient-to-tr from-accent1 to-accent3 border-2 border-accent4 py-7 mx-5 gap-5 rounded-4xl h-full">
       <h2 className="">
-        <span className="text-4xl font-[REM] font-semibold">
+        <span className="text-3xl md:text-3xl lg:text-3xl font-[REM] font-semibold">
           {balance}<small className="font-normal">INR</small>
         </span>
       </h2>
       <div className="flex items-center gap-2">
-        <div className="text-md font-[REM]">Available Balance </div>
+        <div className="text-md md:text-sm lg:text-md font-[REM]">Available Balance </div>
         <img src="/images/eye-solid.svg" className="h-full w-5" alt="eye" />
       </div>
     </div>

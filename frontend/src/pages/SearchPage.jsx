@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
+import DesktopSideBar from "../components/DesktopSideBar";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,27 +43,39 @@ const SearchPage = () => {
   }, [searchTerm]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>
-        {task === "sendmoney"
-          ? "Send Money"
-          : task === "requestmoney"
-          ? "Request Money"
-          : "Search Users"}
-      </h1>
+    <div className="lg:flex h-screen">
+      <DesktopSideBar />
+      <div className="flex-1">
+        <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM]">
+          <h1>
+            {task === "sendmoney"
+              ? "Send Money"
+              : task === "requestmoney"
+              ? "Request Money"
+              : "Search Users"}
+          </h1>
+        </div>
 
-      <SearchBar
-        onSearch={setSearchTerm}
-        delay={300}
-        placeholder="Search by name, contact, or wallet key"
-        inputObjectName="search-input"
-      />
+        <div className="p-5 lg:w-200 m-auto ">
+          <SearchBar
+            onSearch={setSearchTerm}
+            delay={300}
+            placeholder="Search by name, contact, wallet key"
+            inputObjectName="search-input"
+          />
 
-      <div style={{ marginTop: "20px" }}>
-        {searchPerformed && results.length === 0 && <p>No users found.</p>}
-        {results.map((user) => (
-          <UserCard task={task} key={user.id} user={user} onClick={sendUserToTransaction} />
-        ))}
+          <div style={{ marginTop: "20px" }}>
+            {searchPerformed && results.length === 0 && <p className="text-center p-10">No users found.</p>}
+            {results.map((user) => (
+              <UserCard
+                task={task}
+                key={user.id}
+                user={user}
+                onClick={sendUserToTransaction}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
