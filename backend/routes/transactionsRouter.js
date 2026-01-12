@@ -1,12 +1,12 @@
 const express = require('express');
 const { Users, Transactions, PaymentRequests } = require('../db');
-const authmiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 const transactionsRouter = express.Router();
 const mongoose = require("mongoose");
 
 
 transactionsRouter.use(express.json());
-transactionsRouter.use(authmiddleware);
+transactionsRouter.use(authMiddleware);
 
 transactionsRouter.post('/sendmoney', async (req, res) => {
     const to = req.body.to;

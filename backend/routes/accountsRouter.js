@@ -1,14 +1,14 @@
 const express = require('express');
 const { zod } = require('zod');
 const { Users, PaymentRequests, Transactions } = require('../db');
-const authmiddleware = require('../middlewares/authmiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 const accountsRouter = express.Router();
 const cookieParser = require('cookie-parser');
 
 
 accountsRouter.use(express.json());
 
-accountsRouter.use(authmiddleware);
+accountsRouter.use(authMiddleware);
 
 accountsRouter.get('/balance', async (req, res) => {
     const id = req.user.id;

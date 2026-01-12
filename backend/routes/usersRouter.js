@@ -7,7 +7,7 @@ const zod = require("zod");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const Redis = require("redis");
-const authmiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const JWT = require("jsonwebtoken");
 const usersRouter = express.Router();
@@ -227,7 +227,7 @@ usersRouter.post("/resetpassword", async (req, res) => {
 
 
 //Route for specific user data for unique user
-usersRouter.get(`/getuserdetails`, authmiddleware, async (req, res) => {
+usersRouter.get(`/getuserdetails`, authMiddleware, async (req, res) => {
     const fields = req.query.fields?.split(",");
     const userId = req.user.id;
     const user = await Users.findById(userId).lean()
@@ -255,7 +255,7 @@ usersRouter.get(`/getuserdetails`, authmiddleware, async (req, res) => {
 })
 
 //Route for unique user data 
-usersRouter.get("/profiledetails/:username", authmiddleware, async (req, res) => {
+usersRouter.get("/profiledetails/:username", authMiddleware, async (req, res) => {
     const { username } = req.params;
     const currentUser = req.user
     let userDetails = {}
@@ -307,7 +307,7 @@ usersRouter.get("/profiledetails/:username", authmiddleware, async (req, res) =>
 
 
 //Route for bulk users search
-usersRouter.get("/getusers", authmiddleware, async (req, res) => {
+usersRouter.get("/getusers", authMiddleware, async (req, res) => {
     let fetchedUsers = [];
     const searchquery = req.query.searchquery.trim();
     const queryParts = searchquery.split(" ").filter(Boolean);
@@ -353,7 +353,7 @@ usersRouter.get("/getusers", authmiddleware, async (req, res) => {
     res.status(200).json({ users: filteredUsers });
 });
 
-// usersRouter.get("/checkfriendrequest/:friendId", authmiddleware, async (req, res) => {
+// usersRouter.get("/checkfriendrequest/:friendId", authMiddleware, async (req, res) => {
 //     const friendId = req.params.friendId;
 //     const currentUserId = req.user.id;
 //     if (!friendId) {
@@ -373,7 +373,7 @@ usersRouter.get("/getusers", authmiddleware, async (req, res) => {
 //     });
 // });
 
-usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
+usersRouter.post("/sendfriendrequest", authMiddleware, async (req, res) => {
     const currentUserId = req.user.id;
     const friendUsername = req.body.username
 
@@ -399,7 +399,7 @@ usersRouter.post("/sendfriendrequest", authmiddleware, async (req, res) => {
 
 });
 
-usersRouter.post(`/cancelfriendrequest`, authmiddleware, async (req, res) => {
+usersRouter.post(`/cancelfriendrequest`, authMiddleware, async (req, res) => {
     const currentUserId = req.user.id;
     const friendUsername = req.body.username;
     if (!currentUserId || !friendUsername) {
@@ -417,7 +417,7 @@ usersRouter.post(`/cancelfriendrequest`, authmiddleware, async (req, res) => {
     }
 })
 
-usersRouter.post(`/acceptfriendrequest`, authmiddleware, async (req, res) => {
+usersRouter.post(`/acceptfriendrequest`, authMiddleware, async (req, res) => {
     const currentUserId = req.user.id;
     const friendUsername = req.body.username;
     if (!currentUserId || !friendUsername) {
@@ -440,7 +440,7 @@ usersRouter.post(`/acceptfriendrequest`, authmiddleware, async (req, res) => {
     }
 })
 
-usersRouter.post(`/removefriend`, authmiddleware, async (req, res) => {
+usersRouter.post(`/removefriend`, authMiddleware, async (req, res) => {
     const currentUserId = req.user.id;
     const friendUsername = req.body.username;
 
