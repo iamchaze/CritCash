@@ -30,7 +30,7 @@ const SignIn = () => {
         }}
       >
         <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">
-          Empowering <br /> Finances, One Tap <br /> at a Time
+          Empowering <br /> finances, one tap <br /> at a time
         </p>
       </div>
 
@@ -59,7 +59,7 @@ const SignIn = () => {
             <label className="block text-sm mb-1 font-semibold">Username</label>
             <input
               type="text"
-              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-gray-500 outline-none"
               onChange={(e) => setUsername(e.target.value)}
               required
             />
@@ -69,7 +69,7 @@ const SignIn = () => {
             <label className="block text-sm mb-1 font-semibold">Password</label>
             <input
               type="password"
-              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-gray-500 outline-none"
               onChange={(e) => setPassword(e.target.value)}
               required
             />

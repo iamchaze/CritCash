@@ -26,7 +26,6 @@ const SignUp = () => {
   const [createPasswordError, setCreatePasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const [walletKeyError, setWalletKeyError] = useState(null);
-
   const debouncedFirstName = useDebounce(firstName, 500);
   const debouncedLastName = useDebounce(lastName, 500);
   const debouncedUsername = useDebounce(username, 500);
@@ -296,7 +295,7 @@ const SignUp = () => {
             backgroundImage: "url('/images/DeWatermark.ai_1755539134560.png')",
           }}
         >
-          <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">Empowering <br /> Finances, One Tap <br /> at a Time</p>
+          <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">Empowering <br /> finances, one tap <br /> at a time</p>
         </div>
         <div className="lg:min-h-screen w-200  bg-primary shadow-lg p-6">
           <div className="flex justify-end" onClick={() => navigate("/")}>

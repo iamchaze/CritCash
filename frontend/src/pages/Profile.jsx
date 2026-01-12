@@ -146,6 +146,25 @@ const Profile = () => {
         </div>
       )}
       {!profileData && <p>Loading profile data...</p>}
+      <div className="flex flex-row justify-center">
+        <button
+        className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px]"
+        onClick={async () => {
+          await axios
+            .get("http://localhost:5000/api/v1/users/signout", {
+              withCredentials: true, // IMPORTANT to allow cookies
+            })
+            .then((res) => {
+              if (res.data.message === "success") {
+                console.log("Sign out successful");
+                navigate("/signin");
+              }
+            });
+        }}
+      >
+        Sign Out
+      </button>
+      </div>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titlecase";
 import DesktopSideBar from "../components/DesktopSideBar";
+import readableDate from "../utils/readableDate";
+import readableTime from "../utils/readableTime";
 
 const History = () => {
   const [transactions, setTransactions] = useState([]);
@@ -110,9 +112,9 @@ const History = () => {
                           Rs.{transaction.amount}
                         </div>
                         <div>
-                          {transaction.date.slice(0, 10)}
+                          {readableDate(transaction.date)}
                           {", "}
-                          {transaction.time}
+                          {readableTime(transaction.date)}
                         </div>
                       </div>
                     </div>

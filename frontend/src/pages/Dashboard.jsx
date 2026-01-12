@@ -81,8 +81,8 @@ const Dashboard = () => {
           </a>
         </div>
         {/* Desktop Header */}
-        <div className="hidden lg:flex items-center justify-between px-6 py-5">
-          <h1 className="text-2xl font-semibold font-[REM]">Dashboard</h1>
+        <div className="hidden lg:flex items-center justify-between px-6 py-4.5 bg-button1">
+          <h1 className="text-2xl font-semibold font-[REM] text-white">Dashboard</h1>
           <div
             className="w-100 lg:w-100 xl:w-150 max-w-150 transition-all duration-300 ease-in-out"
             style={{ position: "relative" }}
@@ -117,16 +117,7 @@ const Dashboard = () => {
                 alt="dark mode"
               />
             </button>
-            <a
-              href="/settings"
-              className="flex items-center justify-center cursor-pointer border rounded-full p-2 hover:bg-gray-100"
-            >
-              <img
-                src="/images/settings.png"
-                className="w-6 h-6"
-                alt="settings"
-              />
-            </a>
+           
           </div>
         </div>
         {/* Mobile size */}

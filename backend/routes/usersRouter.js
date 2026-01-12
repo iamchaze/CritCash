@@ -1,4 +1,5 @@
 // usersRouter.js
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { Users } = require("../db"); // Import the Users model from usersSchema.js
@@ -7,12 +8,28 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const Redis = require("redis");
 const authmiddleware = require("../middlewares/authMiddleware");
-const { JWT_SECRET } = require("../config");
+
 const JWT = require("jsonwebtoken");
 const usersRouter = express.Router();
-const redisClient = Redis.createClient();
-usersRouter.use(express.json());
+const redisClient = Redis.createClient({
+    url: process.env.REDIS_URL,
+    socket: {
+        tls: false,
+        rejectUnauthorized: false
+    }
+
+});
+
 redisClient.connect().catch(console.error);
+
+usersRouter.use(express.json());
+
+
+usersRouter.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+}));
+
 
 const signupSchema = zod.object({
     firstName: zod.string().min(2).max(15),
@@ -113,15 +130,11 @@ usersRouter.post("/signin", async (req, res) => {
                     id: user._id,
                     username: user.userDetails.username
                 },
-                JWT_SECRET
+                process.env.JWT_SECRET,
             );
-            res.cookie('authToken', token, {
-                httpOnly: false,
-                secure: false,
-                sameSite: 'Strict',
-                maxAge: 24 * 60 * 60 * 1000
-            });
-            
+            res.cookie('authToken', token, { httpOnly: false, secure: false, maxAge: 24 * 60 * 60 * 1000 });
+
+
             return res.status(200).json({ message: "success", token });
         } else {
             return res.status(200).json({ message: "invalid" });
@@ -129,10 +142,12 @@ usersRouter.post("/signin", async (req, res) => {
     }
 });
 
+//Sign out Route
 usersRouter.get("/signout", async (req, res) => {
     res.clearCookie("authToken");
     res.status(200).json({ message: "success" });
 })
+
 
 //Forgot Password Route
 usersRouter.post("/forgotpassword", async (req, res) => {
@@ -149,16 +164,18 @@ usersRouter.post("/forgotpassword", async (req, res) => {
     await redisClient.setEx(email, expiryTime, JSON.stringify({ otp }));
 
     const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 465,
         secure: true,
         auth: {
-            user: "critcashindia@gmail.com",
-            pass: "efbm izvh pjpf pfym",
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
         },
     });
 
+
     const mailOptions = {
-        from: "critcashindia@gmail.com",
+        from: process.env.EMAIL_USER,
         to: email,
         subject: "Forgot Password OTP",
         text: `Use This OTP to Reset Your Password: ${otp}
@@ -170,8 +187,7 @@ This OTP will expire in ${expiryTime / 60} minutes.`,
             console.error("Error sending email:", error);
             return res.status(500).json({ message: "Error sending email" });
         }
-        console.log("Email sent:", info.response);
-        return res.status(200).json({ message: "success" });
+        console.log("Email sent:", info.response); return res.status(200).json({ message: "success" });
     });
 });
 

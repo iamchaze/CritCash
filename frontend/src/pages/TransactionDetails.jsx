@@ -2,6 +2,8 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import titleCase from "../utils/titlecase";
 import DesktopSideBar from "../components/DesktopSideBar";
+import readableDate from "../utils/readableDate";
+import readableTime from "../utils/readableTime";
 const TransactionDetails = () => {
   const location = useLocation();
   const transaction = location.state?.transaction;
@@ -39,20 +41,25 @@ const TransactionDetails = () => {
 
               <pre>
                 <div className="flex flex-row justify-between font-[REM] font-semibold">
+                  <p>Transaction ID: </p>
+                  <p>{transaction.id}</p>{" "}
+                </div>
+                <br />
+                <div className="flex flex-row justify-between font-[REM] font-semibold">
                   <p>Amount: </p>
                   <p>Rs. {transaction.amount}</p>{" "}
                 </div>
                 <br />
                 <div className="flex flex-row justify-between font-[REM] font-semibold">
-                  <p>Date:</p> <p>{transaction.date}</p>
+                  <p>Date:</p> <p>{readableDate(transaction.date)}</p>
                 </div>{" "}
                 <br />
                 <div className="flex flex-row justify-between font-[REM] font-semibold">
-                  <p>Time:</p> <p>{transaction.time}</p>
+                  <p>Time:</p> <p>{readableTime(transaction.date)}</p>
                 </div>{" "}
                 <br />
                 <div className="flex flex-row justify-between font-[REM] font-semibold">
-                  <p>Status:</p> <p>{transaction.status}</p>
+                  <p>Status:</p> <p>{titleCase(transaction.status)}</p>
                 </div>{" "}
                 <br />
                 {transaction.note ? (

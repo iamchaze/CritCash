@@ -94,7 +94,7 @@ accountsRouter.get('/history', async (req, res) => {
 
 accountsRouter.get('/history/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const id = req.user.id;
+    const id = req.user.id; //self
     if (userId === id) {
         return res.status(200).json({ message: 'Cannot view own transaction history' });
     }
@@ -139,6 +139,7 @@ accountsRouter.get('/history/:userId', async (req, res) => {
         return res.status(200).json({ transactions });
     }
 })
+
 
 accountsRouter.put('/deposit', async (req, res) => {
     const amount= req.body.amount * 100;

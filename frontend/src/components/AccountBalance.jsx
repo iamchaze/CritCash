@@ -1,41 +1,63 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const AccountBalance = () => {
-  const [balance, setBalance] = useState(0);
-  useEffect(() => {
-    const fetchBalance = async () => {
-      const response = await axios.get(
+  const [balance, setBalance] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const fetchBalance = async () => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.get(
         "http://localhost:5000/api/v1/accounts/balance",
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-      const balance = response.data.balance;
 
-      if (balance === 0 || balance === undefined) {
-        setBalance("0.00");
-      } else if (response.data.balance) {
-        setBalance(balance);
-      } else if (response.data.message) {
-        setBalance(response.data.message);
-      }
-    };
+      setBalance(data?.balance ?? 0);
+      setIsVisible(true);
+    } catch (err) {
+      setBalance("Error - ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchBalance();
-  }, []);
+  const toggleBalance = () => {
+    if (!isVisible && balance === null) {
+      fetchBalance();
+    } else {
+      setIsVisible(!isVisible);
+    }
+  };
+
+  const displayBalance = isVisible
+    ? `${balance.toFixed?.(2) ?? balance}`
+    : "*****";
 
   return (
     <div className="w-auto flex flex-col items-center justify-center bg-gradient-to-tr from-accent1 to-accent3 border-2 border-accent4 py-7 mx-5 gap-5 rounded-4xl h-full">
-      <h2 className="">
-        <span className="text-3xl md:text-3xl lg:text-3xl font-[REM] font-semibold">
-          {balance}<small className="font-normal">INR</small>
+      <h2>
+        <span className="text-3xl font-[REM] font-semibold">
+          {loading ? "Loading..." : displayBalance}
+          <small className="font-normal"> INR</small>
         </span>
       </h2>
+
       <div className="flex items-center gap-2">
-        <div className="text-md md:text-sm lg:text-md font-[REM]">Available Balance </div>
-        <img src="/images/eye-solid.svg" className="h-full w-5" alt="eye" />
+        <span className="text-md font-[REM]">Available Balance</span>
+
+        <img
+          src={
+            isVisible
+              ? "/images/eye-slash-regular.svg"
+              : "/images/eye-solid.svg"
+          }
+          alt="toggle balance"
+          onClick={toggleBalance}
+          className="w-5 cursor-pointer"
+        />
       </div>
     </div>
   );

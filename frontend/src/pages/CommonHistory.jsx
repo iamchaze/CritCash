@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import DesktopSideBar from "../components/DesktopSideBar";
+import readableDate from "../utils/readableDate";
+import readableTime from "../utils/readableTime";
 
 const CommonHistory = () => {
   const [transactions, setTransactions] = useState([]);
@@ -23,6 +25,7 @@ const CommonHistory = () => {
           `http://localhost:5000/api/v1/accounts/history/${userId}`,
           { withCredentials: true }
         );
+        console.log(response.data.transactions);
         setTransactions(response.data.transactions || []);
       } catch (err) {
         console.error("Error fetching common history:", err);
@@ -31,7 +34,6 @@ const CommonHistory = () => {
         setLoading(false);
       }
     };
-
     fetchCommonHistory();
   }, [userId]);
 
@@ -52,17 +54,65 @@ const CommonHistory = () => {
           ) : transactions.length === 0 ? (
             <p>No transactions found.</p>
           ) : (
-            <ul>
-              {transactions.map((transaction) => (
-                <li key={transaction.id}>
-                  {transaction.type === "sent"
-                    ? `Sent Rs.${transaction.amount} to ${transaction.receiverDetails.firstName} ${transaction.receiverDetails.lastName}`
-                    : transaction.type === "received"
-                    ? `Received Rs.${transaction.amount} from ${transaction.senderDetails.firstName} ${transaction.senderDetails.lastName}`
-                    : "Unknown transaction type"}
-                </li>
-              ))}
-            </ul>
+            <div>
+              {transactions.map((transaction) => {
+                const note = transaction.note;
+
+                return (
+                  <div
+                    className="cursor-pointer bg-accent6 p-5 m-3 rounded-xl shadow-md"
+                    key={transaction.id}
+                  >
+                    <div className="flex flex-row justify-between gap-2 items-center">
+                      <div className="flex flex-row items-center justify-between gap-3">
+                        <div className="font-semibold text-lg">
+                          <span>Note: {} </span>
+                          {note == null ? (
+                            <span className="text-gray-600 font-[REM] font-medium">
+                              No Note Provided
+                            </span>
+                          ) : (
+                            <span className="font-[REM] text-black font-medium">{note}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div
+                        className={`font-bold py-1 px-4 rounded-full justify-center items-center
+                                               ${
+                                                 transaction.type === "sent"
+                                                   ? "bg-red-200 text-red-800"
+                                                   : ""
+                                               } 
+                                               ${
+                                                 transaction.type === "received"
+                                                   ? "bg-green-200 text-green-800"
+                                                   : ""
+                                               } 
+                                               ${
+                                                 transaction.type === "failed"
+                                                   ? "bg-gray-200 text-gray-800"
+                                                   : ""
+                                               }`}
+                      >
+                        {transaction.type}
+                      </div>
+                      <div className="flex flex-col items-end justify-between gap-1 font-[REM]">
+                        <div className=" text-xl font-semibold">
+                          Rs.{transaction.amount}
+                        </div>
+                        <div>
+                          {readableDate(transaction.date)}
+                          {", "}
+                          {readableTime(transaction.date)}
+                        </div>
+                      </div>
+                    </div>
+                    <hr className="border-0 h-[2px]" />
+                  </div>
+                );
+              })}
+              <div>{}</div>
+            </div>
           )}
         </div>
       </div>
