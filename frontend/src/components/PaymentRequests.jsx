@@ -35,7 +35,7 @@ const PaymentRequests = () => {
     <div>
       <h1 className="font-[REM] font-bold text-md px-2">Payment Requests</h1>
       {requests === "No payment requests" || !requests ? (
-        <p className="text-center p-5 ">No Payment Requests</p>
+        <p className="text-center p-5 font-[REM]">No Payment Requests</p>
       ) : (
         <ul>
           {requests.map((request) => (

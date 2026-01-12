@@ -1,5 +1,5 @@
 // usersRouter.js
-require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const { Users } = require("../db"); // Import the Users model from usersSchema.js
@@ -132,7 +132,7 @@ usersRouter.post("/signin", async (req, res) => {
                 },
                 process.env.JWT_SECRET,
             );
-            res.cookie('authToken', token, { httpOnly: false, secure: false, maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('authToken', token, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
 
 
             return res.status(200).json({ message: "success", token });
