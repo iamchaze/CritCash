@@ -81,7 +81,7 @@ const ForgotPassword = () => {
               }
 
               await axios
-                .post("http://localhost:5000/api/v1/users/forgotPassword", {
+                .post("import.meta.env.VITE_BACKEND_URL/api/v1/users/forgotPassword", {
                   email,
                 })
                 .then((res) => {
@@ -114,7 +114,7 @@ const ForgotPassword = () => {
             onClick={async () => {
               const otp = document.getElementById("otp").value;
               await axios
-                .post("http://localhost:5000/api/v1/users/verifyotp", {
+                .post("import.meta.env.VITE_BACKEND_URL/api/v1/users/verifyotp", {
                   email,
                   otp,
                 })
@@ -191,7 +191,7 @@ const ForgotPassword = () => {
                     }
                     await axios
                       .post(
-                        "http://localhost:5000/api/v1/users/resetpassword",
+                        "import.meta.env.VITE_BACKEND_URL/api/v1/users/resetpassword",
                         {
                           email,
                           password: createPassword,

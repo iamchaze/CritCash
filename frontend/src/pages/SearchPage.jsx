@@ -23,7 +23,7 @@ const SearchPage = () => {
       if (searchTerm.length > 2) {
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/v1/users/getusers?searchquery=${searchTerm}`,
+            `import.meta.env.VITE_BACKEND_URL/api/v1/users/getusers?searchquery=${searchTerm}`,
             { withCredentials: true }
           );
           setResults(res.data.users || []);

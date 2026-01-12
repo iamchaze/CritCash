@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/users/profiledetails/${username}`,
+          `import.meta.env.VITE_BACKEND_URL/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
         setProfileData(response.data.data);
@@ -63,7 +63,7 @@ const Profile = () => {
                 onClick={async () => {
                   try {
                     const response = await axios.post(
-                      `http://localhost:5000/api/v1/users/sendfriendrequest`,
+                      `import.meta.env.VITE_BACKEND_URL/api/v1/users/sendfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
                     );
@@ -83,7 +83,7 @@ const Profile = () => {
                 onClick={async () => {
                   try {
                     const response = await axios.post(
-                      `http://localhost:5000/api/v1/users/cancelfriendrequest`,
+                      `import.meta.env.VITE_BACKEND_URL/api/v1/users/cancelfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
                     );
@@ -103,7 +103,7 @@ const Profile = () => {
                 onClick={async () => {
                   try {
                     const response = await axios.post(
-                      `http://localhost:5000/api/v1/users/acceptfriendrequest`,
+                      `import.meta.env.VITE_BACKEND_URL/api/v1/users/acceptfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
                     );
@@ -123,7 +123,7 @@ const Profile = () => {
                 onClick={async () => {
                   try {
                     const response = await axios.post(
-                      "http://localhost:5000/api/v1/users/removefriend",
+                      "import.meta.env.VITE_BACKEND_URL/api/v1/users/removefriend",
                       { username: profileData.username },
                       { withCredentials: true }
                     );
@@ -151,7 +151,7 @@ const Profile = () => {
         className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px]"
         onClick={async () => {
           await axios
-            .get("http://localhost:5000/api/v1/users/signout", {
+            .get("import.meta.env.VITE_BACKEND_URL/api/v1/users/signout", {
               withCredentials: true, // IMPORTANT to allow cookies
             })
             .then((res) => {

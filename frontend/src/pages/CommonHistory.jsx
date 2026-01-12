@@ -22,7 +22,7 @@ const CommonHistory = () => {
     const fetchCommonHistory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/accounts/history/${userId}`,
+          `import.meta.env.VITE_BACKEND_URL/api/v1/accounts/history/${userId}`,
           { withCredentials: true }
         );
         console.log(response.data.transactions);
