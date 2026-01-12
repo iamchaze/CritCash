@@ -1,7 +1,7 @@
 const express = require('express');
 const { zod } = require('zod');
 const { Users, PaymentRequests, Transactions } = require('../db');
-const authmiddleware = require('../middlewares/authMiddleware');
+const authmiddleware = require('../middlewares/authmiddleware');
 const accountsRouter = express.Router();
 const cookieParser = require('cookie-parser');
 
