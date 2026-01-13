@@ -47,10 +47,22 @@ const Home = () => {
             </h1>
             <div className="lg:flex lg:items-center lg:space-between">
               <div className="inline-block mt-8 bg-button1 text-white py-4 px-8 rounded-full shadow-lg/30 font-bold text-2xl font-[REM]">
-                <CustomLink link="signup" text="Take Me In" />
+                <button
+  onClick={() => navigate("/signup")}
+  className="text-white"
+>
+  Take Me In
+</button>
+
               </div>
               <div className="hidden lg:inline-block mt-8 py-4 px-8 font-bold text-2xl font-[REM] text-button1 ">
-                <CustomLink link="signin" text="Sign In" /> 
+                <button
+  onClick={() => navigate("/signin")}
+  className="text-button1"
+>
+  Sign In
+</button>
+
               </div>
             </div>
           </div>
@@ -59,7 +71,7 @@ const Home = () => {
           <CustomLink link="signin" text="Already Have an Account? Sign In" />
         </div>
         <div className="hidden lg:block">
-          <img src="/images/Iphone theme.png" alt="" />
+          <img src="/images/Iphonetheme.png" alt="" />
         </div>
       </div>
     </>
