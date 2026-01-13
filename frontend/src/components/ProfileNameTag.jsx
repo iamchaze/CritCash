@@ -11,7 +11,7 @@ const ProfileNameTag = () => {
   useEffect(() => {
     const setName = async () => {
       const response = await axios.get(
-        `import.meta.env.VITE_BACKEND_URL/api/v1/users/getuserdetails/?fields=firstName,lastName,username`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getuserdetails/?fields=firstName,lastName,username`,
         { withCredentials: true }
       );
       if (response.data.message) {

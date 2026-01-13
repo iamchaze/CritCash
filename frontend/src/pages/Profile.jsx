@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          `import.meta.env.VITE_BACKEND_URL/api/v1/users/profiledetails/${username}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
         setProfileData(response.data.data);

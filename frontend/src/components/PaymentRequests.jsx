@@ -11,7 +11,7 @@ const PaymentRequests = () => {
     const fetchRequests = async () => {
       try {
         const response = await axios.get(
-          "import.meta.env.VITE_BACKEND_URL/api/v1/accounts/paymentrequests",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/paymentrequests`,
           { withCredentials: true }
         );
         if (
