@@ -1,14 +1,17 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
-const CustomLink = (props) => {
-    return (
-        <div>
-            <a style={{
-                textDecoration: 'none',
-                color: 'inherit',
-            }} href = {props.link}>{props.text}</a>
-        </div>
-    );
-}
+const CustomLink = ({ link, text }) => {
+  return (
+    <Link
+      to={`/${link}`}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+      }}
+    >
+      {text}
+    </Link>
+  );
+};
 
 export default CustomLink;

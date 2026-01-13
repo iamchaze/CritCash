@@ -47,22 +47,10 @@ const Home = () => {
             </h1>
             <div className="lg:flex lg:items-center lg:space-between">
               <div className="inline-block mt-8 bg-button1 text-white py-4 px-8 rounded-full shadow-lg/30 font-bold text-2xl font-[REM]">
-                <button
-  onClick={() => navigate("/signup")}
-  className="text-white"
->
-  Take Me In
-</button>
-
+                <CustomLink link="signup" text="Take Me In" />
               </div>
               <div className="hidden lg:inline-block mt-8 py-4 px-8 font-bold text-2xl font-[REM] text-button1 ">
-                <button
-  onClick={() => navigate("/signin")}
-  className="text-button1"
->
-  Sign In
-</button>
-
+                <CustomLink link="signin" text="Sign In" /> 
               </div>
             </div>
           </div>
