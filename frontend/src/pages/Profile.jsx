@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 
 const Profile = () => {
