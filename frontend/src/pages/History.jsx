@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import titleCase from "../utils/titlecase";
+import titleCase from "../utils/titleCase";
 import DesktopSideBar from "../components/DesktopSideBar";
 import readableDate from "../utils/readableDate";
 import readableTime from "../utils/readableTime";
