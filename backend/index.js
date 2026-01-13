@@ -7,7 +7,10 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(cors({
-    origin: process.env.CLIENT_URL, // frontend URL
+    origin: [
+        "https://crit-cash.vercel.app",
+        "http://localhost:5173" 
+    ],// frontend URL
     credentials: true
 }));
 app.use(express.json());
