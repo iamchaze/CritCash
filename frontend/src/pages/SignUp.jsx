@@ -106,7 +106,7 @@ const SignUp = () => {
       }
       try {
         const res = await axios.post(
-          `import.meta.env.VITE_BACKEND_URL/api/v1/users/usernameValidate`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/usernameValidate`,
           {
             username: debouncedUsername,
           }
@@ -151,7 +151,7 @@ const SignUp = () => {
 
       try {
         const res = await axios.post(
-          `import.meta.env.VITE_BACKEND_URL/api/v1/users/emailValidate`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/emailValidate`,
           {
             email: debouncedEmail,
           }
@@ -190,7 +190,7 @@ const SignUp = () => {
         }
         try {
           const res = await axios.post(
-            `import.meta.env.VITE_BACKEND_URL/api/v1/users/contactValidate`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/contactValidate`,
             {
               contact: debouncedContact,
             }
@@ -230,7 +230,7 @@ const SignUp = () => {
         }
         try {
           const res = await axios.post(
-            `import.meta.env.VITE_BACKEND_URL/api/v1/users/walletKeyValidate`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/walletKeyValidate`,
             {
               walletKey: debouncedWalletKey,
             }
@@ -466,7 +466,7 @@ const SignUp = () => {
                   alert("Please fix the errors before submitting.");
                 } else {
                   await axios
-                    .post(`import.meta.env.VITE_BACKEND_URL/api/v1/users/signup`, {
+                    .post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signup`, {
                       firstName,
                       lastName,
                       username,

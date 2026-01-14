@@ -10,7 +10,7 @@ const Settings = () => {
       <button
         onClick={async () => {
           await axios
-            .get("import.meta.env.VITE_BACKEND_URL/api/v1/users/signout", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signout`, {
               withCredentials: true, // IMPORTANT to allow cookies
             })
             .then((res) => {
