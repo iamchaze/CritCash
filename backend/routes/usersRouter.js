@@ -118,6 +118,7 @@ usersRouter.post("/signup", async (req, res) => {
 
 //Sign in Route
 usersRouter.post("/signin", async (req, res) => {
+    console.log("Signin request body:", req.body);
     const { username, password } = req.body;
     const user = await Users.findOne({ "userDetails.username": username });
     if (!user) {
