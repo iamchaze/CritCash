@@ -25,12 +25,6 @@ redisClient.connect().catch(console.error);
 usersRouter.use(express.json());
 
 
-usersRouter.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}));
-
-
 const signupSchema = zod.object({
     firstName: zod.string().min(2).max(15),
     lastName: zod.string().min(2).max(15),
