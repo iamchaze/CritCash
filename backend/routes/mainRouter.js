@@ -6,7 +6,7 @@ const transactionsRouter = require('./transactionsRouter');
 const accountsRouter = require('./accountsRouter');
 const depositsRouter = require('./depositsRouter');
 const payRequestsRouter = require('./payRequestsRouter');
-
+const usersRouter = require("./usersRouter");
 
 mainRouter.use("/users", usersRouter)
 mainRouter.use("/accounts", accountsRouter);
