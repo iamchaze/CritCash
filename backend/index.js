@@ -3,10 +3,8 @@ const express = require("express");
 const mainRouter = require("./routes/mainRouter");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
-
+const PORT = process.env.PORT || 5000;
 const app = express();
-
-import cors from "cors";
 
 const allowedOrigins = [
   "https://crit-cash.vercel.app",
@@ -41,8 +39,8 @@ app.get("/", (req, res) => {
 })
 
 
-app.listen(port = 5000, () => {
-    console.log(`http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server Running on Port - ${PORT}`);
 });
 
 

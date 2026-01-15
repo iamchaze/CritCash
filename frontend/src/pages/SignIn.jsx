@@ -11,7 +11,6 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
-  const debouncedPassword = useDebounce(password, 300);
 
   useEffect(() => {
     // If already logged in, clear token
@@ -83,7 +82,7 @@ const SignIn = () => {
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
                   {
                     username: debouncedUsername,
-                    password: debouncedPassword,
+                    password: password,
                   },
                   {
                     withCredentials: true,
