@@ -133,10 +133,10 @@ usersRouter.post("/signin", async (req, res) => {
                 },
                 process.env.JWT_SECRET,
             );
-            res.cookie('authToken', token, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('authToken', token, { httpOnly: true, secure: true, sameSite: "none", maxAge: 24 * 60 * 60 * 1000 });
 
 
-            return res.status(200).json({ message: "success", token });
+            return res.status(200).json({ message: "success" });
         } else {
             return res.status(200).json({ message: "invalid" });
         }

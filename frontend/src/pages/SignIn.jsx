@@ -87,6 +87,9 @@ const SignIn = () => {
                   },
                   {
                     withCredentials: true,
+                    headers: {
+                      "Content-Type": "application/json",
+                    }
                   }
                 )
                 .then((res) => {

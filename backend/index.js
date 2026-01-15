@@ -6,13 +6,27 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+import cors from "cors";
+
+const allowedOrigins = [
+  "https://crit-cash.vercel.app",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-    origin: [
-        "https://crit-cash.vercel.app",
-        "http://localhost:5173" 
-    ],// frontend URL
-    credentials: true
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
