@@ -116,7 +116,7 @@ usersRouter.post("/signup", async (req, res) => {
 });
 
 
-//Sign in Route
+//Sign in Route - production fix cookie issue
 usersRouter.post("/signin", async (req, res) => {
     console.log("Signin request body:", req.body);
     const { username, password } = req.body;
