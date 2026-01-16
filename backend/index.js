@@ -15,11 +15,6 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// 🔥 THIS LINE IS CRITICAL
-app.options("*", cors({
-  origin: "https://crit-cash.vercel.app",
-  credentials: true,
-}));
 
 
 
