@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 axios.defaults.withCredentials = true;
 
 const SignIn = () => {
+  console.log("BACKEND URL:", import.meta.env.VITE_BACKEND_URL);
+
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
