@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
 
 const authMiddleware = (req, res, next) => {
+     console.log("COOKIE RECEIVED:", req.cookies);
     let token;
 
     if (req.headers.authorization) {
         token = req.headers.authorization.replace("Bearer ", "");
-        console.log("COOKIE RECEIVED:", req.cookies);
+       
     }
 
     if (!token) {
