@@ -8,6 +8,7 @@ import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
 import axios from "axios";
 import MobileNavBar from "../components/MobileNavBar";
+axios.defaults.withCredentials = true;
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,7 +28,7 @@ const Dashboard = () => {
         setCheckingAuth(false);
       })
       .catch(() => {
-        navigate("/signin"); 
+        navigate("/dashboard"); 
       });
   }, []);
 

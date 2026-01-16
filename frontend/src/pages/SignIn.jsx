@@ -5,6 +5,8 @@ import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
 import Cookies from "js-cookie";
 
+axios.defaults.withCredentials = true;
+
 const SignIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
