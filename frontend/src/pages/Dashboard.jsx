@@ -17,19 +17,6 @@ const Dashboard = () => {
   const desktopDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
   const navigate = useNavigate();
-  const [checkingAuth, setCheckingAuth] = useState(true);
-
- useEffect(() => {
-  axios
-    .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`)
-    .then(() => {
-      setCheckingAuth(false);
-    })
-    .catch(() => {
-      navigate("/signin");
-    });
-}, []);
-
 
   useEffect(() => {
     const fetchUsers = async () => {

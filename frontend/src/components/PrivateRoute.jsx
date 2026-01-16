@@ -1,11 +1,29 @@
-import { Outlet, Navigate } from 'react-router-dom';
-import Cookies from "js-cookie";
-
+import { Outlet, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const PrivateRoute = () => {
-  const isAuthenticated = Cookies.get("authToken") ? true : null;
+  const [checking, setChecking] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
-}
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`, {
+        withCredentials: true,
+      })
+      .then(() => {
+        setAuthorized(true);
+        setChecking(false);
+      })
+      .catch(() => {
+        setAuthorized(false);
+        setChecking(false);
+      });
+  }, []);
+
+  if (checking) return <p>Checking session...</p>;
+
+  return authorized ? <Outlet /> : <Navigate to="/signin" replace />;
+};
 
 export default PrivateRoute;
