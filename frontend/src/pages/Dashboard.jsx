@@ -44,7 +44,19 @@ const Dashboard = () => {
     setShowDropdown(false);
     navigate("/friendprofile", { state: { task: "gotoprofile", user } });
   };
-
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`, {
+        withCredentials: true,
+      })
+      .then(() => {
+         // session valid
+      })
+      .catch(() => {
+        navigate("/signin"); // no session
+      });
+  }, []);
+  
   // close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
