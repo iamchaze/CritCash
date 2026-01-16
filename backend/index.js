@@ -4,15 +4,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mainRouter = require("./routes/mainRouter");
 
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT || 5000;
 const app = express();
-
 
 app.use(cors({
   origin: "https://crit-cash.vercel.app",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 
