@@ -19,18 +19,17 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`, {
-        withCredentials: true,
-      })
-      .then(() => {
-        setCheckingAuth(false);
-      })
-      .catch(() => {
-        navigate("/dashboard"); 
-      });
-  }, []);
+ useEffect(() => {
+  axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`)
+    .then(() => {
+      setCheckingAuth(false);
+    })
+    .catch(() => {
+      navigate("/signin");
+    });
+}, []);
+
 
   useEffect(() => {
     const fetchUsers = async () => {

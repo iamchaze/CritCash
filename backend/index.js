@@ -10,8 +10,17 @@ const app = express();
 
 app.use(cors({
   origin: "https://crit-cash.vercel.app",
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+// 🔥 THIS LINE IS CRITICAL
+app.options("*", cors({
+  origin: "https://crit-cash.vercel.app",
+  credentials: true,
+}));
+
 
 
 app.use(express.json());
