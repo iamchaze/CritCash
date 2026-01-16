@@ -1,40 +1,36 @@
 require("dotenv").config();
 const express = require("express");
-const mainRouter = require("./routes/mainRouter");
 const cors = require("cors");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
+const mainRouter = require("./routes/mainRouter");
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const allowedOrigins = [
-  "https://crit-cash.vercel.app",
-  "http://localhost:5173"
-];
-
 app.use(cors({
-  origin: "https://crit-cash.vercel.app",
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      origin === "https://crit-cash.vercel.app" ||
+      origin === "http://localhost:5173"
+    ) {
+      return callback(null, true);
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
 }));
-
-
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
-app.use('/api/v1', mainRouter);
-
-
+app.use("/api/v1", mainRouter);
 
 app.get("/", (req, res) => {
-    res.send("<h1>Welcome to Paymate</h1>");
-})
-
-
-app.listen(PORT, () => {
-    console.log(`Server Running on Port - ${PORT}`);
+  res.send("<h1>Welcome to Paymate</h1>");
 });
 
+app.listen(PORT, () => {
+  console.log(`Server Running on Port - ${PORT}`);
+});

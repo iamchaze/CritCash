@@ -19,6 +19,26 @@ const SignIn = () => {
       Cookies.remove("authToken");
     }
   }, []);
+  const handleSignIn = async () => {
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
+        { username: debouncedUsername, password },
+        { withCredentials: true }
+      );
+
+      if (res.data.message === "invalid") {
+        setCredentialsError("Invalid Credentials");
+        return;
+      }
+
+      setCredentialsError("");
+      navigate("/dashboard"); // ✅ optimistic redirect
+    } catch (err) {
+      console.error(err);
+      setCredentialsError("Something went wrong. Try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1">
@@ -76,36 +96,7 @@ const SignIn = () => {
 
           <button
             className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
-            onClick={async () => {
-              try {
-                const res = await axios.post(
-                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
-                  {
-                    username: debouncedUsername,
-                    password,
-                  },
-                  { withCredentials: true }
-                );
-
-                if (res.data.message === "invalid") {
-                  setCredentialsError("Invalid Credentials");
-                  return;
-                }
-
-
-                await axios.get(
-                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`,
-                  { withCredentials: true }
-                );
-
-
-                setCredentialsError(null);
-                navigate("/dashboard");
-              } catch (err) {
-                console.error(err);
-                setCredentialsError("Something went wrong. Try again.");
-              }
-            }}
+            onClick={handleSignIn}
           >
             Sign In
           </button>
