@@ -96,7 +96,7 @@ const SignIn = () => {
                     setCredentialsError("Invalid Credentials");
                   } else if (res.data.message === "success") {
                     setCredentialsError(null);
-                    window.location.href = "/dashboard";
+                    navigate("/dashboard");
                   }
                 })
                 .catch((err) => {
