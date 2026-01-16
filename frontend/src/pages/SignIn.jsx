@@ -92,6 +92,7 @@ const SignIn = () => {
                   return;
                 }
 
+
                 await axios.get(
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`,
                   { withCredentials: true }

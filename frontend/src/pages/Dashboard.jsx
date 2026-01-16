@@ -50,14 +50,15 @@ const Dashboard = () => {
         withCredentials: true,
       })
       .then(() => {
-         // session valid
+         
+         navigate("/dashboard");
       })
       .catch(() => {
-        navigate("/signin"); // no session
+        navigate("/signin"); 
       });
   }, []);
+
   
-  // close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
