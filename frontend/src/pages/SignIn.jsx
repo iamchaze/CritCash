@@ -77,32 +77,33 @@ const SignIn = () => {
           <button
             className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
             onClick={async () => {
-              await axios
-                .post(
+              try {
+                const res = await axios.post(
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
                   {
                     username: debouncedUsername,
-                    password: password,
+                    password,
                   },
-                  {
-                    withCredentials: true,
-                    headers: {
-                      "Content-Type": "application/json",
-                    }
-                  }
-                )
-                .then((res) => {
-                  if (res.data.message === "invalid") {
-                    setCredentialsError("Invalid Credentials");
-                  } else if (res.data.message === "success") {
-                    setCredentialsError(null);
-                    navigate("/dashboard");
-                  }
-                })
-                .catch((err) => {
-                  console.error(err);
-                  setCredentialsError("Something went wrong. Try again.");
-                });
+                  { withCredentials: true }
+                );
+
+                if (res.data.message === "invalid") {
+                  setCredentialsError("Invalid Credentials");
+                  return;
+                }
+
+                await axios.get(
+                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`,
+                  { withCredentials: true }
+                );
+
+
+                setCredentialsError(null);
+                navigate("/dashboard");
+              } catch (err) {
+                console.error(err);
+                setCredentialsError("Something went wrong. Try again.");
+              }
             }}
           >
             Sign In
