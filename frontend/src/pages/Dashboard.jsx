@@ -22,7 +22,7 @@ const Dashboard = () => {
       if (searchTerm.length > 2) {
         setShowDropdown(true);
         try {
-          const res = await api.get(
+          const res = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getusers?searchquery=${searchTerm}`,
           );
           setResults(res.data.users || []);

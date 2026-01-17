@@ -64,7 +64,7 @@ const Deposit = () => {
           : {}),
       };
 
-      const response = await api.put(
+      const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/deposit`,
         payload,
         {

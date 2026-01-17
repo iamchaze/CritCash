@@ -70,7 +70,7 @@ const SignIn = () => {
             className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
             onClick={async () => {
               try {
-                const res = await api.post(
+                const res = await axios.post(
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
                   { username: debouncedUsername, password }
                 );

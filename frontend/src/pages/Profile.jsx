@@ -12,7 +12,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await api.get(
+        const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
@@ -62,7 +62,7 @@ const Profile = () => {
               className="bg-blue-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await api.post(
+                    const response = await axios.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/sendfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -82,7 +82,7 @@ const Profile = () => {
               className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await api.post(
+                    const response = await axios.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/cancelfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -102,7 +102,7 @@ const Profile = () => {
               className="bg-green-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await api.post(
+                    const response = await axios.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/acceptfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -122,7 +122,7 @@ const Profile = () => {
               className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await api.post(
+                    const response = await axios.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/removefriend`,
                       { username: profileData.username },
                       { withCredentials: true }

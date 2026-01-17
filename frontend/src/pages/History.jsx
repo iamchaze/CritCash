@@ -16,7 +16,7 @@ const History = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await api.get(
+        const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/history/`,
           {
             withCredentials: true,

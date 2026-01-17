@@ -10,7 +10,7 @@ const AccountBalance = () => {
     try {
       setLoading(true);
 
-      const { data } = await api.get(
+      const { data } = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/balance`,
         { withCredentials: true }
       );

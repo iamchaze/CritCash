@@ -90,7 +90,7 @@ const TransactionPage = () => {
           <button
             className="bg-button1 text-primary text-2xl font-[REM] font-bold w-full lg:w-60 p-5 rounded-xl hover:bg-accent2 hover:text-button1 cursor-pointer transition-colors duration-300"
             onClick={async () => {
-              const response = await api.post(
+              const response = await axios.post(
                 `${import.meta.env.VITE_BACKEND_URL}/api/v1/transactions/${
                   task === `acceptpaymentrequest`
                     ? `sendmoney?query=acceptpaymentrequest`

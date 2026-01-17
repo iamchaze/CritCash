@@ -105,7 +105,7 @@ const SignUp = () => {
         return;
       }
       try {
-        const res = await api.post(
+        const res = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/usernameValidate`,
           {
             username: debouncedUsername,
@@ -150,7 +150,7 @@ const SignUp = () => {
       }
 
       try {
-        const res = await api.post(
+        const res = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/emailValidate`,
           {
             email: debouncedEmail,
@@ -189,7 +189,7 @@ const SignUp = () => {
           return;
         }
         try {
-          const res = await api.post(
+          const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/contactValidate`,
             {
               contact: debouncedContact,
@@ -229,7 +229,7 @@ const SignUp = () => {
           return;
         }
         try {
-          const res = await api.post(
+          const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/walletKeyValidate`,
             {
               walletKey: debouncedWalletKey,

@@ -10,7 +10,7 @@ const PaymentRequests = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await api.get(
+        const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/paymentrequests`,
           { withCredentials: true }
         );
