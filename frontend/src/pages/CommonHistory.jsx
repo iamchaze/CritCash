@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import DesktopSideBar from "../components/DesktopSideBar";
 import readableDate from "../utils/readableDate";
 import readableTime from "../utils/readableTime";

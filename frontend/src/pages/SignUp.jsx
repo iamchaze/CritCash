@@ -2,7 +2,7 @@ import React from "react";
 import CustomLink from "../components/CustomLink";
 import { useState, useEffect } from "react";
 import useDebounce from "../utils/debounce";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {

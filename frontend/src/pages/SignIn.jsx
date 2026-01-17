@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
 import Cookies from "js-cookie";
@@ -11,14 +11,6 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [credentialsError, setCredentialsError] = useState("");
   const debouncedUsername = useDebounce(username, 500);
-
-  useEffect(() => {
-    // If already logged in, clear token
-    const token = Cookies.get("authToken");
-    if (token) {
-      Cookies.remove("authToken");
-    }
-  }, []);
 
   return (
     <div className="min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1">
@@ -80,18 +72,15 @@ const SignIn = () => {
               try {
                 const res = await axios.post(
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
-                  {
-                    username: debouncedUsername,
-                    password,
-                  },
-                  { withCredentials: true }
+                  { username: debouncedUsername, password }
                 );
 
                 if (res.data.message === "invalid") {
                   setCredentialsError("Invalid Credentials");
                   return;
                 }
-                setCredentialsError(null);
+
+                localStorage.setItem("token", res.data.token);
                 navigate("/dashboard");
               } catch (err) {
                 console.error(err);

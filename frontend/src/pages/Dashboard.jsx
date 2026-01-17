@@ -6,9 +6,8 @@ import PaymentRequests from "../components/PaymentRequests";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import MobileNavBar from "../components/MobileNavBar";
-axios.defaults.withCredentials = true;
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +24,6 @@ const Dashboard = () => {
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getusers?searchquery=${searchTerm}`,
-            { withCredentials: true }
           );
           setResults(res.data.users || []);
         } catch (err) {

@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import useDebounce from "../utils/debounce";
 import { useEffect } from "react";
 import CustomLink from "../components/CustomLink";
