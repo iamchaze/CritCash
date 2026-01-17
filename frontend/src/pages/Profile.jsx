@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
@@ -150,7 +150,7 @@ const Profile = () => {
         <button
         className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px]"
         onClick={async () => {
-          await api
+          await axios
             .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signout`, {
               withCredentials: true, // IMPORTANT to allow cookies
             })

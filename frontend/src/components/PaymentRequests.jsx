@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 const PaymentRequests = () => {

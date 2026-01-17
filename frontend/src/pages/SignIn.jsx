@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
 import Cookies from "js-cookie";

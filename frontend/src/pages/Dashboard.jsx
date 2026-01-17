@@ -6,7 +6,7 @@ import PaymentRequests from "../components/PaymentRequests";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import MobileNavBar from "../components/MobileNavBar";
 
 const Dashboard = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import DesktopSideBar from "../components/DesktopSideBar";
 
 const Deposit = () => {

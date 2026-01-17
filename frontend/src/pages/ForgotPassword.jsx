@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import useDebounce from "../utils/debounce";
 import { useEffect } from "react";
 import CustomLink from "../components/CustomLink";
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
                 return;
               }
 
-              await api
+              await axios
                 .post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/forgotPassword`, {
                   email,
                 })
@@ -113,7 +113,7 @@ const ForgotPassword = () => {
             type="submit"
             onClick={async () => {
               const otp = document.getElementById("otp").value;
-              await api
+              await axios
                 .post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/verifyotp`, {
                   email,
                   otp,
@@ -189,7 +189,7 @@ const ForgotPassword = () => {
                       alert("Please fix the errors before submitting");
                       return;
                     }
-                    await api
+                    await axios
                       .post(
                         `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/resetpassword`,
                         {

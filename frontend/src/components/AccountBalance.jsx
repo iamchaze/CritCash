@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 
 const AccountBalance = () => {
   const [balance, setBalance] = useState(null);

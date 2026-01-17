@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 const Settings = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const Settings = () => {
     <>
       <button
         onClick={async () => {
-          await api
+          await axios
             .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signout`, {
               withCredentials: true, // IMPORTANT to allow cookies
             })

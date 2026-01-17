@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 import DesktopSideBar from "../components/DesktopSideBar";

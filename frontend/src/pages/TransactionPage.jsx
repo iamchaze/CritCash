@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 

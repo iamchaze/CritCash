@@ -1,7 +1,7 @@
 // pages/SearchPage.jsx
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../utils/axiosConfig";
+import axios from "../utils/axiosConfig";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
