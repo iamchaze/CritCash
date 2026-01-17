@@ -137,13 +137,6 @@ usersRouter.post("/signin", async (req, res) => {
     }
 });
 
-usersRouter.get("/me", authMiddleware, (req, res) => {
-  res.status(200).json({
-    authenticated: true,
-    user: req.user
-  });
-});
-
 //Sign out Route
 usersRouter.get("/signout", async (req, res) => {
     res.clearCookie("authToken");

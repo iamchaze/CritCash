@@ -91,12 +91,6 @@ const SignIn = () => {
                   setCredentialsError("Invalid Credentials");
                   return;
                 }
-
-
-                await axios.get(
-                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/me`,
-                  { withCredentials: true }
-                );
                 setCredentialsError(null);
                 navigate("/dashboard");
               } catch (err) {
