@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -10,7 +10,7 @@ const ProfileNameTag = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const setName = async () => {
-      const response = await axios.get(
+      const response = await api.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getuserdetails/?fields=firstName,lastName,username`,
         { withCredentials: true }
       );

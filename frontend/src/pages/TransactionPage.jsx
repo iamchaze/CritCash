@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 
@@ -90,7 +90,7 @@ const TransactionPage = () => {
           <button
             className="bg-button1 text-primary text-2xl font-[REM] font-bold w-full lg:w-60 p-5 rounded-xl hover:bg-accent2 hover:text-button1 cursor-pointer transition-colors duration-300"
             onClick={async () => {
-              const response = await axios.post(
+              const response = await api.post(
                 `${import.meta.env.VITE_BACKEND_URL}/api/v1/transactions/${
                   task === `acceptpaymentrequest`
                     ? `sendmoney?query=acceptpaymentrequest`

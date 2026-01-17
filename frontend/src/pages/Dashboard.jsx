@@ -6,7 +6,7 @@ import PaymentRequests from "../components/PaymentRequests";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import MobileNavBar from "../components/MobileNavBar";
 
 const Dashboard = () => {
@@ -22,7 +22,7 @@ const Dashboard = () => {
       if (searchTerm.length > 2) {
         setShowDropdown(true);
         try {
-          const res = await axios.get(
+          const res = await api.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getusers?searchquery=${searchTerm}`,
           );
           setResults(res.data.users || []);

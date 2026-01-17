@@ -1,7 +1,7 @@
 // pages/SearchPage.jsx
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import SearchBar from "../components/SearchBar";
 import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
@@ -22,7 +22,7 @@ const SearchPage = () => {
     const fetchUsers = async () => {
       if (searchTerm.length > 2) {
         try {
-          const res = await axios.get(
+          const res = await api.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getusers?searchquery=${searchTerm}`,
             { withCredentials: true }
           );

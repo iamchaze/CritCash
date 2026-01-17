@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 const PaymentRequests = () => {
@@ -10,7 +10,7 @@ const PaymentRequests = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/paymentrequests`,
           { withCredentials: true }
         );

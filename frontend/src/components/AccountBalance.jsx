@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 
 const AccountBalance = () => {
   const [balance, setBalance] = useState(null);
@@ -10,7 +10,7 @@ const AccountBalance = () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get(
+      const { data } = await api.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/balance`,
         { withCredentials: true }
       );

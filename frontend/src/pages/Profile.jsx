@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
@@ -12,7 +12,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/profiledetails/${username}`,
           { withCredentials: true }
         );
@@ -62,7 +62,7 @@ const Profile = () => {
               className="bg-blue-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await axios.post(
+                    const response = await api.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/sendfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -82,7 +82,7 @@ const Profile = () => {
               className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await axios.post(
+                    const response = await api.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/cancelfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -102,7 +102,7 @@ const Profile = () => {
               className="bg-green-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await axios.post(
+                    const response = await api.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/acceptfriendrequest`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -122,7 +122,7 @@ const Profile = () => {
               className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    const response = await axios.post(
+                    const response = await api.post(
                       `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/removefriend`,
                       { username: profileData.username },
                       { withCredentials: true }
@@ -150,7 +150,7 @@ const Profile = () => {
         <button
         className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px]"
         onClick={async () => {
-          await axios
+          await api
             .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signout`, {
               withCredentials: true, // IMPORTANT to allow cookies
             })

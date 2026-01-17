@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import DesktopSideBar from "../components/DesktopSideBar";
 
 const Deposit = () => {
@@ -64,7 +64,7 @@ const Deposit = () => {
           : {}),
       };
 
-      const response = await axios.put(
+      const response = await api.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/deposit`,
         payload,
         {

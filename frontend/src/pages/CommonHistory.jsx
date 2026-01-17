@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import DesktopSideBar from "../components/DesktopSideBar";
 import readableDate from "../utils/readableDate";
 import readableTime from "../utils/readableTime";
@@ -21,7 +21,7 @@ const CommonHistory = () => {
     }
     const fetchCommonHistory = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/history/${userId}`,
           { withCredentials: true }
         );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import CustomLink from "../components/CustomLink";
 import useDebounce from "../utils/debounce";
 import Cookies from "js-cookie";
@@ -70,7 +70,7 @@ const SignIn = () => {
             className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
             onClick={async () => {
               try {
-                const res = await axios.post(
+                const res = await api.post(
                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signin`,
                   { username: debouncedUsername, password }
                 );

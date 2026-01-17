@@ -2,7 +2,7 @@ import React from "react";
 import CustomLink from "../components/CustomLink";
 import { useState, useEffect } from "react";
 import useDebounce from "../utils/debounce";
-import axios from "../utils/axiosConfig";
+import api from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -105,7 +105,7 @@ const SignUp = () => {
         return;
       }
       try {
-        const res = await axios.post(
+        const res = await api.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/usernameValidate`,
           {
             username: debouncedUsername,
@@ -150,7 +150,7 @@ const SignUp = () => {
       }
 
       try {
-        const res = await axios.post(
+        const res = await api.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/emailValidate`,
           {
             email: debouncedEmail,
@@ -189,7 +189,7 @@ const SignUp = () => {
           return;
         }
         try {
-          const res = await axios.post(
+          const res = await api.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/contactValidate`,
             {
               contact: debouncedContact,
@@ -229,7 +229,7 @@ const SignUp = () => {
           return;
         }
         try {
-          const res = await axios.post(
+          const res = await api.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/walletKeyValidate`,
             {
               walletKey: debouncedWalletKey,
