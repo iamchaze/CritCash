@@ -80,6 +80,8 @@ const SignIn = () => {
                   return;
                 }
 
+                console.log("TOKEN RECEIVED:", res.data.token);
+
                 localStorage.setItem("token", res.data.token);
                 navigate("/dashboard");
               } catch (err) {
