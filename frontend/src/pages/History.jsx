@@ -38,7 +38,10 @@ const History = () => {
       <div className="lg:flex h-screen">
         <DesktopSideBar />
         <div className="bg-primary h-screen flex-1">
-          <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM]">
+          <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM] relative">
+            <button className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2" onClick={() => navigate(-1)}>
+            <img src="../../public/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
+          </button>
             <h1>All Transactions</h1>
           </div>
 
@@ -63,7 +66,7 @@ const History = () => {
                       })
                     }
                   >
-                    <div className="flex flex-row justify-between gap-2 items-center">
+                    <div className="flex flex-row justify-between gap-2 items-center relative">
                       <div className="flex flex-row items-center justify-between gap-3">
                         <img
                           src="/images/person1.jpg"
@@ -88,7 +91,7 @@ const History = () => {
                         </div>
                       </div>
                       <div
-                        className={`font-bold py-1 px-4 rounded-full 
+                        className={`font-bold py-1 px-4 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                                   ${
                                     transaction.type === "sent"
                                       ? "bg-red-200 text-red-800"

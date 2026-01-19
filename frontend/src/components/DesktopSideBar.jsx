@@ -11,7 +11,7 @@ const DesktopSideBar = () => {
         <nav className="flex-1 px-4 py-6 space-y-4">
           <Link
             to="/dashboard"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl"
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl active:translate-0.5 transition-all"
           >
             <img src="/images/Home.svg" className="w-6 h-6" alt="home" />
             <span className="font-semibold text-accent1">Home</span>
@@ -19,7 +19,7 @@ const DesktopSideBar = () => {
           <Link
             to="/search"
             state={{ task: "sendmoney" }}
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl"
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl active:translate-0.5 transition-all"
           >
             <img src="/images/Send.svg" className="w-6 h-6" alt="send" />
             <span className="font-semibold text-accent1">Send</span>
@@ -27,21 +27,21 @@ const DesktopSideBar = () => {
           <Link
             to="/search"
             state={{ task: "requestmoney" }}
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl"
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl active:translate-0.5 transition-all"
           >
             <img src="/images/Request.svg" className="w-6 h-6" alt="request" />
             <span className="font-semibold text-accent1">Request</span>
           </Link>
           <Link
             to="/deposit"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl"
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl active:translate-0.5 transition-all"
           >
             <img src="/images/Deposit.svg" className="w-6 h-6" alt="deposit" />
             <span className="font-semibold text-accent1">Deposit</span>
           </Link>
           <Link
             to="/history"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl"
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-button1light hover:shadow-3xl active:translate-0.5 transition-all"
           >
             <img src="/images/History.svg" className="w-6 h-6" alt="history" />
             <span className="font-semibold text-accent1">History</span>

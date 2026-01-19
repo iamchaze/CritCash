@@ -6,9 +6,9 @@ const MobileNavBar = () => {
         to={link}
         state={{ task }}
         style={{ textDecoration: "none", color: "inherit" }}
-        className="flex flex-col items-center gap-1"
+        className="flex flex-col items-center gap-1  active:translate-0.5 transition-all"
       >
-        <div className="bg-button1 w-15 h-15 rounded-full cursor-pointer relative shadow-lg/10 border-2 border-accent4">
+        <div className="bg-button1 w-15 h-15 rounded-full cursor-pointer relative shadow-lg/10 border-2 border-accent4 active:bg-accent2 ">
           <img
             className="w-7 h-7 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             src={svg}

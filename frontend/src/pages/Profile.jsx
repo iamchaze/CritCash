@@ -148,7 +148,7 @@ const Profile = () => {
       {!profileData && <p>Loading profile data...</p>}
       <div className="flex flex-row justify-center">
         <button
-        className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px]"
+        className="bg-red-500 text-white p-3 rounded-2xl font-semibold cursor-pointer hover:shadow-md hover:bg-red-400 active:bg-red:700 transition-all hover:translate-y-[-1px] transition-all"
         onClick={async () => {
           await axios
             .get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signout`, {

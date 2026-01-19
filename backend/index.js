@@ -10,8 +10,13 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.set("trust proxy", 1);
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://crit-cash.vercel.app",
+];
+
 app.use(cors({
-  origin: "https://crit-cash.vercel.app",
+  origin: allowedOrigins,
   credentials: true,
 }));
 

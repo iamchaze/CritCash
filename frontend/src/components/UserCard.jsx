@@ -8,7 +8,7 @@ const UserCard = ({ user, onClick, task }) => {
   return (
     <div className=" cursor-pointer p-2 bg-gray-100">
       <div
-        className="font-[REM] text-lg bg-accent6 py-3 px-5 rounded-2xl"
+        className="font-[REM] text-lg bg-blue-100 py-3 px-5 rounded-2xl"
         key={user.id}
         onClick={
           task === "sendmoney" || task === "requestmoney"

@@ -8,6 +8,7 @@ import UserCard from "../components/UserCard";
 import DesktopSideBar from "../components/DesktopSideBar";
 import axios from "../utils/axiosConfig";
 import MobileNavBar from "../components/MobileNavBar";
+import Autopays from "../components/Autopays";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +68,7 @@ const Dashboard = () => {
       <DesktopSideBar />
       <div className="flex-1">
         {/* Header for mobile view */}
-        <div className="flex items-center justify-between px-5 py-5 lg:hidden">
+        <div className="flex items-center justify-between px-5 py-5 lg:hidden ">
           <ProfileNameTag />
           <a
             href="/settings"
@@ -157,9 +158,7 @@ const Dashboard = () => {
           </div>
 
           <div className="w-auto hidden lg:col-span-2 lg:flex lg:flex-col lg:space-y-6">
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h2 className=" text-lg font-semibold mb-4">Active Autopays</h2>
-            </div>
+            <Autopays />
             <div className="bg-white p-6 rounded-xl shadow">
               <PaymentRequests />
             </div>

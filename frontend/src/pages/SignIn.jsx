@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../utils/axiosConfig";
 import CustomLink from "../components/CustomLink";
@@ -67,7 +67,7 @@ const SignIn = () => {
           </div>
 
           <button
-            className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
+            className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition cursor-pointer active:bg-accent2 active:translate-0.5 transition-all"
             onClick={async () => {
               try {
                 const res = await axios.post(
