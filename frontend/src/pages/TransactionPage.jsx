@@ -33,7 +33,7 @@ const TransactionPage = () => {
         {/* Profile */}
         <div className="flex flex-col items-center">
           <img
-            src="../../public/images/defaultpic.jpg"
+            src="/images/defaultpic.jpg"
             className="m-auto w-28 h-28 lg:w-32 lg:h-32 object-cover rounded-full"
             alt="person"
           />

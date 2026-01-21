@@ -69,7 +69,7 @@ const History = () => {
                     <div className="flex flex-row justify-between gap-2 items-center relative">
                       <div className="flex flex-row items-center justify-between gap-3">
                         <img
-                          src="../../public/images/defaultpic.jpg"
+                          src="/images/defaultpic.jpg"
                           alt="profile image"
                           className="inline w-15 h-15 object-cover rounded-full"
                         />

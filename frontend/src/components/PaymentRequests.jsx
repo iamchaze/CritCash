@@ -51,7 +51,7 @@ const PaymentRequests = () => {
               >
                 <div className="flex items-center justify-start gap-3">
                   <img
-                    src="../../public/images/defaultpic.jpg"
+                    src="/images/defaultpic.jpg"
                     className="h-10 w-10 object-cover rounded-full"
                     alt="profile image"
                   />

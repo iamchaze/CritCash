@@ -34,7 +34,7 @@ const ProfileNameTag = () => {
           navigate(`/profile/${username}`);
         }}
       >
-        <img className="w-10 h-10 object-cover rounded-full border-2 border-accent4" src="../../public/images/defaultpic.jpg" alt="" />
+        <img className="w-10 h-10 object-cover rounded-full border-2 border-accent4" src="/images/defaultpic.jpg" alt="" />
         <p className="font-[REM] font-semibold text-md">{profileNameTag}</p>
       </div>
     </>
