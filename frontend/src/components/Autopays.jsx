@@ -10,7 +10,7 @@ const Autopays = () => {
           onClick={createAutopay}
         >
           <img
-            src="../../public/images/plus-solid.svg"
+            src="/images/plus-solid.svg"
             className="w-6 h-6 text-white fill-white mr-2"
             alt=""
           />
