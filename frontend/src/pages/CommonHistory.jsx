@@ -42,7 +42,7 @@ const CommonHistory = () => {
       <div className="lg:flex h-screen">
         <DesktopSideBar />
         <div className="bg-primary h-screen flex-1">
-          <div className="bg-button1">
+          <div className="bg-button1 hover:bg-button1light">
             <h1 className="text-white text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM]">
               Common Transaction History
             </h1>

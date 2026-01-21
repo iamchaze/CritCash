@@ -67,7 +67,7 @@ const SignIn = () => {
           </div>
 
           <button
-            className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition cursor-pointer active:bg-accent2 active:translate-0.5 transition-all"
+            className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light cursor-pointer active:bg-accent2 active:translate-0.5 transition-all"
             onClick={async () => {
               try {
                 const res = await axios.post(
@@ -79,8 +79,6 @@ const SignIn = () => {
                   setCredentialsError("Invalid Credentials");
                   return;
                 }
-
-                console.log("TOKEN RECEIVED:", res.data.token);
 
                 localStorage.setItem("token", res.data.token);
                 navigate("/dashboard");

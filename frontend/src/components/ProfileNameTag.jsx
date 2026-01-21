@@ -29,12 +29,12 @@ const ProfileNameTag = () => {
   }, []);
   return (
     <>
-      <div className="flex items-center justify-start cursor-pointer gap-4 lg:bg-accent1 p-2 rounded-lg lg:shadow-lg lg:hover:shadow-xl transition-shadow duration-300 active:translate-0.5 transition-all"
+      <div className="flex items-center justify-start cursor-pointer gap-4 lg:bg-accent1 p-2 rounded-lg lg:shadow-lg lg:hover:shadow-xl hover:translate-[-0.1rem] duration-300 active:translate-0.5 transition-all"
         onClick={() => {
           navigate(`/profile/${username}`);
         }}
       >
-        <img className="w-10 h-10 object-cover rounded-full border-2 border-accent4" src="/images/person1.jpg" alt="" />
+        <img className="w-10 h-10 object-cover rounded-full border-2 border-accent4" src="../../public/images/defaultpic.jpg" alt="" />
         <p className="font-[REM] font-semibold text-md">{profileNameTag}</p>
       </div>
     </>

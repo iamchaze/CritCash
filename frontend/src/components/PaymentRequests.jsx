@@ -33,7 +33,9 @@ const PaymentRequests = () => {
 
   return (
     <div>
-      <h1 className="font-[REM] font-bold text-md px-2">Payment Requests</h1>
+      <h1 className="font-[REM] font-semibold text-lg px-2">Payment Requests</h1>
+      <br />
+      <hr />
       {requests === "No payment requests" || !requests ? (
         <p className="text-center p-5 font-[REM]">No Payment Requests</p>
       ) : (
@@ -49,7 +51,7 @@ const PaymentRequests = () => {
               >
                 <div className="flex items-center justify-start gap-3">
                   <img
-                    src="/images/person1.jpg"
+                    src="../../public/images/defaultpic.jpg"
                     className="h-10 w-10 object-cover rounded-full"
                     alt="profile image"
                   />
@@ -69,7 +71,7 @@ const PaymentRequests = () => {
                   {/* <p>Note: {request.requestNote}</p> */}
                 </div>
                 <button
-                  className="bg-button1 text-white text-md font-semibold px-4 py-2 rounded-lg shadow-md"
+                  className="bg-button1 text-white text-md font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-button1light hover:translate-[-0.1rem] active:bg-accent2 active:translate-0.5 transition-all cursor-pointer"
                   onClick={async () => {
                     const user = {
                       requestId: request._id,

@@ -34,7 +34,7 @@ const Profile = () => {
         <div>
           <div className="mt-10 mx-auto mb-5">
             <img
-              src="/images/person1.jpg"
+              src="../../public/images/defaultpic.jpg"
               className="m-auto rounded-full h-20 w-20 object-cover"
               alt=""
             />
