@@ -36,7 +36,7 @@ app.use("/api/v1", mainRouter);
 
 
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome to Paymate</h1>");
+  res.send("<h1>Welcome to CritCash</h1>");
 });
 
 app.listen(PORT, () => {

@@ -21,7 +21,7 @@ const Home = () => {
         <div className="hidden lg:flex items-center justify-between my-10 mx-25">
           <p className="font-[REM] font-bold text-2xl cursor-pointer" onClick={() => {
             navigate("/");
-          }}>PAYMATE.</p>
+          }}>CRITCASH.</p>
           <div className="flex gap-10 items-center">
             <a href="" className="font-[REM] text-lg cursor-pointer">
               About Me
