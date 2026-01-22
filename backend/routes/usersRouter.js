@@ -148,17 +148,17 @@ usersRouter.get("/signout", async (req, res) => {
 //Forgot Password Route
 usersRouter.post("/forgotpassword", async (req, res) => {
     const { email } = req.body;
-
+    console.log("Forgot password request for email:", email);
     const user = await Users.findOne({ "userDetails.email": email });
     if (!user) {
         return res.status(200).json({ message: "invalid" });
     }
-
+    console.log(user);
     const otp = Math.floor(1000 + Math.random() * 9000);
     const expiryTime = 10 * 60;
-
+    console.log(otp);
     await redisClient.setEx(email, expiryTime, JSON.stringify({ otp }));
-
+    
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
