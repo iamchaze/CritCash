@@ -40,7 +40,7 @@ const History = () => {
         <div className="bg-primary h-screen flex-1">
           <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM] relative">
             <button className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2" onClick={() => navigate(-1)}>
-            <img src="../../public/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
+            <img src="/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
           </button>
             <h1>All Transactions</h1>
           </div>
