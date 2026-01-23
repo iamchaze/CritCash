@@ -169,6 +169,9 @@ usersRouter.post("/forgotpassword", async (req, res) => {
                 pass: process.env.EMAIL_PASS,
             },
         });
+        await transporter.verify();
+        console.log("✅ SMTP transporter verified");
+        console.log("EMAIL_USER:", process.env.EMAIL_USER);
 
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
