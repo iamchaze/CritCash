@@ -6,21 +6,12 @@ const { Users } = require("../db"); // Import the Users model from usersSchema.j
 const zod = require("zod");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const Redis = require("redis");
 const authMiddleware = require("../middlewares/authMiddleware");
+const redisClient = require("../middlewares/redisClient");
 
 const JWT = require("jsonwebtoken");
 const usersRouter = express.Router();
-const redisClient = Redis.createClient({
-    url: process.env.REDIS_URL,
-    socket: {
-        tls: false,
-        rejectUnauthorized: false
-    }
 
-});
-
-redisClient.connect().catch(console.error);
 
 usersRouter.use(express.json());
 
@@ -145,47 +136,56 @@ usersRouter.get("/signout", async (req, res) => {
 })
 
 
-//Forgot Password Route
 usersRouter.post("/forgotpassword", async (req, res) => {
-    const { email } = req.body;
-    console.log("Forgot password request for email:", email);
-    const user = await Users.findOne({ "userDetails.email": email });
-    if (!user) {
-        return res.status(200).json({ message: "invalid" });
-    }
-    console.log(user);
-    const otp = Math.floor(1000 + Math.random() * 9000);
-    const expiryTime = 10 * 60;
-    console.log(otp);
-    await redisClient.setEx(email, expiryTime, JSON.stringify({ otp }));
-    
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
+    try {
+        const { email } = req.body;
+        console.log("Forgot password request for email:", email);
 
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Forgot Password OTP",
-        text: `Use This OTP to Reset Your Password: ${otp}
-This OTP will expire in ${expiryTime / 60} minutes.`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error("Error sending email:", error);
-            return res.status(500).json({ message: "Error sending email" });
+        const user = await Users.findOne({ "userDetails.email": email });
+        if (!user) {
+            return res.status(200).json({ message: "invalid" });
         }
-        console.log("Email sent:", info.response); return res.status(200).json({ message: "success" });
-    });
+
+        const otp = Math.floor(1000 + Math.random() * 9000);
+        const expiryTime = 10 * 60;
+        try {
+            await redisClient.setEx(
+                email,
+                expiryTime,
+                JSON.stringify({ otp })
+            );
+            console.log("OTP stored in Redis");
+        } catch (redisError) {
+            console.error("Redis error:", redisError);
+            return res.status(500).json({ message: "OTP service unavailable" });
+        }
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Forgot Password OTP",
+            text: `Use This OTP to Reset Your Password: ${otp}
+This OTP will expire in 10 minutes.`,
+        });
+
+        return res.status(200).json({ message: "success" });
+
+    } catch (err) {
+        console.error("Forgot password error:", err);
+        return res.status(500).json({ message: "Server error" });
+    }
 });
+
 
 //Verify OTP Route
 usersRouter.post("/verifyotp", async (req, res) => {
