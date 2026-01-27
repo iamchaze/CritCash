@@ -16,7 +16,6 @@ const Settings = () => {
             .then((res) => {
               if (res.data.message === "success") {
                 localStorage.removeItem("token");
-                console.log("Sign out successful");
                 navigate("/signin");
               }
             });

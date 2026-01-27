@@ -11,7 +11,6 @@ const TransactionResult = () => {
     const note = location.state?.note;
 
      useEffect(() => {
-            console.log(user, amount, task, note);
       }, []);
 
 

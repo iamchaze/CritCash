@@ -103,7 +103,6 @@ usersRouter.post("/signup", async (req, res) => {
 
 //Sign in Route - production fix cookie issue
 usersRouter.post("/signin", async (req, res) => {
-    console.log("Signin request body:", req.body);
     const { username, password } = req.body;
     const user = await Users.findOne({ "userDetails.username": username });
     if (!user) {
@@ -139,7 +138,7 @@ usersRouter.get("/signout", async (req, res) => {
 usersRouter.post("/forgotpassword", async (req, res) => {
     try {
         const { email } = req.body;
-        console.log("Forgot password request for email:", email);
+       
 
         const user = await Users.findOne({ "userDetails.email": email });
         if (!user) {
@@ -154,7 +153,6 @@ usersRouter.post("/forgotpassword", async (req, res) => {
                 expiryTime,
                 JSON.stringify({ otp })
             );
-            console.log("OTP stored in Redis");
         } catch (redisError) {
             console.error("Redis error:", redisError);
             return res.status(500).json({ message: "OTP service unavailable" });
@@ -170,8 +168,6 @@ usersRouter.post("/forgotpassword", async (req, res) => {
             },
         });
         await transporter.verify();
-        console.log("✅ SMTP transporter verified");
-        console.log("EMAIL_USER:", process.env.EMAIL_USER);
 
         await transporter.sendMail({
             from: process.env.EMAIL_USER,

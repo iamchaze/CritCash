@@ -123,7 +123,6 @@ const TransactionPage = () => {
                 alert("Payment request sent");
                 navigate("/dashboard", { replace: true });
               } else if (response.data.message == "Money transferred") {
-                console.log(response.data);
                 navigate("/transactionresult", { state: { task, user, amount, note } });
               } else {
                 alert(response.data.message);

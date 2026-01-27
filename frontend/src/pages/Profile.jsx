@@ -67,7 +67,6 @@ const Profile = () => {
                       { username: profileData.username },
                       { withCredentials: true }
                     );
-                    console.log(response.data.message);
                     setConnection("sentrequest");
                   } catch {
                     console.log("Error sending friend request");

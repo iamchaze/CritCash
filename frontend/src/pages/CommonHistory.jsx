@@ -25,7 +25,6 @@ const CommonHistory = () => {
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/history/${userId}`,
           { withCredentials: true }
         );
-        console.log(response.data.transactions);
         setTransactions(response.data.transactions || []);
       } catch (err) {
         console.error("Error fetching common history:", err);
