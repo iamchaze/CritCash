@@ -109,7 +109,7 @@ const TransactionPage = () => {
                 navigate("/dashboard", { replace: true });
               } else if (response.data.message == "Money transferred") {
                 alert("Money transferred");
-                navigate("/dashboard", { replace: true });
+                navigate("/transactionresult", { replace: true });
               } else {
                 alert(response.data.message);
               }

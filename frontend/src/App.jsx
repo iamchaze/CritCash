@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import SearchPage from "./pages/SearchPage";
 import TransactionPage from "./pages/TransactionPage";
+import TransactionResult from "./pages/TransactionResult";
 import TransactionDetails from "./pages/TransactionDetails";
 import CommonHistory from "./pages/CommonHistory";
 import Deposit from "./pages/Deposit";
@@ -36,6 +37,7 @@ function App() {
             <Route path="/transactiondetails" element={<TransactionDetails />} />
             <Route path="/commonhistory" element={<CommonHistory />} />
             <Route path="/transaction" element={<TransactionPage />} />
+            <Route path="/transactionresult" element={<TransactionResult />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -40,4 +40,8 @@ const transactionsSchema = new mongoose.Schema({
     }
 })
 
+transactionsSchema.index({ senderUserId: 1, transactionDate: -1 });
+transactionsSchema.index({ receiverUserId: 1, transactionDate: -1 });
+
+
 module.exports = { transactionsSchema };
