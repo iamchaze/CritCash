@@ -24,7 +24,7 @@ const SearchPage = () => {
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/getusers?searchquery=${searchTerm}`,
-            { withCredentials: true }
+            { withCredentials: true },
           );
           setResults(res.data.users || []);
         } catch (err) {
@@ -47,15 +47,22 @@ const SearchPage = () => {
       <DesktopSideBar />
       <div className="flex-1">
         <div className="relative bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM]">
-          <button className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2" onClick={() => navigate(-1)}>
-            <img src="/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
+          <button
+            className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2  hover:cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <img
+              src="/images/arrow-left-solid.svg"
+              alt="Back"
+              className="w-full h-full"
+            />
           </button>
           <h1>
             {task === "sendmoney"
               ? "Send Money"
               : task === "requestmoney"
-              ? "Request Money"
-              : "Search Users"}
+                ? "Request Money"
+                : "Search Users"}
           </h1>
         </div>
 
@@ -68,7 +75,9 @@ const SearchPage = () => {
           />
 
           <div style={{ marginTop: "20px" }}>
-            {searchPerformed && results.length === 0 && <p className="text-center p-10">No users found.</p>}
+            {searchPerformed && results.length === 0 && (
+              <p className="text-center p-10">No users found.</p>
+            )}
             {results.map((user) => (
               <UserCard
                 task={task}

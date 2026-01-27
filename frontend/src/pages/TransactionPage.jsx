@@ -19,16 +19,31 @@ const TransactionPage = () => {
       setRequestAmount(user.requestAmount);
     }
   }, [task, user]);
+
+    
+
   return (
   <>
     <div className="bg-gray-100 h-screen flex flex-col items-center lg:items-stretch justify-between relative">
       
       {/* Top section */}
       <div className="w-full pt-20 lg:pt-10 relative">
+        <button
+              className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2 hover:cursor-pointer"
+              onClick={() => navigate(-1)}
+            >
+              <img
+                src="/images/arrow-left-solid.svg"
+                alt="Back"
+                className="w-full h-full"
+              />
+            </button>
+            </div>
         {/* Split button - only visible on desktop */}
         <button className="hidden lg:block absolute top-5 right-10 bg-button1 text-white px-4 py-2 rounded-lg shadow-md">
           Split With Mates
         </button>
+        
 
         {/* Profile */}
         <div className="flex flex-col items-center">
@@ -71,7 +86,7 @@ const TransactionPage = () => {
             <span className="font-[REM] ml-2">INR</span>
           </div>
         </div>
-      </div>
+  
 
       {/* Note input & Send button */}
       <div className="w-full px-5 lg:px-20">
@@ -108,8 +123,8 @@ const TransactionPage = () => {
                 alert("Payment request sent");
                 navigate("/dashboard", { replace: true });
               } else if (response.data.message == "Money transferred") {
-                alert("Money transferred");
-                navigate("/transactionresult", { replace: true });
+                console.log(response.data);
+                navigate("/transactionresult", { state: { task, user, amount, note } });
               } else {
                 alert(response.data.message);
               }

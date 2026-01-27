@@ -20,7 +20,7 @@ const History = () => {
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/history/`,
           {
             withCredentials: true,
-          }
+          },
         );
         setTransactions(response.data.transactions || []);
       } catch (err) {
@@ -39,9 +39,16 @@ const History = () => {
         <DesktopSideBar />
         <div className="bg-primary h-screen flex-1">
           <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM] relative">
-            <button className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2" onClick={() => navigate(-1)}>
-            <img src="/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
-          </button>
+            <button
+              className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2  hover:cursor-pointer"
+              onClick={() => navigate(-1)}
+            >
+              <img
+                src="/images/arrow-left-solid.svg"
+                alt="Back"
+                className="w-full h-full"
+              />
+            </button>
             <h1>All Transactions</h1>
           </div>
 
@@ -77,17 +84,17 @@ const History = () => {
                           {" "}
                           {transaction.type === "sent"
                             ? `${titleCase(
-                                transaction.receiverDetails.firstName
+                                transaction.receiverDetails.firstName,
                               )} ${titleCase(
-                                transaction.receiverDetails.lastName
+                                transaction.receiverDetails.lastName,
                               )}`
                             : transaction.type === "received"
-                            ? `${titleCase(
-                                transaction.senderDetails.firstName
-                              )} ${titleCase(
-                                transaction.senderDetails.lastName
-                              )}`
-                            : "error"}
+                              ? `${titleCase(
+                                  transaction.senderDetails.firstName,
+                                )} ${titleCase(
+                                  transaction.senderDetails.lastName,
+                                )}`
+                              : "error"}
                         </div>
                       </div>
                       <div

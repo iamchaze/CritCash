@@ -5,12 +5,11 @@ const usersRouter = require('./usersRouter');
 const transactionsRouter = require('./transactionsRouter');
 const accountsRouter = require('./accountsRouter');
 const depositsRouter = require('./depositsRouter');
-const payRequestsRouter = require('./payRequestsRouter');
 
 mainRouter.use("/users", usersRouter)
 mainRouter.use("/accounts", accountsRouter);
 mainRouter.use("/transactions", transactionsRouter)
-// mainRouter.use("/transactions", transactionsRouter)
+// mainRouter.use("/transactions", transactionsRouter);
 // mainRouter.use("/accounts", accountsRouter);
 // mainRouter.use("/deposits", depositsRouter);
 // mainRouter.use("/payRequests", payRequestsRouter);

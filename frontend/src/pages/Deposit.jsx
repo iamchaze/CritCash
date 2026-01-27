@@ -26,7 +26,7 @@ const Deposit = () => {
   const requestOtp = async () => {
     try {
       alert(
-        "OTP requested. Please check your registered mobile number or email."
+        "OTP requested. Please check your registered mobile number or email.",
       );
     } catch (error) {
       console.error("OTP request failed:", error);
@@ -69,7 +69,7 @@ const Deposit = () => {
         payload,
         {
           withCredentials: true,
-        }
+        },
       );
 
       if (response.data.message !== "successful") {
@@ -230,9 +230,16 @@ const Deposit = () => {
 
         <div className="w-full h-full rounded-xl lg:rounded-none shadow-2xl overflow-hidden border border-gray-100">
           <div className=" bg-accent2 text-center p-5 lg:p-7 text-2xl lg:text-3xl font-bold font-[REM] relative">
-            <button className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2" onClick={() => navigate(-1)}>
-            <img src="/images/arrow-left-solid.svg" alt="Back" className="w-full h-full"  />
-          </button>
+            <button
+              className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2 hover:cursor-pointer"
+              onClick={() => navigate(-1)}
+            >
+              <img
+                src="/images/arrow-left-solid.svg"
+                alt="Back"
+                className="w-full h-full"
+              />
+            </button>
             <h1>Deposit</h1>
           </div>
           <header className="flex justify-between items-center px-4 py-3 bg-accent6">

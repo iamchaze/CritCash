@@ -14,7 +14,7 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
     const amount = req.body.amount * 100;
     const query = req.query.query;
     // Validate the request
-    
+     
     if (!to || !amount || !from) {
         return res.status(200).json({ message: 'Invalid request' });
     }
