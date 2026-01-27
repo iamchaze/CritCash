@@ -141,7 +141,6 @@ const Deposit = () => {
       <StyledInput
         placeholder="Enter Amount"
         name="amount"
-        type="number"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
@@ -269,8 +268,8 @@ const Deposit = () => {
                   paddingRight: "2.5rem",
                 }}
               >
-                <option value="debit">Debit Card</option>
-                <option value="credit">Credit Card</option>
+                {/* <option value="debit">Debit Card</option>
+                <option value="credit">Credit Card</option> */}
                 <option value="bank">Bank Transfer</option>
                 <option value="paypal">PayPal</option>
                 <option value="crypto">Cryptocurrency</option>

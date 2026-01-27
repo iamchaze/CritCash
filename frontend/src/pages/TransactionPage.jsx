@@ -20,30 +20,26 @@ const TransactionPage = () => {
     }
   }, [task, user]);
 
-    
-
   return (
-  <>
-    <div className="bg-gray-100 h-screen flex flex-col items-center lg:items-stretch justify-between relative">
-      
-      {/* Top section */}
-      <div className="w-full pt-20 lg:pt-10 relative">
-        <button
-              className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2 hover:cursor-pointer"
-              onClick={() => navigate(-1)}
-            >
-              <img
-                src="/images/arrow-left-solid.svg"
-                alt="Back"
-                className="w-full h-full"
-              />
-            </button>
-            </div>
+    <>
+      <div className="bg-gray-100 h-screen flex flex-col items-center lg:items-stretch justify-between relative">
+        {/* Top section */}
+        <div className="w-full pt-20 lg:pt-10 relative">
+          <button
+            className="lg:hidden w-7 h-7 absolute left-5 top-1/2 -translate-y-1/2 hover:cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <img
+              src="/images/arrow-left-solid.svg"
+              alt="Back"
+              className="w-full h-full"
+            />
+          </button>
+        </div>
         {/* Split button - only visible on desktop */}
         <button className="hidden lg:block absolute top-5 right-10 bg-button1 text-white px-4 py-2 rounded-lg shadow-md">
           Split With Mates
         </button>
-        
 
         {/* Profile */}
         <div className="flex flex-col items-center">
@@ -59,8 +55,8 @@ const TransactionPage = () => {
                     task === "sendmoney" || task === "acceptpaymentrequest"
                       ? "Paying"
                       : task === "requestmoney"
-                      ? "Requesting from"
-                      : "Unknown Transaction"
+                        ? "Requesting from"
+                        : "Unknown Transaction"
                   }`
                 : "Unknown Transaction"}
               <div className="bg-accent2 font-bold w-fit block m-auto mt-2 px-3 py-1 rounded-xl">
@@ -86,61 +82,62 @@ const TransactionPage = () => {
             <span className="font-[REM] ml-2">INR</span>
           </div>
         </div>
-  
 
-      {/* Note input & Send button */}
-      <div className="w-full px-5 lg:px-20">
-        <div className="p-5 lg:w-[500px] m-auto">
-          <input
-            className="bg-gray-200 font-[REM] text-center py-3 font-light w-full p-2 rounded-lg "
-            type="text"
-            placeholder="Add Note"
-            value={task === "acceptpaymentrequest" ? user.requestNote : note}
-            disabled={task === "acceptpaymentrequest"}
-            onChange={(e) => setNote(e.target.value)}
-          />
-        </div>
+        {/* Note input & Send button */}
+        <div className="w-full px-5 lg:px-20">
+          <div className="p-5 lg:w-[500px] m-auto">
+            <input
+              className="bg-gray-200 font-[REM] text-center py-3 font-light w-full p-2 rounded-lg "
+              type="text"
+              placeholder="Add Note"
+              value={task === "acceptpaymentrequest" ? user.requestNote : note}
+              disabled={task === "acceptpaymentrequest"}
+              onChange={(e) => setNote(e.target.value)}
+            />
+          </div>
 
-        <div className="flex justify-center lg:justify-end items-center m-5">
-          <button
-            className="bg-button1 text-primary text-2xl font-[REM] font-bold w-full lg:w-60 p-5 rounded-xl hover:bg-accent2 hover:text-button1 cursor-pointer transition-colors duration-300"
-            onClick={async () => {
-              const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/v1/transactions/${
-                  task === `acceptpaymentrequest`
-                    ? `sendmoney?query=acceptpaymentrequest`
-                    : task
-                }`,
-                {
-                  to: user,
-                  amount:
-                    task === "acceptpaymentrequest" ? requestAmount : amount,
-                  note: note !== "" ? note : null,
-                },
-                { withCredentials: true }
-              );
-              if (response.data.message == "Payment request sent") {
-                alert("Payment request sent");
-                navigate("/dashboard", { replace: true });
-              } else if (response.data.message == "Money transferred") {
-                navigate("/transactionresult", { state: { task, user, amount, note } });
-              } else {
-                alert(response.data.message);
-              }
-            }}
-          >
-            {task === "sendmoney" || task === "acceptpaymentrequest"
-              ? `Send Money`
-              : task === "requestmoney"
-              ? `Request Money`
-              : `Unknown Transaction`}
-          </button>
+          <div className="flex justify-center lg:justify-end items-center m-5">
+            <button
+              className="bg-button1 text-primary text-2xl font-[REM] font-bold w-full lg:w-60 p-5 rounded-xl hover:bg-accent2 hover:text-button1 cursor-pointer transition-colors duration-300"
+              onClick={async () => {
+                const response = await axios.post(
+                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/transactions/${
+                    task === `acceptpaymentrequest`
+                      ? `sendmoney?query=acceptpaymentrequest`
+                      : task
+                  }`,
+                  {
+                    to: user,
+                    amount:
+                      task === "acceptpaymentrequest" ? requestAmount : amount,
+                    note: note !== "" ? note : null,
+                  },
+                  { withCredentials: true },
+                );
+                if (response.data.message == "Payment request sent") {
+                  alert("Payment request sent");
+                  navigate("/dashboard", { replace: true });
+                } else if (response.data.message == "Money transferred") {
+                  navigate("/transactionresult", {
+                    state: { user, amount, result: "success" },
+                  });
+                } else {
+                  alert(response.data.message);
+                  navigate("/transactionresult", { state: { user, amount, result: "failed", message: response.data.message } });
+                }
+              }}
+            >
+              {task === "sendmoney" || task === "acceptpaymentrequest"
+                ? `Send Money`
+                : task === "requestmoney"
+                  ? `Request Money`
+                  : `Unknown Transaction`}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
-
+    </>
+  );
 };
 
 export default TransactionPage;

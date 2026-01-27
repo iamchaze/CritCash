@@ -168,6 +168,11 @@ const Dashboard = () => {
           <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5 lg:hidden">
             <PaymentRequests />
           </div>
+          <br />
+          <br />
+          <div>
+            <Autopays />
+          </div>
         </div>
       </div>
     </div>
