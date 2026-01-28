@@ -3,6 +3,151 @@ import { useNavigate } from "react-router-dom";
 import axios from "../utils/axiosConfig";
 import DesktopSideBar from "../components/DesktopSideBar";
 
+// Reusable styled input component, defined outside to avoid remounts
+const StyledInput = ({
+  placeholder,
+  type = "text",
+  name,
+  value,
+  onChange,
+  className = "",
+  required = true,
+}) => (
+  <input
+    type={type}
+    placeholder={placeholder}
+    name={name}
+    value={value}
+    onChange={onChange}
+    required={required}
+    className={`w-full lg:w-fit lg:flex lg:flex-row lg:justify-around p-3 lg:pr-10 my-2 text-sm text-gray-700 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder:text-gray-400 ${className}`}
+    style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.05) inset" }}
+  />
+);
+
+// Card details input group for debit/credit, defined outside so inputs keep focus
+const CardDetailsInputs = ({
+  cardDetails,
+  amount,
+  otp,
+  onCardDetailChange,
+  onAmountChange,
+  onOtpChange,
+  onRequestOtp,
+}) => (
+  <>
+    <StyledInput
+      placeholder="Enter Card Holder's Name"
+      name="cardHolderName"
+      value={cardDetails.cardHolderName}
+      onChange={onCardDetailChange}
+    />
+    <StyledInput
+      placeholder="Enter Card Number"
+      name="cardNumber"
+      type="tel"
+      value={cardDetails.cardNumber}
+      onChange={onCardDetailChange}
+    />
+    <div className="flex space-x-2 my-2">
+      <StyledInput
+        placeholder="Expiry Date (MM/YY)"
+        name="expiryDate"
+        value={cardDetails.expiryDate}
+        onChange={onCardDetailChange}
+        className="w-1/2"
+      />
+      <StyledInput
+        placeholder="CVV"
+        name="cvv"
+        type="password"
+        value={cardDetails.cvv}
+        onChange={onCardDetailChange}
+        className="w-1/2"
+      />
+    </div>
+    <StyledInput
+      placeholder="Enter Amount"
+      name="amount"
+      value={amount}
+      onChange={onAmountChange}
+    />
+
+    <button
+      onClick={onRequestOtp}
+      className="w-full lg:w-fit lg:px-5 lg:block py-3 mt-4 text-white font-semibold  rounded-lg shadow-lg bg-button1 hover:bg-button1light cursor-pointer transition duration-150"
+    >
+      Generate OTP
+    </button>
+
+    <StyledInput
+      placeholder="Enter OTP"
+      name="otp"
+      type="text"
+      value={otp}
+      onChange={onOtpChange}
+      className="mt-4"
+    />
+  </>
+);
+
+// Helper component to render the alternative payment method details
+const OtherPaymentDetails = ({ paymentMethod }) => {
+  switch (paymentMethod) {
+    case "bank":
+      return (
+        <>
+          <h2 className="text-lg font-semibold text-gray-800 my-4">
+            Bank Transfer Details
+          </h2>
+          <StyledInput placeholder="Account Number" name="accountNumber" />
+          <StyledInput placeholder="IFSC Code" name="ifscCode" />
+          <StyledInput
+            placeholder="Account Holder Name"
+            name="bankHolderName"
+          />
+        </>
+      );
+    case "paypal":
+      return (
+        <>
+          <h2 className="text-lg font-semibold text-gray-800 my-4">
+            PayPal Details
+          </h2>
+          <StyledInput
+            placeholder="PayPal Email"
+            name="paypalEmail"
+            type="email"
+          />
+        </>
+      );
+    case "crypto":
+      return (
+        <>
+          <h2 className="text-lg font-semibold text-gray-800 my-4">
+            Crypto Payment
+          </h2>
+          <StyledInput placeholder="Wallet Address" name="walletAddress" />
+          <StyledInput
+            placeholder="Crypto Type (BTC/ETH)"
+            name="cryptoType"
+          />
+        </>
+      );
+    case "upi":
+      return (
+        <>
+          <h2 className="text-lg font-semibold text-gray-800 my-4">
+            UPI Payment
+          </h2>
+          <StyledInput placeholder="UPI ID (e.g., name@bank)" name="upiId" />
+        </>
+      );
+    default:
+      return null;
+  }
+};
+
 const Deposit = () => {
   const [paymentMethod, setPaymentMethod] = useState("debit");
   const [amount, setAmount] = useState("");
@@ -84,144 +229,6 @@ const Deposit = () => {
     }
   };
 
-  const StyledInput = ({
-    placeholder,
-    type = "text",
-    name,
-    value,
-    onChange,
-    className = "",
-    required = true,
-  }) => (
-    <input
-      type={type}
-      placeholder={placeholder}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className={`w-full lg:w-fit lg:flex lg:flex-row lg:justify-around p-3 lg:pr-10 my-2 text-sm text-gray-700 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder:text-gray-400 ${className}`}
-      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.05) inset" }}
-    />
-  );
-
-  // Helper function to render the card details input group
-  const CardDetailsInputs = () => (
-    <>
-      <StyledInput
-        placeholder="Enter Card Holder's Name"
-        name="cardHolderName"
-        value={cardDetails.cardHolderName}
-        onChange={handleCardDetailChange}
-      />
-      <StyledInput
-        placeholder="Enter Card Number"
-        name="cardNumber"
-        type="tel"
-        value={cardDetails.cardNumber}
-        onChange={handleCardDetailChange}
-      />
-      <div className="flex space-x-2 my-2">
-        <StyledInput
-          placeholder="Expiry Date (MM/YY)"
-          name="expiryDate"
-          value={cardDetails.expiryDate}
-          onChange={handleCardDetailChange}
-          className="w-1/2"
-        />
-        <StyledInput
-          placeholder="CVV"
-          name="cvv"
-          type="password"
-          value={cardDetails.cvv}
-          onChange={handleCardDetailChange}
-          className="w-1/2"
-        />
-      </div>
-      <StyledInput
-        placeholder="Enter Amount"
-        name="amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-
-      {/* Updated: Button now calls requestOtp() */}
-      <button
-        onClick={requestOtp}
-        className="w-full lg:w-fit lg:px-5 lg:block py-3 mt-4 text-white font-semibold  rounded-lg shadow-lg bg-button1 hover:bg-button1light cursor-pointer transition duration-150"
-      >
-        Generate OTP
-      </button>
-
-      <StyledInput
-        placeholder="Enter OTP"
-        name="otp"
-        type="text"
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-        className="mt-4"
-      />
-    </>
-  );
-
-  // Helper function to render the alternative payment method details
-  const OtherPaymentDetails = () => {
-    // ... (Rest of the OtherPaymentDetails function remains the same as before)
-    switch (paymentMethod) {
-      case "bank":
-        return (
-          <>
-            <h2 className="text-lg font-semibold text-gray-800 my-4">
-              Bank Transfer Details
-            </h2>
-            <StyledInput placeholder="Account Number" name="accountNumber" />
-            <StyledInput placeholder="IFSC Code" name="ifscCode" />
-            <StyledInput
-              placeholder="Account Holder Name"
-              name="bankHolderName"
-            />
-          </>
-        );
-      case "paypal":
-        return (
-          <>
-            <h2 className="text-lg font-semibold text-gray-800 my-4">
-              PayPal Details
-            </h2>
-            <StyledInput
-              placeholder="PayPal Email"
-              name="paypalEmail"
-              type="email"
-            />
-          </>
-        );
-      case "crypto":
-        return (
-          <>
-            <h2 className="text-lg font-semibold text-gray-800 my-4">
-              Crypto Payment
-            </h2>
-            <StyledInput placeholder="Wallet Address" name="walletAddress" />
-            <StyledInput
-              placeholder="Crypto Type (BTC/ETH)"
-              name="cryptoType"
-            />
-          </>
-        );
-      case "upi":
-        return (
-          <>
-            <h2 className="text-lg font-semibold text-gray-800 my-4">
-              UPI Payment
-            </h2>
-            <StyledInput placeholder="UPI ID (e.g., name@bank)" name="upiId" />
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <>
       <div className="lg:flex h-screen">
@@ -268,8 +275,8 @@ const Deposit = () => {
                   paddingRight: "2.5rem",
                 }}
               >
-                {/* <option value="debit">Debit Card</option>
-                <option value="credit">Credit Card</option> */}
+                <option value="debit">Debit Card</option>
+                <option value="credit">Credit Card</option>
                 <option value="bank">Bank Transfer</option>
                 <option value="paypal">PayPal</option>
                 <option value="crypto">Cryptocurrency</option>
@@ -278,10 +285,18 @@ const Deposit = () => {
             </div>
 
             {paymentMethod === "debit" || paymentMethod === "credit" ? (
-              <CardDetailsInputs />
+              <CardDetailsInputs
+                cardDetails={cardDetails}
+                amount={amount}
+                otp={otp}
+                onCardDetailChange={handleCardDetailChange}
+                onAmountChange={(e) => setAmount(e.target.value)}
+                onOtpChange={(e) => setOtp(e.target.value)}
+                onRequestOtp={requestOtp}
+              />
             ) : (
               <>
-                {OtherPaymentDetails()}
+                <OtherPaymentDetails paymentMethod={paymentMethod} />
                 <StyledInput
                   placeholder="Enter Amount"
                   name="amount"
