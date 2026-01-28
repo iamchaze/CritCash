@@ -39,7 +39,7 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
     await Users.updateOne({ _id: fromAccount._id }, { $inc: { "accountDetails.balance": -amount } })
     await Users.updateOne({ _id: toAccount._id }, { $inc: { "accountDetails.balance": amount } })
 
-    await Transactions.create({
+    const transaction = await Transactions.create({
         senderUserId: from.id,
         receiverUserId: to.id,
         transactionAmount: amount,
@@ -59,7 +59,8 @@ transactionsRouter.post('/sendmoney', async (req, res) => {
 
     await session.commitTransaction();
     res.send({
-        message: `Money transferred`
+        message: `Money transferred`,
+        transactionId: transaction._id
     })
 })
 

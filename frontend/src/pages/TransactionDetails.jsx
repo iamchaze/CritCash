@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../utils/axiosConfig";
 import titleCase from "../utils/titleCase";
 import DesktopSideBar from "../components/DesktopSideBar";
 import readableDate from "../utils/readableDate";
 import readableTime from "../utils/readableTime";
 const TransactionDetails = () => {
   const location = useLocation();
-  const transaction = location.state?.transaction;
   const navigate = useNavigate();
+
+  const initialTransaction = location.state?.transaction || null;
+  const transactionId = location.state?.transactionId || null;
+
+  const [transaction, setTransaction] = useState(initialTransaction);
+  const [loading, setLoading] = useState(!initialTransaction && !!transactionId);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      if (transaction || !transactionId) {
+        return;
+      }
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/accounts/history/transaction/${transactionId}`,
+          { withCredentials: true },
+        );
+        setTransaction(response.data.transaction || null);
+        if (!response.data.transaction) {
+          setError("No transaction details available.");
+        }
+      } catch (err) {
+        console.error("Error fetching transaction details:", err);
+        setError("Failed to load transaction details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransaction();
+  }, [transaction, transactionId]);
+
+  if (loading) {
+    return <p>Loading transaction details...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!transaction) {
     return <p>No transaction details available.</p>;
   }

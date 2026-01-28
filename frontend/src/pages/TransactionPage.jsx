@@ -119,10 +119,14 @@ const TransactionPage = () => {
                   navigate("/dashboard", { replace: true });
                 } else if (response.data.message == "Money transferred") {
                   navigate("/transactionresult", {
-                    state: { user, amount, result: "success" },
+                    state: {
+                      user,
+                      amount,
+                      result: "success",
+                      transactionId: response.data.transactionId,
+                    },
                   });
                 } else {
-                  alert(response.data.message);
                   navigate("/transactionresult", { state: { user, amount, result: "failed", message: response.data.message } });
                 }
               }}

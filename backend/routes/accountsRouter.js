@@ -140,6 +140,57 @@ accountsRouter.get('/history/:userId', async (req, res) => {
     }
 })
 
+// Get details of a single transaction visible to the authenticated user
+accountsRouter.get('/history/transaction/:transactionId', async (req, res) => {
+    const authUserId = req.user.id;
+    const { transactionId } = req.params;
+
+    const transactionDoc = await Transactions.findOne({
+        _id: transactionId,
+        $or: [
+            { senderUserId: authUserId },
+            { receiverUserId: authUserId }
+        ]
+    });
+
+    if (!transactionDoc) {
+        return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    const transaction = {
+        id: transactionDoc._id,
+        date: transactionDoc.transactionDate,
+        time: transactionDoc.transactionTime,
+        amount: transactionDoc.transactionAmount / 100,
+        status: transactionDoc.transactionStatus,
+        type: transactionDoc.senderUserId === authUserId ? 'sent' : 'received',
+        senderUserId: transactionDoc.senderUserId,
+        receiverUserId: transactionDoc.receiverUserId,
+        note: transactionDoc.transactionNote || null
+    };
+
+    const userDetails = await Users.find({
+        _id: { $in: [transaction.senderUserId, transaction.receiverUserId] }
+    });
+
+    const sender = userDetails.find(user => user._id.toString() === transaction.senderUserId.toString());
+    const receiver = userDetails.find(user => user._id.toString() === transaction.receiverUserId.toString());
+
+    transaction.senderDetails = sender ? {
+        firstName: sender.userDetails.firstName,
+        lastName: sender.userDetails.lastName,
+        username: sender.userDetails.username,
+    } : null;
+
+    transaction.receiverDetails = receiver ? {
+        firstName: receiver.userDetails.firstName,
+        lastName: receiver.userDetails.lastName,
+        username: receiver.userDetails.username,
+    } : null;
+
+    return res.status(200).json({ transaction });
+})
+
 
 accountsRouter.put('/deposit', async (req, res) => {
     const amount= req.body.amount * 100;

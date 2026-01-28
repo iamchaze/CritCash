@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import titleCase from "../utils/titleCase";
 
@@ -9,6 +8,7 @@ const TransactionResult = () => {
   const amount = location.state?.amount;
   const result = location.state?.result;
   const message = location.state?.message;
+  const transactionId = location.state?.transactionId;
 
   return (
     <>
@@ -75,13 +75,18 @@ const TransactionResult = () => {
           </div>
           <div
             className={`bg-button1 py-3 px-5 lg:py-5 lg:px:7 text-white font-[REM] font-bold rounded-md hover:bg-button1dark hover:cursor-pointer hover:translate-[-0.1rem] active:translate-0.5 active:bg-button1light active:cursor-pointer transition-all duration-300 ${result === "success" ? `block` : `hidden`}`}
-            onClick={() =>
-              navigate("/transactiondetails", {
-                state: {
-                  transaction: { user, amount, date: new Date(), type: "sent" },
-                },
-              })
-            }
+            onClick={() => {
+              if (transactionId) {
+                navigate("/transactiondetails", {
+                  state: {
+                    transactionId,
+                  },
+                });
+              } else {
+                // Fallback: go to full history if no specific transaction id is available
+                navigate("/history");
+              }
+            }}
           >
             <button className="hover:cursor-pointer lg:text-3xl">
               View Details
