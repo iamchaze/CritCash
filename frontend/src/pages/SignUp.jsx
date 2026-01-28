@@ -451,7 +451,7 @@ const SignUp = () => {
 
             {/* Submit */}
             <button
-              className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light transition"
+              className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light hover:cursor-pointer hover:translate-[-0.1rem] active:translate-0.5 active:bg-button1dark active:cursor-pointer transition-all duration-300"
               onClick={async () => {
                 if (
                   firstNameError ||

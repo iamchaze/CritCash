@@ -45,8 +45,6 @@ const Dashboard = () => {
     navigate("/friendprofile", { state: { task: "gotoprofile", user } });
   };
 
-
-  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -83,7 +81,9 @@ const Dashboard = () => {
         </div>
         {/* Desktop Header */}
         <div className="hidden lg:flex items-center justify-between px-6 py-4.5 bg-button1">
-          <h1 className="text-2xl font-semibold font-[REM] text-white">Dashboard</h1>
+          <h1 className="text-2xl font-semibold font-[REM] text-white">
+            Dashboard
+          </h1>
           <div
             className="w-100 lg:w-100 xl:w-150 max-w-150 transition-all duration-300 ease-in-out"
             style={{ position: "relative" }}
@@ -118,7 +118,6 @@ const Dashboard = () => {
                 alt="dark mode"
               />
             </button>
-           
           </div>
         </div>
         {/* Mobile size */}
@@ -156,7 +155,7 @@ const Dashboard = () => {
           <div className="flex justify-around items-center mx-5 lg:hidden">
             <MobileNavBar />
           </div>
-
+          {/* Desktop Size */}
           <div className="w-auto hidden lg:col-span-2 lg:flex lg:flex-col lg:space-y-6">
             <Autopays />
             <div className="bg-white p-6 rounded-xl shadow">
@@ -164,14 +163,16 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Mobile Payment Requests */}
-          <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5 lg:hidden">
-            <PaymentRequests />
-          </div>
-          <br />
-          <br />
-          <div>
-            <Autopays />
+          {/* Mobile Size */}
+          <div className="lg:hidden">
+            <div className="bg-primary rounded-t-2xl shadow-lg p-5 mt-5">
+              <PaymentRequests />
+            </div>
+            <br />
+            <br />
+            <div>
+              <Autopays />
+            </div>
           </div>
         </div>
       </div>
