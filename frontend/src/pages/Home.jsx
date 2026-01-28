@@ -58,9 +58,44 @@ const Home = () => {
         <div className="text-center text-lg underline font-[REM] lg:hidden">
           <CustomLink link="signin" text="Already Have an Account? Sign In" />
         </div>
-        <div className="hidden lg:block">
-          <img src="/images/Iphonetheme.png" alt="" />
-        </div>
+
+        {/* Feature highlight section */}
+        <section className="mt-16 px-6 lg:px-25 py-10">
+          <div className="max-w-5xl mx-auto bg-white/70 backdrop-blur-md rounded-3xl shadow-lg border border-accent2/50">
+            <div className="grid gap-10 lg:grid-cols-2 items-center p-8 lg:p-12">
+              <div className="flex justify-center">
+                <img
+                  src="/images/Iphonetheme.png"
+                  alt="CritCash app preview"
+                  className="w-64 lg:w-80 drop-shadow-xl"
+                />
+              </div>
+              <div className="space-y-4 text-left font-[REM]">
+                <h2 className="text-2xl lg:text-3xl font-bold text-button1">
+                  All your payments in one smart app
+                </h2>
+                <p className="text-gray-700">
+                  Manage deposits, track transactions, and send or request money securely with a clean,
+                  intuitive interface designed for everyday use.
+                </p>
+                <ul className="space-y-2 text-gray-800">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-accent4" />
+                    <span>Instant transfers with real-time transaction status.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-accent5" />
+                    <span>Clear history and detailed breakdown of every payment.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-accent3" />
+                    <span>Modern, responsive experience across desktop and mobile.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );

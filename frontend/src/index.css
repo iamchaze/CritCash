@@ -6,30 +6,26 @@
     --breakpoint-lg: 976px;
     --breakpoint-xl: 1600px;
 
-    /* Finance-focused, semantic palette */
-    /* Soft app background */
-    --color-primary: #F4FBF7;
-    /* Lightest accent – panels, subtle highlights */
-    --color-accent1: #E6F7F0;
-    /* Primary accent – cards, key sections */
-    --color-accent2: #C7EEE0;
-    /* Stronger accent – secondary emphasis */
-    --color-accent3: #9FDDC5;
-    /* Success / positive amounts */
-    --color-accent4: #22C55E;
-    /* Informational / secondary CTAs */
-    --color-accent5: #1D4ED8;
-    /* Soft info background – chips, pills */
-    --color-accent6: #DBEAFE;
+    /* App-wide palette based on provided blues */
+    /* Background */
+    --color-primary: #f7fbfd;
+    /* Light background accents */
+    --color-accent1: #f0f7fc;
+    --color-accent2: #e4f0fb;
+    --color-accent3: #d6e9f9;
+    /* Stronger accents derived from primary/secondary/accent */
+    --color-accent4: #4598cf; /* primary */
+    --color-accent5: #87bfe5; /* secondary */
+    --color-accent6: #67b1e3; /* accent */
 
-    /* Primary action button and states */
-    --color-button1: #0F766E;
-    --color-button1light: #14B8A6;
-    --color-button1dark: #115E59;
+    /* Primary buttons (use primary and a darker/lighter variant) */
+    --color-button1: #4598cf;
+    --color-button1light: #67b1e3;
+    --color-button1dark: #2f76a8;
 
-    /* Inputs and text fields */
-    --color-textboxbg: #F9FAFB;
-    --color-textboxborder: #D1D5DB;
+    /* Inputs and text fields: keep light and neutral with slight blue hint */
+    --color-textboxbg: #f7fbfd;
+    --color-textboxborder: #d0e2f3;
 }
 
 .left-rectangle {
