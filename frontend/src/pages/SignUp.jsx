@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useDebounce from "../utils/debounce";
 import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import DotLoader from "../components/DotLoader";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const SignUp = () => {
   const [createPassword, setCreatePassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [walletKey, setWalletKey] = useState("");
+  const [signupLoader, setSignupLoader] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
 
   //Error/Success states
   const [firstNameError, setFirstNameError] = useState(null);
@@ -34,6 +37,24 @@ const SignUp = () => {
   const debouncedCreatePassword = useDebounce(createPassword, 500);
   const debouncedConfirmPassword = useDebounce(confirmPassword, 500);
   const debouncedWalletKey = useDebounce(walletKey, 500);
+
+  const isDisabled =
+    !debouncedFirstName ||
+    !debouncedLastName ||
+    !debouncedUsername ||
+    !debouncedEmail ||
+    !debouncedContact ||
+    !debouncedCreatePassword ||
+    !debouncedConfirmPassword ||
+    !debouncedWalletKey ||
+    firstNameError ||
+    lastNameError ||
+    usernameError !== "Username is available." ||
+    emailError ||
+    contactError ||
+    createPasswordError ||
+    confirmPasswordError ||
+    walletKeyError;
 
   //First name validation
   useEffect(() => {
@@ -109,7 +130,7 @@ const SignUp = () => {
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/usernameValidate`,
           {
             username: debouncedUsername,
-          }
+          },
         );
         if (isMounted) {
           if (res.data?.available) {
@@ -143,7 +164,7 @@ const SignUp = () => {
         return;
       }
 
-      const emailRegex = /@.*\.com$/;
+      const emailRegex = /^[^@]+@.*\.com$/;
       if (emailRegex.test(debouncedEmail) == false) {
         setEmailError("Email is not valid.");
         return;
@@ -154,7 +175,7 @@ const SignUp = () => {
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/emailValidate`,
           {
             email: debouncedEmail,
-          }
+          },
         );
         if (isMounted) {
           if (res.data?.available) {
@@ -193,7 +214,7 @@ const SignUp = () => {
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/contactValidate`,
             {
               contact: debouncedContact,
-            }
+            },
           );
           if (isMounted) {
             if (res.data?.available) {
@@ -224,7 +245,7 @@ const SignUp = () => {
         const walletKeyRegex = /^[A-Za-z0-9]{8,}$/;
         if (walletKeyRegex.test(debouncedWalletKey) == false) {
           setWalletKeyError(
-            "Wallet Key must be at least 8 characters long and contain only alphanumeric characters."
+            "Wallet Key must be at least 8 characters long and contain only alphanumeric characters.",
           );
           return;
         }
@@ -233,7 +254,7 @@ const SignUp = () => {
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/walletKeyValidate`,
             {
               walletKey: debouncedWalletKey,
-            }
+            },
           );
           if (isMounted) {
             if (res.data?.available) {
@@ -262,7 +283,7 @@ const SignUp = () => {
       const validatePassword = async () => {
         if (debouncedCreatePassword.length < 8) {
           setCreatePasswordError(
-            "Password must be at least 8 characters long."
+            "Password must be at least 8 characters long.",
           );
         } else {
           setCreatePasswordError(null);
@@ -288,16 +309,18 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1">
+      <div className={`min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1`}>
         <div
           className="hidden lg:inline-block relative min-w-100  w-200 lg:min-h-screen bg-cover bg-center rounded-md"
           style={{
             backgroundImage: "url('/images/DeWatermark.ai_1755539134560.png')",
           }}
         >
-          <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">Empowering <br /> finances, one tap <br /> at a time</p>
+          <p className="absolute left-10 bottom-20 text-6xl text-white font-[#F4FBF8] drop-shadow-2xl/50">
+            Empowering <br /> finances, one tap <br /> at a time
+          </p>
         </div>
-        <div className="lg:min-h-screen w-200  bg-primary shadow-lg p-6">
+        <div className={`lg:min-h-screen w-200  bg-primary shadow-lg p-6`}>
           <div className="flex justify-end" onClick={() => navigate("/")}>
             <img
               className="w-6 h-6 cursor-pointer"
@@ -322,6 +345,7 @@ const SignUp = () => {
                   First Name
                 </label>
                 <input
+                  disabled={signupLoader}
                   type="text"
                   className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   onChange={(e) => setFirstName(e.target.value)}
@@ -336,6 +360,7 @@ const SignUp = () => {
                   Last Name
                 </label>
                 <input
+                disabled={signupLoader}
                   type="text"
                   className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   onChange={(e) => setLastName(e.target.value)}
@@ -354,15 +379,16 @@ const SignUp = () => {
               </label>
               <input
                 type="text"
+                disabled={signupLoader}
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
               {usernameError && (
                 <p
-                  className={`text-xs ${
+                  className={`text-xs m-1 ${
                     usernameError === "Username is available."
-                      ? "text-green-500"
+                      ? "text-green-600"
                       : "text-red-500"
                   }`}
                 >
@@ -375,13 +401,14 @@ const SignUp = () => {
             <div>
               <label className="block text-sm mb-1 font-semibold">Email</label>
               <input
+              disabled={signupLoader}
                 type="email"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
               {emailError && (
-                <p className="text-red-500 text-xs">{emailError}</p>
+                <p className="text-red-500 text-xs m-1">{emailError}</p>
               )}
             </div>
 
@@ -391,13 +418,14 @@ const SignUp = () => {
                 Contact Number
               </label>
               <input
+              disabled={signupLoader}
                 type="text"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setContact(e.target.value)}
                 required
               />
               {contactError && (
-                <p className="text-red-500 text-xs">{contactError}</p>
+                <p className="text-red-500 text-xs m-1">{contactError}</p>
               )}
             </div>
 
@@ -407,13 +435,16 @@ const SignUp = () => {
                 Create Password
               </label>
               <input
+              disabled={signupLoader}
                 type="password"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setCreatePassword(e.target.value)}
                 required
               />
               {createPasswordError && (
-                <p className="text-red-500 text-xs">{createPasswordError}</p>
+                <p className="text-red-500 text-xs m-1">
+                  {createPasswordError}
+                </p>
               )}
             </div>
 
@@ -423,13 +454,16 @@ const SignUp = () => {
                 Confirm Password
               </label>
               <input
+              disabled={signupLoader}
                 type="password"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
               {confirmPasswordError && (
-                <p className="text-red-500 text-xs">{confirmPasswordError}</p>
+                <p className="text-red-500 text-xs m-1">
+                  {confirmPasswordError}
+                </p>
               )}
             </div>
 
@@ -439,19 +473,26 @@ const SignUp = () => {
                 Create a Unique WalletId
               </label>
               <input
+              disabled={signupLoader}
                 type="text"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setWalletKey(e.target.value)}
                 required
               />
               {walletKeyError && (
-                <p className="text-red-500 text-xs">{walletKeyError}</p>
+                <p className="text-red-500 text-xs m-1">{walletKeyError}</p>
               )}
             </div>
 
             {/* Submit */}
-            <button
-              className="w-full mt-4 bg-button1 text-white font-[REM] text-xl font-bold py-3 rounded-full shadow hover:bg-button1light hover:cursor-pointer hover:translate-[-0.1rem] active:translate-0.5 active:bg-button1dark active:cursor-pointer transition-all duration-300"
+            <div
+              disabled={isDisabled || signupLoader}
+              className={`w-full mt-4 text-xl font-bold py-3 rounded-full shadow transition-all font-[REM] text-center
+              ${
+                isDisabled
+                  ? "bg-button1 opacity-50 cursor-not-allowed"
+                  : "bg-button1 text-white cursor-pointer hover:translate-y-[-0.1rem] hover:shadow-lg transition-all duration-200 ease-in-out active:translate-0.5 active:bg-accent5"
+              }`}
               onClick={async () => {
                 if (
                   firstNameError ||
@@ -463,35 +504,67 @@ const SignUp = () => {
                   confirmPasswordError ||
                   walletKeyError
                 ) {
-                  alert("Please fix the errors before submitting.");
+                  alert("Please fill all input fields correctly.");
                 } else {
+                  setSignupLoader(true);
                   await axios
-                    .post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signup`, {
-                      firstName,
-                      lastName,
-                      username,
-                      email,
-                      contact,
-                      password: createPassword,
-                      walletKey,
-                    })
+                    .post(
+                      `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/signup`,
+                      {
+                        firstName,
+                        lastName,
+                        username,
+                        email,
+                        contact,
+                        password: createPassword,
+                        walletKey,
+                      },
+                    )
                     .then(() => {
-                      navigate("/signin");
+                      setSuccessMessage(true);
                       alert("User Created Successfully!");
                     })
                     .catch((err) => console.log(err));
                 }
               }}
             >
-              Create Account
-            </button>
+              {signupLoader ? (
+                <DotLoader className="m-auto" />
+              ) : (
+                <button className="hover:cursor-pointer">Create Account</button>
+              )}
+            </div>
           </div>
-
+          <div
+              disabled={isDisabled}
+              className={`w-full mt-4 text-xl font-bold py-3 rounded-full shadow transition-all font-[REM] text-center
+              ${
+                isDisabled
+                  ? "bg-button1 opacity-50 cursor-not-allowed"
+                  : "bg-button1 text-white cursor-pointer hover:translate-y-[-0.1rem] hover:shadow-lg transition-all duration-200 ease-in-out active:translate-0.5 active:bg-accent5"
+              }`}
+              onClick={() => {
+                setSignupLoader(true)
+              }}
+            >
+              {signupLoader ? (
+                <DotLoader className="m-auto" />
+              ) : (
+                <button className="hover:cursor-pointer">Create Account</button>
+              )}
+            </div>
           {/* Link */}
           <div className="mt-4 text-center underline font-[REM]">
             <CustomLink link="signin" text="Already Have an Account? Sign In" />
           </div>
         </div>
+      </div>
+      {/* Success Message */}
+      <div className={`absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent3 text-black px-4 py-2 rounded-md font-[REM] text-lg`}>
+        Account created! Go To{" "}
+        <span className="font-semibold">
+          <CustomLink link="signin" text="Sign In" />
+        </span>
       </div>
     </>
   );
