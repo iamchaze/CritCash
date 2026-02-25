@@ -309,9 +309,11 @@ const SignUp = () => {
 
   return (
     <>
-      <div className={`min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent1`}>
+      <div
+        className={`min-h-screen flex justify-around items-center lg:px-10 gap-10 bg-accent`}
+      >
         <div
-          className="hidden lg:inline-block relative min-w-100  w-200 lg:min-h-screen bg-cover bg-center rounded-md"
+          className={`hidden lg:inline-block relative min-w-100  w-200 lg:min-h-screen bg-cover bg-center rounded-md ${successMessage ? `opacity-50` : `opacity-100`}`}
           style={{
             backgroundImage: "url('/images/DeWatermark.ai_1755539134560.png')",
           }}
@@ -320,7 +322,9 @@ const SignUp = () => {
             Empowering <br /> finances, one tap <br /> at a time
           </p>
         </div>
-        <div className={`lg:min-h-screen w-200  bg-primary shadow-lg p-6`}>
+        <div
+          className={`${successMessage ? `opacity-50` : `opacity-100`} not-[]:lg:min-h-screen w-200  bg-primary shadow-lg p-6`}
+        >
           <div className="flex justify-end" onClick={() => navigate("/")}>
             <img
               className="w-6 h-6 cursor-pointer"
@@ -360,7 +364,7 @@ const SignUp = () => {
                   Last Name
                 </label>
                 <input
-                disabled={signupLoader}
+                  disabled={signupLoader}
                   type="text"
                   className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   onChange={(e) => setLastName(e.target.value)}
@@ -401,7 +405,7 @@ const SignUp = () => {
             <div>
               <label className="block text-sm mb-1 font-semibold">Email</label>
               <input
-              disabled={signupLoader}
+                disabled={signupLoader}
                 type="email"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setEmail(e.target.value)}
@@ -418,7 +422,7 @@ const SignUp = () => {
                 Contact Number
               </label>
               <input
-              disabled={signupLoader}
+                disabled={signupLoader}
                 type="text"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setContact(e.target.value)}
@@ -435,7 +439,7 @@ const SignUp = () => {
                 Create Password
               </label>
               <input
-              disabled={signupLoader}
+                disabled={signupLoader}
                 type="password"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setCreatePassword(e.target.value)}
@@ -454,7 +458,7 @@ const SignUp = () => {
                 Confirm Password
               </label>
               <input
-              disabled={signupLoader}
+                disabled={signupLoader}
                 type="password"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -473,7 +477,7 @@ const SignUp = () => {
                 Create a Unique WalletId
               </label>
               <input
-              disabled={signupLoader}
+                disabled={signupLoader}
                 type="text"
                 className="w-full bg-gray-100 border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 onChange={(e) => setWalletKey(e.target.value)}
@@ -535,36 +539,40 @@ const SignUp = () => {
               )}
             </div>
           </div>
-          <div
-              disabled={isDisabled}
-              className={`w-full mt-4 text-xl font-bold py-3 rounded-full shadow transition-all font-[REM] text-center
-              ${
-                isDisabled
-                  ? "bg-button1 opacity-50 cursor-not-allowed"
-                  : "bg-button1 text-white cursor-pointer hover:translate-y-[-0.1rem] hover:shadow-lg transition-all duration-200 ease-in-out active:translate-0.5 active:bg-accent5"
-              }`}
-              onClick={() => {
-                setSignupLoader(true)
-              }}
-            >
-              {signupLoader ? (
-                <DotLoader className="m-auto" />
-              ) : (
-                <button className="hover:cursor-pointer">Create Account</button>
-              )}
-            </div>
+          
           {/* Link */}
           <div className="mt-4 text-center underline font-[REM]">
             <CustomLink link="signin" text="Already Have an Account? Sign In" />
           </div>
         </div>
       </div>
-      {/* Success Message */}
-      <div className={`absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent3 text-black px-4 py-2 rounded-md font-[REM] text-lg`}>
-        Account created! Go To{" "}
-        <span className="font-semibold">
-          <CustomLink link="signin" text="Sign In" />
-        </span>
+      {/* */}
+      <div
+        className={`${successMessage ? "block" : "hidden"} absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent3 text-black px-10 py-5 rounded-md font-[REM] text-lg`}
+      >
+        <div
+          className="absolute right-5 top-5 font-[REM] font-bold hover:cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+         <img
+              className="w-6 h-6 cursor-pointer"
+              src="/images/+.svg"
+              alt="close"
+            />
+        </div>
+        <br />
+        <br />
+        Account created!
+        <br />
+        <br />
+        <p>
+          Go To{" "}
+          <span className="font-semibold">
+            <CustomLink link="signin" text="Sign In" />
+          </span>{" "}
+        </p>
       </div>
     </>
   );
