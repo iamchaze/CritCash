@@ -526,7 +526,6 @@ const SignUp = () => {
                     )
                     .then(() => {
                       setSuccessMessage(true);
-                      alert("User Created Successfully!");
                     })
                     .catch((err) => console.log(err));
                 }
@@ -539,7 +538,7 @@ const SignUp = () => {
               )}
             </div>
           </div>
-          
+
           {/* Link */}
           <div className="mt-4 text-center underline font-[REM]">
             <CustomLink link="signin" text="Already Have an Account? Sign In" />
@@ -556,11 +555,11 @@ const SignUp = () => {
             navigate("/");
           }}
         >
-         <img
-              className="w-6 h-6 cursor-pointer"
-              src="/images/+.svg"
-              alt="close"
-            />
+          <img
+            className="w-6 h-6 cursor-pointer"
+            src="/images/+.svg"
+            alt="close"
+          />
         </div>
         <br />
         <br />

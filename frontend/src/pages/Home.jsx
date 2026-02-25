@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomLink from "../components/CustomLink";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ServerStatusContext } from "../context/ServerStatusContext";
 
-// import '../styles/styles.css'
 const Home = () => {
+  const { serverReady, showPopup } = useContext(ServerStatusContext);
+
+  const [popupVisible, setPopupVisible] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (serverReady) {
+      const timer = setTimeout(() => {
+        setPopupVisible(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [serverReady]);
+
   return (
     <>
+      {showPopup && (
+        <div
+          className={`absolute top-1/10 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-gray-500 rounded-2xl font-[REM] font-semibold shadow-2xl px-7 py-4  ${popupVisible ? "block" : "hidden"}`}
+        >
+          {!serverReady && (
+            <span className="text-yellow-300">
+              Server is facing cold start please hold tight... ⏳
+            </span>
+          )}
+
+          {serverReady && (
+            <span className="text-green-500">
+              Server is ready! You can now proceed.
+            </span>
+          )}
+
+          <img
+            onClick={() => setPopupVisible(false)}
+            className="w-6 h-6 cursor-pointer inline"
+            src="/images/+.svg"
+            alt="close"
+          />
+        </div>
+      )}
+
       {/* Background content */}
       <div className="h-screen bg-primary absolute inset-0 -z-20 lg:hidden">
         <div className="relative w-full h-screen overflow-hidden">
@@ -83,7 +123,7 @@ const Home = () => {
                 About Me
               </a>
             </div>
-            <div className="hover:underline cursor-pointer"> 
+            <div className="hover:underline cursor-pointer">
               <a href="https://github.com/iamchaze/CritCash" target="_blank">
                 GitHub Link
               </a>
